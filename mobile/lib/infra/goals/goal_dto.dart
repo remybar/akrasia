@@ -9,8 +9,8 @@ part 'goal_dto.freezed.dart';
 part 'goal_dto.g.dart';
 
 @freezed
-abstract class GoalDTO implements _$GoalDTO {
-  const factory GoalDTO({
+abstract class GoalDTO with _$GoalDTO {
+  factory GoalDTO({
     @JsonKey(ignore: true) @required String id,
     @required String name,
     @required bool toReach,
@@ -24,17 +24,19 @@ abstract class GoalDTO implements _$GoalDTO {
     );
   }
 
+  factory GoalDTO.fromJson(Map<String, dynamic> json) => _$GoalDTOFromJson(json);
+
+  factory GoalDTO.fromFirestore(DocumentSnapshot document) {
+    return GoalDTO.fromJson(document.data()).copyWith(id: document.id);
+  }
+}
+
+extension GoalDTOX on GoalDTO {
   Goal toDomain() {
     return Goal(
       id: UniqueId.fromUniqueString(id),
       name: GoalName(name),
       toReach: toReach,
     );
-  }
-
-  factory GoalDTO.fromJson(Map<String, dynamic> json) => _$GoalDTOFromJson(json);
-
-  factory GoalDTO.fromFirestore(DocumentSnapshot document) {
-    return GoalDTO.fromJson(document.data()).copyWith(id: document.id);
   }
 }

@@ -114,7 +114,7 @@ class __$GoalDTOCopyWithImpl<$Res> extends _$GoalDTOCopyWithImpl<$Res>
 
 /// @nodoc
 class _$_GoalDTO implements _GoalDTO {
-  const _$_GoalDTO(
+  _$_GoalDTO(
       {@required @JsonKey(ignore: true) this.id,
       @required this.name,
       @required this.toReach})
@@ -169,7 +169,7 @@ class _$_GoalDTO implements _GoalDTO {
 }
 
 abstract class _GoalDTO implements GoalDTO {
-  const factory _GoalDTO(
+  factory _GoalDTO(
       {@required @JsonKey(ignore: true) String id,
       @required String name,
       @required bool toReach}) = _$_GoalDTO;

@@ -1,7 +1,10 @@
+import 'package:akrasia/application/auth/auth_bloc.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:another_flushbar/flushbar_helper.dart';
 
+import 'package:akrasia/ui/routes/router.gr.dart';
 import 'package:akrasia/application/auth/sign_in_form/sign_in_form_bloc.dart';
 
 class SignInForm extends StatelessWidget {
@@ -10,19 +13,23 @@ class SignInForm extends StatelessWidget {
     return BlocConsumer<SignInFormBloc, SignInFormState>(
       listener: (context, state) {
         state.authFailureOrSuccessOption.fold(
-            () {},
-            (either) => either.fold((failure) {
-                  FlushbarHelper.createError(
-                      message: failure.map(
-                    cancelledByUser: (_) => 'Cancelled',
-                    emailAlreadyInUse: (_) => 'Email already in use',
-                    invalidEmailAndPasswordCombination: (_) => 'Invalid email and password combination',
-                    serverError: (_) => 'Server error',
-                  )).show(context);
-                },
-                    (_) => {
-                          //TODO navigate
-                        }));
+          () {},
+          (either) => either.fold(
+            (failure) {
+              FlushbarHelper.createError(
+                  message: failure.map(
+                cancelledByUser: (_) => 'Cancelled',
+                emailAlreadyInUse: (_) => 'Email already in use',
+                invalidEmailAndPasswordCombination: (_) => 'Invalid email and password combination',
+                serverError: (_) => 'Server error',
+              )).show(context);
+            },
+            (_) {
+              ExtendedNavigator.root.pushGoalOverviewPage();
+              context.read<AuthBloc>().add(const AuthEvent.authCheckRequested());
+            },
+          ),
+        );
       },
       builder: (context, state) {
         return Form(
