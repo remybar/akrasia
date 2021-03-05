@@ -25,38 +25,39 @@ dependencies:
     sdk: flutter
   another_flushbar: ^1.10.11
   auto_route: ^0.6.9
+  cloud_firestore: ^0.16.0
   cupertino_icons: ^1.0.0
   dartz: ^0.9.2
   firebase_auth: ^0.20.1
   firebase_core: ^0.7.0
   flutter_bloc: ^6.1.2
-  cloud_firestore: ^0.16.0
   freezed_annotation: ^0.12.0
-  json_annotation: ^3.1.1
   get_it: ^5.0.6
   google_sign_in: ^4.5.9
   injectable: ^1.1.2
-  meta: ^1.2.4
-  uuid: ^2.2.2
+  json_annotation: ^3.1.1
   kt_dart: ^0.7.0
+  meta: ^1.2.4
+  rxdart: ^0.24.0
+  uuid: ^2.2.2
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  lint: ^1.3.0
-  build_runner: null
-  freezed: ^0.12.7
-  injectable_generator: ^1.1.2
   auto_route_generator: ^0.6.10
-  json_serializable: ^3.5.1
-
-  # To add a splash screen at the real app start-up
-  # to create the splash screen: flutter pub run flutter_native_splash:create
-  flutter_native_splash: ^0.3.1
+  build_runner: null
 
   # To easily set the app icon
   # to update the app icon: flutter pub run flutter_launcher_icons:main
   flutter_launcher_icons: "^0.8.1"
+
+  # To add a splash screen at the real app start-up
+  # to create the splash screen: flutter pub run flutter_native_splash:create
+  flutter_native_splash: ^0.3.1
+  freezed: ^0.12.7
+  injectable_generator: ^1.1.2
+  json_serializable: ^3.5.1
+  lint: ^1.3.0
 
 flutter_icons:
   android: "launcher_icon"
@@ -107,29 +108,24 @@ flutter_native_splash:
   # flutter pub run flutter_native_splash:create
   # To restore Flutter's default white splash screen, run the following command in the terminal:
   # flutter pub run flutter_native_splash:remove
-
   # color is the only required parameter.  It sets the background color of your splash screen.
   color: "#9370db"
-  
+
   # Optional parameters are listed below.  To enable a parameter, uncomment the line by removing 
   # the leading # character.
-
   # The image parameter allows you to specify an image used in the splash screen.  It must be a 
   # png file.  
   image: assets/splash.png
-
   # The color_dark and image_dark are parameters that set the color and image when the device is 
   # in dark mode.  If they are not specified, the app will use the color and image above.
   # If the image_dark parameter is specified, color_dark must be specified.
   #color_dark: "#042a49"
   #image_dark: assets/splash-invert.png
-
   # The android and ios parameters can be used to disable generating a splash screen on a given 
   # platform.
   #android: false
   #ios: false
   #web: false
-
   # The position of the splash image can be set with android_gravity, ios_content_mode, and
   # web_image_mode parameters.  All default to center.
   #
@@ -147,7 +143,6 @@ flutter_native_splash:
   #
   # web_image_mode can be one of the following modes: center, contain, stretch, and cover.
   #web_image_mode: center
-
   # To hide the notification bar, use the fullscreen parameter.  Has no affect in web since web 
   # has no notification bar.  Defaults to false.
   # NOTE: Unlike Android, iOS will not automatically show the notification bar when the app loads.
@@ -155,7 +150,6 @@ flutter_native_splash:
   #       WidgetsFlutterBinding.ensureInitialized();
   #       SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.bottom, SystemUiOverlay.top]);
   #fullscreen: true
-  
   # If you have changed the name(s) of your info.plist file(s), you can specify the filename(s) 
   # with the info_plist_files parameter.  Remove only the # characters in the three lines below,
   # do not remove any spaces:

@@ -1,5 +1,7 @@
 import 'package:akrasia/domain/core/failures.dart';
 
+class NotAuthenticatedError extends Error {}
+
 /// represents an error that should never happen.
 class UnexpectedValueError extends Error {
   final ValueFailure valueFailure;
