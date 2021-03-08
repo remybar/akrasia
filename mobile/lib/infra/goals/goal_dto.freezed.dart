@@ -18,7 +18,7 @@ class _$GoalDTOTearOff {
 
 // ignore: unused_element
   _GoalDTO call(
-      {@required @JsonKey(ignore: true) String id,
+      {@JsonKey(ignore: true) String id,
       @required String name,
       @required bool toReach}) {
     return _GoalDTO(
@@ -115,11 +115,10 @@ class __$GoalDTOCopyWithImpl<$Res> extends _$GoalDTOCopyWithImpl<$Res>
 /// @nodoc
 class _$_GoalDTO implements _GoalDTO {
   _$_GoalDTO(
-      {@required @JsonKey(ignore: true) this.id,
+      {@JsonKey(ignore: true) this.id,
       @required this.name,
       @required this.toReach})
-      : assert(id != null),
-        assert(name != null),
+      : assert(name != null),
         assert(toReach != null);
 
   factory _$_GoalDTO.fromJson(Map<String, dynamic> json) =>
@@ -170,7 +169,7 @@ class _$_GoalDTO implements _GoalDTO {
 
 abstract class _GoalDTO implements GoalDTO {
   factory _GoalDTO(
-      {@required @JsonKey(ignore: true) String id,
+      {@JsonKey(ignore: true) String id,
       @required String name,
       @required bool toReach}) = _$_GoalDTO;
 

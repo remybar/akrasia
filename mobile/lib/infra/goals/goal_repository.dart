@@ -12,9 +12,9 @@ import 'package:akrasia/infra/goals/goal_dto.dart';
 
 @LazySingleton(as: IGoalRepository)
 class GoalRepository implements IGoalRepository {
-  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final FirebaseFirestore _firestore;
 
-  GoalRepository();
+  GoalRepository(this._firestore);
 
   @override
   Future<Either<GoalFailure, Unit>> create(Goal goal) async {

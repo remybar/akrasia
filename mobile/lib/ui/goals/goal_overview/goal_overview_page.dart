@@ -7,6 +7,7 @@ import 'package:akrasia/application/auth/auth_bloc.dart';
 import 'package:akrasia/application/goals/goal_watcher/goal_watcher_bloc.dart';
 import 'package:akrasia/application/goals/goal_actor/goal_actor_bloc.dart';
 import 'package:akrasia/ui/routes/router.gr.dart';
+import 'package:akrasia/ui/goals/goal_overview/widgets/goal_overview_body_widget.dart';
 import 'package:akrasia/injection.dart';
 
 class GoalOverviewPage extends StatelessWidget {
@@ -29,7 +30,7 @@ class GoalOverviewPage extends StatelessWidget {
           BlocListener<AuthBloc, AuthState>(
             listener: (context, state) {
               state.maybeMap(
-                unauthenticated: (_) => ExtendedNavigator.root.pushSignInPage(),
+                unauthenticated: (_) => ExtendedNavigator.of(context).replace(Routes.signInPage),
                 orElse: () {},
               );
             },
@@ -63,10 +64,11 @@ class GoalOverviewPage extends StatelessWidget {
           ),
           floatingActionButton: FloatingActionButton(
             onPressed: () {
-              // TODO: navigate to GoalFormPage
+              ExtendedNavigator.of(context).pushGoalFormPage(editedGoal: null);
             },
             child: const Icon(Icons.add),
           ),
+          body: GoalOverviewBodyWidget(),
         ),
       ),
     );

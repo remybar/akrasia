@@ -7,7 +7,7 @@ import 'package:akrasia/ui/app_widget.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
   configureInjection(Environment.prod);
+  await Firebase.initializeApp();
   runApp(AppWidget());
 }

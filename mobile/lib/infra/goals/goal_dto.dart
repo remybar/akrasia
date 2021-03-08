@@ -11,7 +11,7 @@ part 'goal_dto.g.dart';
 @freezed
 abstract class GoalDTO with _$GoalDTO {
   factory GoalDTO({
-    @JsonKey(ignore: true) @required String id,
+    @JsonKey(ignore: true) String id,
     @required String name,
     @required bool toReach,
   }) = _GoalDTO;
