@@ -28,6 +28,27 @@ class _$ValueFailureTearOff {
   }
 
 // ignore: unused_element
+  InvalidGoalValue<T> invalidGoalValue<T>({@required T failedValue}) {
+    return InvalidGoalValue<T>(
+      failedValue: failedValue,
+    );
+  }
+
+// ignore: unused_element
+  InvalidGoalUnit<T> invalidGoalUnit<T>({@required T failedValue}) {
+    return InvalidGoalUnit<T>(
+      failedValue: failedValue,
+    );
+  }
+
+// ignore: unused_element
+  NegativeOrNull<T> negativeOrNull<T>({@required T failedValue}) {
+    return NegativeOrNull<T>(
+      failedValue: failedValue,
+    );
+  }
+
+// ignore: unused_element
   ExceedingLength<T> exceedingLength<T>(
       {@required T failedValue, @required int max}) {
     return ExceedingLength<T>(
@@ -70,6 +91,9 @@ mixin _$ValueFailure<T> {
   TResult when<TResult extends Object>({
     @required TResult invalidEmail(T failedValue),
     @required TResult shortPassword(T failedValue),
+    @required TResult invalidGoalValue(T failedValue),
+    @required TResult invalidGoalUnit(T failedValue),
+    @required TResult negativeOrNull(T failedValue),
     @required TResult exceedingLength(T failedValue, int max),
     @required TResult empty(T failedValue),
     @required TResult multiline(T failedValue),
@@ -79,6 +103,9 @@ mixin _$ValueFailure<T> {
   TResult maybeWhen<TResult extends Object>({
     TResult invalidEmail(T failedValue),
     TResult shortPassword(T failedValue),
+    TResult invalidGoalValue(T failedValue),
+    TResult invalidGoalUnit(T failedValue),
+    TResult negativeOrNull(T failedValue),
     TResult exceedingLength(T failedValue, int max),
     TResult empty(T failedValue),
     TResult multiline(T failedValue),
@@ -89,6 +116,9 @@ mixin _$ValueFailure<T> {
   TResult map<TResult extends Object>({
     @required TResult invalidEmail(InvalidEmail<T> value),
     @required TResult shortPassword(ShortPassword<T> value),
+    @required TResult invalidGoalValue(InvalidGoalValue<T> value),
+    @required TResult invalidGoalUnit(InvalidGoalUnit<T> value),
+    @required TResult negativeOrNull(NegativeOrNull<T> value),
     @required TResult exceedingLength(ExceedingLength<T> value),
     @required TResult empty(Empty<T> value),
     @required TResult multiline(Multiline<T> value),
@@ -98,6 +128,9 @@ mixin _$ValueFailure<T> {
   TResult maybeMap<TResult extends Object>({
     TResult invalidEmail(InvalidEmail<T> value),
     TResult shortPassword(ShortPassword<T> value),
+    TResult invalidGoalValue(InvalidGoalValue<T> value),
+    TResult invalidGoalUnit(InvalidGoalUnit<T> value),
+    TResult negativeOrNull(NegativeOrNull<T> value),
     TResult exceedingLength(ExceedingLength<T> value),
     TResult empty(Empty<T> value),
     TResult multiline(Multiline<T> value),
@@ -215,6 +248,9 @@ class _$InvalidEmail<T>
   TResult when<TResult extends Object>({
     @required TResult invalidEmail(T failedValue),
     @required TResult shortPassword(T failedValue),
+    @required TResult invalidGoalValue(T failedValue),
+    @required TResult invalidGoalUnit(T failedValue),
+    @required TResult negativeOrNull(T failedValue),
     @required TResult exceedingLength(T failedValue, int max),
     @required TResult empty(T failedValue),
     @required TResult multiline(T failedValue),
@@ -222,6 +258,9 @@ class _$InvalidEmail<T>
   }) {
     assert(invalidEmail != null);
     assert(shortPassword != null);
+    assert(invalidGoalValue != null);
+    assert(invalidGoalUnit != null);
+    assert(negativeOrNull != null);
     assert(exceedingLength != null);
     assert(empty != null);
     assert(multiline != null);
@@ -234,6 +273,9 @@ class _$InvalidEmail<T>
   TResult maybeWhen<TResult extends Object>({
     TResult invalidEmail(T failedValue),
     TResult shortPassword(T failedValue),
+    TResult invalidGoalValue(T failedValue),
+    TResult invalidGoalUnit(T failedValue),
+    TResult negativeOrNull(T failedValue),
     TResult exceedingLength(T failedValue, int max),
     TResult empty(T failedValue),
     TResult multiline(T failedValue),
@@ -252,6 +294,9 @@ class _$InvalidEmail<T>
   TResult map<TResult extends Object>({
     @required TResult invalidEmail(InvalidEmail<T> value),
     @required TResult shortPassword(ShortPassword<T> value),
+    @required TResult invalidGoalValue(InvalidGoalValue<T> value),
+    @required TResult invalidGoalUnit(InvalidGoalUnit<T> value),
+    @required TResult negativeOrNull(NegativeOrNull<T> value),
     @required TResult exceedingLength(ExceedingLength<T> value),
     @required TResult empty(Empty<T> value),
     @required TResult multiline(Multiline<T> value),
@@ -259,6 +304,9 @@ class _$InvalidEmail<T>
   }) {
     assert(invalidEmail != null);
     assert(shortPassword != null);
+    assert(invalidGoalValue != null);
+    assert(invalidGoalUnit != null);
+    assert(negativeOrNull != null);
     assert(exceedingLength != null);
     assert(empty != null);
     assert(multiline != null);
@@ -271,6 +319,9 @@ class _$InvalidEmail<T>
   TResult maybeMap<TResult extends Object>({
     TResult invalidEmail(InvalidEmail<T> value),
     TResult shortPassword(ShortPassword<T> value),
+    TResult invalidGoalValue(InvalidGoalValue<T> value),
+    TResult invalidGoalUnit(InvalidGoalUnit<T> value),
+    TResult negativeOrNull(NegativeOrNull<T> value),
     TResult exceedingLength(ExceedingLength<T> value),
     TResult empty(Empty<T> value),
     TResult multiline(Multiline<T> value),
@@ -373,6 +424,9 @@ class _$ShortPassword<T>
   TResult when<TResult extends Object>({
     @required TResult invalidEmail(T failedValue),
     @required TResult shortPassword(T failedValue),
+    @required TResult invalidGoalValue(T failedValue),
+    @required TResult invalidGoalUnit(T failedValue),
+    @required TResult negativeOrNull(T failedValue),
     @required TResult exceedingLength(T failedValue, int max),
     @required TResult empty(T failedValue),
     @required TResult multiline(T failedValue),
@@ -380,6 +434,9 @@ class _$ShortPassword<T>
   }) {
     assert(invalidEmail != null);
     assert(shortPassword != null);
+    assert(invalidGoalValue != null);
+    assert(invalidGoalUnit != null);
+    assert(negativeOrNull != null);
     assert(exceedingLength != null);
     assert(empty != null);
     assert(multiline != null);
@@ -392,6 +449,9 @@ class _$ShortPassword<T>
   TResult maybeWhen<TResult extends Object>({
     TResult invalidEmail(T failedValue),
     TResult shortPassword(T failedValue),
+    TResult invalidGoalValue(T failedValue),
+    TResult invalidGoalUnit(T failedValue),
+    TResult negativeOrNull(T failedValue),
     TResult exceedingLength(T failedValue, int max),
     TResult empty(T failedValue),
     TResult multiline(T failedValue),
@@ -410,6 +470,9 @@ class _$ShortPassword<T>
   TResult map<TResult extends Object>({
     @required TResult invalidEmail(InvalidEmail<T> value),
     @required TResult shortPassword(ShortPassword<T> value),
+    @required TResult invalidGoalValue(InvalidGoalValue<T> value),
+    @required TResult invalidGoalUnit(InvalidGoalUnit<T> value),
+    @required TResult negativeOrNull(NegativeOrNull<T> value),
     @required TResult exceedingLength(ExceedingLength<T> value),
     @required TResult empty(Empty<T> value),
     @required TResult multiline(Multiline<T> value),
@@ -417,6 +480,9 @@ class _$ShortPassword<T>
   }) {
     assert(invalidEmail != null);
     assert(shortPassword != null);
+    assert(invalidGoalValue != null);
+    assert(invalidGoalUnit != null);
+    assert(negativeOrNull != null);
     assert(exceedingLength != null);
     assert(empty != null);
     assert(multiline != null);
@@ -429,6 +495,9 @@ class _$ShortPassword<T>
   TResult maybeMap<TResult extends Object>({
     TResult invalidEmail(InvalidEmail<T> value),
     TResult shortPassword(ShortPassword<T> value),
+    TResult invalidGoalValue(InvalidGoalValue<T> value),
+    TResult invalidGoalUnit(InvalidGoalUnit<T> value),
+    TResult negativeOrNull(NegativeOrNull<T> value),
     TResult exceedingLength(ExceedingLength<T> value),
     TResult empty(Empty<T> value),
     TResult multiline(Multiline<T> value),
@@ -451,6 +520,536 @@ abstract class ShortPassword<T> implements ValueFailure<T> {
   @override
   @JsonKey(ignore: true)
   $ShortPasswordCopyWith<T, ShortPassword<T>> get copyWith;
+}
+
+/// @nodoc
+abstract class $InvalidGoalValueCopyWith<T, $Res>
+    implements $ValueFailureCopyWith<T, $Res> {
+  factory $InvalidGoalValueCopyWith(
+          InvalidGoalValue<T> value, $Res Function(InvalidGoalValue<T>) then) =
+      _$InvalidGoalValueCopyWithImpl<T, $Res>;
+  @override
+  $Res call({T failedValue});
+}
+
+/// @nodoc
+class _$InvalidGoalValueCopyWithImpl<T, $Res>
+    extends _$ValueFailureCopyWithImpl<T, $Res>
+    implements $InvalidGoalValueCopyWith<T, $Res> {
+  _$InvalidGoalValueCopyWithImpl(
+      InvalidGoalValue<T> _value, $Res Function(InvalidGoalValue<T>) _then)
+      : super(_value, (v) => _then(v as InvalidGoalValue<T>));
+
+  @override
+  InvalidGoalValue<T> get _value => super._value as InvalidGoalValue<T>;
+
+  @override
+  $Res call({
+    Object failedValue = freezed,
+  }) {
+    return _then(InvalidGoalValue<T>(
+      failedValue:
+          failedValue == freezed ? _value.failedValue : failedValue as T,
+    ));
+  }
+}
+
+/// @nodoc
+class _$InvalidGoalValue<T>
+    with DiagnosticableTreeMixin
+    implements InvalidGoalValue<T> {
+  const _$InvalidGoalValue({@required this.failedValue})
+      : assert(failedValue != null);
+
+  @override
+  final T failedValue;
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'ValueFailure<$T>.invalidGoalValue(failedValue: $failedValue)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'ValueFailure<$T>.invalidGoalValue'))
+      ..add(DiagnosticsProperty('failedValue', failedValue));
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is InvalidGoalValue<T> &&
+            (identical(other.failedValue, failedValue) ||
+                const DeepCollectionEquality()
+                    .equals(other.failedValue, failedValue)));
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^ const DeepCollectionEquality().hash(failedValue);
+
+  @JsonKey(ignore: true)
+  @override
+  $InvalidGoalValueCopyWith<T, InvalidGoalValue<T>> get copyWith =>
+      _$InvalidGoalValueCopyWithImpl<T, InvalidGoalValue<T>>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object>({
+    @required TResult invalidEmail(T failedValue),
+    @required TResult shortPassword(T failedValue),
+    @required TResult invalidGoalValue(T failedValue),
+    @required TResult invalidGoalUnit(T failedValue),
+    @required TResult negativeOrNull(T failedValue),
+    @required TResult exceedingLength(T failedValue, int max),
+    @required TResult empty(T failedValue),
+    @required TResult multiline(T failedValue),
+    @required TResult notAlphaNum(T failedValue),
+  }) {
+    assert(invalidEmail != null);
+    assert(shortPassword != null);
+    assert(invalidGoalValue != null);
+    assert(invalidGoalUnit != null);
+    assert(negativeOrNull != null);
+    assert(exceedingLength != null);
+    assert(empty != null);
+    assert(multiline != null);
+    assert(notAlphaNum != null);
+    return invalidGoalValue(failedValue);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object>({
+    TResult invalidEmail(T failedValue),
+    TResult shortPassword(T failedValue),
+    TResult invalidGoalValue(T failedValue),
+    TResult invalidGoalUnit(T failedValue),
+    TResult negativeOrNull(T failedValue),
+    TResult exceedingLength(T failedValue, int max),
+    TResult empty(T failedValue),
+    TResult multiline(T failedValue),
+    TResult notAlphaNum(T failedValue),
+    @required TResult orElse(),
+  }) {
+    assert(orElse != null);
+    if (invalidGoalValue != null) {
+      return invalidGoalValue(failedValue);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object>({
+    @required TResult invalidEmail(InvalidEmail<T> value),
+    @required TResult shortPassword(ShortPassword<T> value),
+    @required TResult invalidGoalValue(InvalidGoalValue<T> value),
+    @required TResult invalidGoalUnit(InvalidGoalUnit<T> value),
+    @required TResult negativeOrNull(NegativeOrNull<T> value),
+    @required TResult exceedingLength(ExceedingLength<T> value),
+    @required TResult empty(Empty<T> value),
+    @required TResult multiline(Multiline<T> value),
+    @required TResult notAlphaNum(NotAlphaNum<T> value),
+  }) {
+    assert(invalidEmail != null);
+    assert(shortPassword != null);
+    assert(invalidGoalValue != null);
+    assert(invalidGoalUnit != null);
+    assert(negativeOrNull != null);
+    assert(exceedingLength != null);
+    assert(empty != null);
+    assert(multiline != null);
+    assert(notAlphaNum != null);
+    return invalidGoalValue(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object>({
+    TResult invalidEmail(InvalidEmail<T> value),
+    TResult shortPassword(ShortPassword<T> value),
+    TResult invalidGoalValue(InvalidGoalValue<T> value),
+    TResult invalidGoalUnit(InvalidGoalUnit<T> value),
+    TResult negativeOrNull(NegativeOrNull<T> value),
+    TResult exceedingLength(ExceedingLength<T> value),
+    TResult empty(Empty<T> value),
+    TResult multiline(Multiline<T> value),
+    TResult notAlphaNum(NotAlphaNum<T> value),
+    @required TResult orElse(),
+  }) {
+    assert(orElse != null);
+    if (invalidGoalValue != null) {
+      return invalidGoalValue(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class InvalidGoalValue<T> implements ValueFailure<T> {
+  const factory InvalidGoalValue({@required T failedValue}) =
+      _$InvalidGoalValue<T>;
+
+  @override
+  T get failedValue;
+  @override
+  @JsonKey(ignore: true)
+  $InvalidGoalValueCopyWith<T, InvalidGoalValue<T>> get copyWith;
+}
+
+/// @nodoc
+abstract class $InvalidGoalUnitCopyWith<T, $Res>
+    implements $ValueFailureCopyWith<T, $Res> {
+  factory $InvalidGoalUnitCopyWith(
+          InvalidGoalUnit<T> value, $Res Function(InvalidGoalUnit<T>) then) =
+      _$InvalidGoalUnitCopyWithImpl<T, $Res>;
+  @override
+  $Res call({T failedValue});
+}
+
+/// @nodoc
+class _$InvalidGoalUnitCopyWithImpl<T, $Res>
+    extends _$ValueFailureCopyWithImpl<T, $Res>
+    implements $InvalidGoalUnitCopyWith<T, $Res> {
+  _$InvalidGoalUnitCopyWithImpl(
+      InvalidGoalUnit<T> _value, $Res Function(InvalidGoalUnit<T>) _then)
+      : super(_value, (v) => _then(v as InvalidGoalUnit<T>));
+
+  @override
+  InvalidGoalUnit<T> get _value => super._value as InvalidGoalUnit<T>;
+
+  @override
+  $Res call({
+    Object failedValue = freezed,
+  }) {
+    return _then(InvalidGoalUnit<T>(
+      failedValue:
+          failedValue == freezed ? _value.failedValue : failedValue as T,
+    ));
+  }
+}
+
+/// @nodoc
+class _$InvalidGoalUnit<T>
+    with DiagnosticableTreeMixin
+    implements InvalidGoalUnit<T> {
+  const _$InvalidGoalUnit({@required this.failedValue})
+      : assert(failedValue != null);
+
+  @override
+  final T failedValue;
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'ValueFailure<$T>.invalidGoalUnit(failedValue: $failedValue)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'ValueFailure<$T>.invalidGoalUnit'))
+      ..add(DiagnosticsProperty('failedValue', failedValue));
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is InvalidGoalUnit<T> &&
+            (identical(other.failedValue, failedValue) ||
+                const DeepCollectionEquality()
+                    .equals(other.failedValue, failedValue)));
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^ const DeepCollectionEquality().hash(failedValue);
+
+  @JsonKey(ignore: true)
+  @override
+  $InvalidGoalUnitCopyWith<T, InvalidGoalUnit<T>> get copyWith =>
+      _$InvalidGoalUnitCopyWithImpl<T, InvalidGoalUnit<T>>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object>({
+    @required TResult invalidEmail(T failedValue),
+    @required TResult shortPassword(T failedValue),
+    @required TResult invalidGoalValue(T failedValue),
+    @required TResult invalidGoalUnit(T failedValue),
+    @required TResult negativeOrNull(T failedValue),
+    @required TResult exceedingLength(T failedValue, int max),
+    @required TResult empty(T failedValue),
+    @required TResult multiline(T failedValue),
+    @required TResult notAlphaNum(T failedValue),
+  }) {
+    assert(invalidEmail != null);
+    assert(shortPassword != null);
+    assert(invalidGoalValue != null);
+    assert(invalidGoalUnit != null);
+    assert(negativeOrNull != null);
+    assert(exceedingLength != null);
+    assert(empty != null);
+    assert(multiline != null);
+    assert(notAlphaNum != null);
+    return invalidGoalUnit(failedValue);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object>({
+    TResult invalidEmail(T failedValue),
+    TResult shortPassword(T failedValue),
+    TResult invalidGoalValue(T failedValue),
+    TResult invalidGoalUnit(T failedValue),
+    TResult negativeOrNull(T failedValue),
+    TResult exceedingLength(T failedValue, int max),
+    TResult empty(T failedValue),
+    TResult multiline(T failedValue),
+    TResult notAlphaNum(T failedValue),
+    @required TResult orElse(),
+  }) {
+    assert(orElse != null);
+    if (invalidGoalUnit != null) {
+      return invalidGoalUnit(failedValue);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object>({
+    @required TResult invalidEmail(InvalidEmail<T> value),
+    @required TResult shortPassword(ShortPassword<T> value),
+    @required TResult invalidGoalValue(InvalidGoalValue<T> value),
+    @required TResult invalidGoalUnit(InvalidGoalUnit<T> value),
+    @required TResult negativeOrNull(NegativeOrNull<T> value),
+    @required TResult exceedingLength(ExceedingLength<T> value),
+    @required TResult empty(Empty<T> value),
+    @required TResult multiline(Multiline<T> value),
+    @required TResult notAlphaNum(NotAlphaNum<T> value),
+  }) {
+    assert(invalidEmail != null);
+    assert(shortPassword != null);
+    assert(invalidGoalValue != null);
+    assert(invalidGoalUnit != null);
+    assert(negativeOrNull != null);
+    assert(exceedingLength != null);
+    assert(empty != null);
+    assert(multiline != null);
+    assert(notAlphaNum != null);
+    return invalidGoalUnit(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object>({
+    TResult invalidEmail(InvalidEmail<T> value),
+    TResult shortPassword(ShortPassword<T> value),
+    TResult invalidGoalValue(InvalidGoalValue<T> value),
+    TResult invalidGoalUnit(InvalidGoalUnit<T> value),
+    TResult negativeOrNull(NegativeOrNull<T> value),
+    TResult exceedingLength(ExceedingLength<T> value),
+    TResult empty(Empty<T> value),
+    TResult multiline(Multiline<T> value),
+    TResult notAlphaNum(NotAlphaNum<T> value),
+    @required TResult orElse(),
+  }) {
+    assert(orElse != null);
+    if (invalidGoalUnit != null) {
+      return invalidGoalUnit(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class InvalidGoalUnit<T> implements ValueFailure<T> {
+  const factory InvalidGoalUnit({@required T failedValue}) =
+      _$InvalidGoalUnit<T>;
+
+  @override
+  T get failedValue;
+  @override
+  @JsonKey(ignore: true)
+  $InvalidGoalUnitCopyWith<T, InvalidGoalUnit<T>> get copyWith;
+}
+
+/// @nodoc
+abstract class $NegativeOrNullCopyWith<T, $Res>
+    implements $ValueFailureCopyWith<T, $Res> {
+  factory $NegativeOrNullCopyWith(
+          NegativeOrNull<T> value, $Res Function(NegativeOrNull<T>) then) =
+      _$NegativeOrNullCopyWithImpl<T, $Res>;
+  @override
+  $Res call({T failedValue});
+}
+
+/// @nodoc
+class _$NegativeOrNullCopyWithImpl<T, $Res>
+    extends _$ValueFailureCopyWithImpl<T, $Res>
+    implements $NegativeOrNullCopyWith<T, $Res> {
+  _$NegativeOrNullCopyWithImpl(
+      NegativeOrNull<T> _value, $Res Function(NegativeOrNull<T>) _then)
+      : super(_value, (v) => _then(v as NegativeOrNull<T>));
+
+  @override
+  NegativeOrNull<T> get _value => super._value as NegativeOrNull<T>;
+
+  @override
+  $Res call({
+    Object failedValue = freezed,
+  }) {
+    return _then(NegativeOrNull<T>(
+      failedValue:
+          failedValue == freezed ? _value.failedValue : failedValue as T,
+    ));
+  }
+}
+
+/// @nodoc
+class _$NegativeOrNull<T>
+    with DiagnosticableTreeMixin
+    implements NegativeOrNull<T> {
+  const _$NegativeOrNull({@required this.failedValue})
+      : assert(failedValue != null);
+
+  @override
+  final T failedValue;
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'ValueFailure<$T>.negativeOrNull(failedValue: $failedValue)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'ValueFailure<$T>.negativeOrNull'))
+      ..add(DiagnosticsProperty('failedValue', failedValue));
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is NegativeOrNull<T> &&
+            (identical(other.failedValue, failedValue) ||
+                const DeepCollectionEquality()
+                    .equals(other.failedValue, failedValue)));
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^ const DeepCollectionEquality().hash(failedValue);
+
+  @JsonKey(ignore: true)
+  @override
+  $NegativeOrNullCopyWith<T, NegativeOrNull<T>> get copyWith =>
+      _$NegativeOrNullCopyWithImpl<T, NegativeOrNull<T>>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object>({
+    @required TResult invalidEmail(T failedValue),
+    @required TResult shortPassword(T failedValue),
+    @required TResult invalidGoalValue(T failedValue),
+    @required TResult invalidGoalUnit(T failedValue),
+    @required TResult negativeOrNull(T failedValue),
+    @required TResult exceedingLength(T failedValue, int max),
+    @required TResult empty(T failedValue),
+    @required TResult multiline(T failedValue),
+    @required TResult notAlphaNum(T failedValue),
+  }) {
+    assert(invalidEmail != null);
+    assert(shortPassword != null);
+    assert(invalidGoalValue != null);
+    assert(invalidGoalUnit != null);
+    assert(negativeOrNull != null);
+    assert(exceedingLength != null);
+    assert(empty != null);
+    assert(multiline != null);
+    assert(notAlphaNum != null);
+    return negativeOrNull(failedValue);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object>({
+    TResult invalidEmail(T failedValue),
+    TResult shortPassword(T failedValue),
+    TResult invalidGoalValue(T failedValue),
+    TResult invalidGoalUnit(T failedValue),
+    TResult negativeOrNull(T failedValue),
+    TResult exceedingLength(T failedValue, int max),
+    TResult empty(T failedValue),
+    TResult multiline(T failedValue),
+    TResult notAlphaNum(T failedValue),
+    @required TResult orElse(),
+  }) {
+    assert(orElse != null);
+    if (negativeOrNull != null) {
+      return negativeOrNull(failedValue);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object>({
+    @required TResult invalidEmail(InvalidEmail<T> value),
+    @required TResult shortPassword(ShortPassword<T> value),
+    @required TResult invalidGoalValue(InvalidGoalValue<T> value),
+    @required TResult invalidGoalUnit(InvalidGoalUnit<T> value),
+    @required TResult negativeOrNull(NegativeOrNull<T> value),
+    @required TResult exceedingLength(ExceedingLength<T> value),
+    @required TResult empty(Empty<T> value),
+    @required TResult multiline(Multiline<T> value),
+    @required TResult notAlphaNum(NotAlphaNum<T> value),
+  }) {
+    assert(invalidEmail != null);
+    assert(shortPassword != null);
+    assert(invalidGoalValue != null);
+    assert(invalidGoalUnit != null);
+    assert(negativeOrNull != null);
+    assert(exceedingLength != null);
+    assert(empty != null);
+    assert(multiline != null);
+    assert(notAlphaNum != null);
+    return negativeOrNull(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object>({
+    TResult invalidEmail(InvalidEmail<T> value),
+    TResult shortPassword(ShortPassword<T> value),
+    TResult invalidGoalValue(InvalidGoalValue<T> value),
+    TResult invalidGoalUnit(InvalidGoalUnit<T> value),
+    TResult negativeOrNull(NegativeOrNull<T> value),
+    TResult exceedingLength(ExceedingLength<T> value),
+    TResult empty(Empty<T> value),
+    TResult multiline(Multiline<T> value),
+    TResult notAlphaNum(NotAlphaNum<T> value),
+    @required TResult orElse(),
+  }) {
+    assert(orElse != null);
+    if (negativeOrNull != null) {
+      return negativeOrNull(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class NegativeOrNull<T> implements ValueFailure<T> {
+  const factory NegativeOrNull({@required T failedValue}) = _$NegativeOrNull<T>;
+
+  @override
+  T get failedValue;
+  @override
+  @JsonKey(ignore: true)
+  $NegativeOrNullCopyWith<T, NegativeOrNull<T>> get copyWith;
 }
 
 /// @nodoc
@@ -541,6 +1140,9 @@ class _$ExceedingLength<T>
   TResult when<TResult extends Object>({
     @required TResult invalidEmail(T failedValue),
     @required TResult shortPassword(T failedValue),
+    @required TResult invalidGoalValue(T failedValue),
+    @required TResult invalidGoalUnit(T failedValue),
+    @required TResult negativeOrNull(T failedValue),
     @required TResult exceedingLength(T failedValue, int max),
     @required TResult empty(T failedValue),
     @required TResult multiline(T failedValue),
@@ -548,6 +1150,9 @@ class _$ExceedingLength<T>
   }) {
     assert(invalidEmail != null);
     assert(shortPassword != null);
+    assert(invalidGoalValue != null);
+    assert(invalidGoalUnit != null);
+    assert(negativeOrNull != null);
     assert(exceedingLength != null);
     assert(empty != null);
     assert(multiline != null);
@@ -560,6 +1165,9 @@ class _$ExceedingLength<T>
   TResult maybeWhen<TResult extends Object>({
     TResult invalidEmail(T failedValue),
     TResult shortPassword(T failedValue),
+    TResult invalidGoalValue(T failedValue),
+    TResult invalidGoalUnit(T failedValue),
+    TResult negativeOrNull(T failedValue),
     TResult exceedingLength(T failedValue, int max),
     TResult empty(T failedValue),
     TResult multiline(T failedValue),
@@ -578,6 +1186,9 @@ class _$ExceedingLength<T>
   TResult map<TResult extends Object>({
     @required TResult invalidEmail(InvalidEmail<T> value),
     @required TResult shortPassword(ShortPassword<T> value),
+    @required TResult invalidGoalValue(InvalidGoalValue<T> value),
+    @required TResult invalidGoalUnit(InvalidGoalUnit<T> value),
+    @required TResult negativeOrNull(NegativeOrNull<T> value),
     @required TResult exceedingLength(ExceedingLength<T> value),
     @required TResult empty(Empty<T> value),
     @required TResult multiline(Multiline<T> value),
@@ -585,6 +1196,9 @@ class _$ExceedingLength<T>
   }) {
     assert(invalidEmail != null);
     assert(shortPassword != null);
+    assert(invalidGoalValue != null);
+    assert(invalidGoalUnit != null);
+    assert(negativeOrNull != null);
     assert(exceedingLength != null);
     assert(empty != null);
     assert(multiline != null);
@@ -597,6 +1211,9 @@ class _$ExceedingLength<T>
   TResult maybeMap<TResult extends Object>({
     TResult invalidEmail(InvalidEmail<T> value),
     TResult shortPassword(ShortPassword<T> value),
+    TResult invalidGoalValue(InvalidGoalValue<T> value),
+    TResult invalidGoalUnit(InvalidGoalUnit<T> value),
+    TResult negativeOrNull(NegativeOrNull<T> value),
     TResult exceedingLength(ExceedingLength<T> value),
     TResult empty(Empty<T> value),
     TResult multiline(Multiline<T> value),
@@ -695,6 +1312,9 @@ class _$Empty<T> with DiagnosticableTreeMixin implements Empty<T> {
   TResult when<TResult extends Object>({
     @required TResult invalidEmail(T failedValue),
     @required TResult shortPassword(T failedValue),
+    @required TResult invalidGoalValue(T failedValue),
+    @required TResult invalidGoalUnit(T failedValue),
+    @required TResult negativeOrNull(T failedValue),
     @required TResult exceedingLength(T failedValue, int max),
     @required TResult empty(T failedValue),
     @required TResult multiline(T failedValue),
@@ -702,6 +1322,9 @@ class _$Empty<T> with DiagnosticableTreeMixin implements Empty<T> {
   }) {
     assert(invalidEmail != null);
     assert(shortPassword != null);
+    assert(invalidGoalValue != null);
+    assert(invalidGoalUnit != null);
+    assert(negativeOrNull != null);
     assert(exceedingLength != null);
     assert(empty != null);
     assert(multiline != null);
@@ -714,6 +1337,9 @@ class _$Empty<T> with DiagnosticableTreeMixin implements Empty<T> {
   TResult maybeWhen<TResult extends Object>({
     TResult invalidEmail(T failedValue),
     TResult shortPassword(T failedValue),
+    TResult invalidGoalValue(T failedValue),
+    TResult invalidGoalUnit(T failedValue),
+    TResult negativeOrNull(T failedValue),
     TResult exceedingLength(T failedValue, int max),
     TResult empty(T failedValue),
     TResult multiline(T failedValue),
@@ -732,6 +1358,9 @@ class _$Empty<T> with DiagnosticableTreeMixin implements Empty<T> {
   TResult map<TResult extends Object>({
     @required TResult invalidEmail(InvalidEmail<T> value),
     @required TResult shortPassword(ShortPassword<T> value),
+    @required TResult invalidGoalValue(InvalidGoalValue<T> value),
+    @required TResult invalidGoalUnit(InvalidGoalUnit<T> value),
+    @required TResult negativeOrNull(NegativeOrNull<T> value),
     @required TResult exceedingLength(ExceedingLength<T> value),
     @required TResult empty(Empty<T> value),
     @required TResult multiline(Multiline<T> value),
@@ -739,6 +1368,9 @@ class _$Empty<T> with DiagnosticableTreeMixin implements Empty<T> {
   }) {
     assert(invalidEmail != null);
     assert(shortPassword != null);
+    assert(invalidGoalValue != null);
+    assert(invalidGoalUnit != null);
+    assert(negativeOrNull != null);
     assert(exceedingLength != null);
     assert(empty != null);
     assert(multiline != null);
@@ -751,6 +1383,9 @@ class _$Empty<T> with DiagnosticableTreeMixin implements Empty<T> {
   TResult maybeMap<TResult extends Object>({
     TResult invalidEmail(InvalidEmail<T> value),
     TResult shortPassword(ShortPassword<T> value),
+    TResult invalidGoalValue(InvalidGoalValue<T> value),
+    TResult invalidGoalUnit(InvalidGoalUnit<T> value),
+    TResult negativeOrNull(NegativeOrNull<T> value),
     TResult exceedingLength(ExceedingLength<T> value),
     TResult empty(Empty<T> value),
     TResult multiline(Multiline<T> value),
@@ -850,6 +1485,9 @@ class _$Multiline<T> with DiagnosticableTreeMixin implements Multiline<T> {
   TResult when<TResult extends Object>({
     @required TResult invalidEmail(T failedValue),
     @required TResult shortPassword(T failedValue),
+    @required TResult invalidGoalValue(T failedValue),
+    @required TResult invalidGoalUnit(T failedValue),
+    @required TResult negativeOrNull(T failedValue),
     @required TResult exceedingLength(T failedValue, int max),
     @required TResult empty(T failedValue),
     @required TResult multiline(T failedValue),
@@ -857,6 +1495,9 @@ class _$Multiline<T> with DiagnosticableTreeMixin implements Multiline<T> {
   }) {
     assert(invalidEmail != null);
     assert(shortPassword != null);
+    assert(invalidGoalValue != null);
+    assert(invalidGoalUnit != null);
+    assert(negativeOrNull != null);
     assert(exceedingLength != null);
     assert(empty != null);
     assert(multiline != null);
@@ -869,6 +1510,9 @@ class _$Multiline<T> with DiagnosticableTreeMixin implements Multiline<T> {
   TResult maybeWhen<TResult extends Object>({
     TResult invalidEmail(T failedValue),
     TResult shortPassword(T failedValue),
+    TResult invalidGoalValue(T failedValue),
+    TResult invalidGoalUnit(T failedValue),
+    TResult negativeOrNull(T failedValue),
     TResult exceedingLength(T failedValue, int max),
     TResult empty(T failedValue),
     TResult multiline(T failedValue),
@@ -887,6 +1531,9 @@ class _$Multiline<T> with DiagnosticableTreeMixin implements Multiline<T> {
   TResult map<TResult extends Object>({
     @required TResult invalidEmail(InvalidEmail<T> value),
     @required TResult shortPassword(ShortPassword<T> value),
+    @required TResult invalidGoalValue(InvalidGoalValue<T> value),
+    @required TResult invalidGoalUnit(InvalidGoalUnit<T> value),
+    @required TResult negativeOrNull(NegativeOrNull<T> value),
     @required TResult exceedingLength(ExceedingLength<T> value),
     @required TResult empty(Empty<T> value),
     @required TResult multiline(Multiline<T> value),
@@ -894,6 +1541,9 @@ class _$Multiline<T> with DiagnosticableTreeMixin implements Multiline<T> {
   }) {
     assert(invalidEmail != null);
     assert(shortPassword != null);
+    assert(invalidGoalValue != null);
+    assert(invalidGoalUnit != null);
+    assert(negativeOrNull != null);
     assert(exceedingLength != null);
     assert(empty != null);
     assert(multiline != null);
@@ -906,6 +1556,9 @@ class _$Multiline<T> with DiagnosticableTreeMixin implements Multiline<T> {
   TResult maybeMap<TResult extends Object>({
     TResult invalidEmail(InvalidEmail<T> value),
     TResult shortPassword(ShortPassword<T> value),
+    TResult invalidGoalValue(InvalidGoalValue<T> value),
+    TResult invalidGoalUnit(InvalidGoalUnit<T> value),
+    TResult negativeOrNull(NegativeOrNull<T> value),
     TResult exceedingLength(ExceedingLength<T> value),
     TResult empty(Empty<T> value),
     TResult multiline(Multiline<T> value),
@@ -1006,6 +1659,9 @@ class _$NotAlphaNum<T> with DiagnosticableTreeMixin implements NotAlphaNum<T> {
   TResult when<TResult extends Object>({
     @required TResult invalidEmail(T failedValue),
     @required TResult shortPassword(T failedValue),
+    @required TResult invalidGoalValue(T failedValue),
+    @required TResult invalidGoalUnit(T failedValue),
+    @required TResult negativeOrNull(T failedValue),
     @required TResult exceedingLength(T failedValue, int max),
     @required TResult empty(T failedValue),
     @required TResult multiline(T failedValue),
@@ -1013,6 +1669,9 @@ class _$NotAlphaNum<T> with DiagnosticableTreeMixin implements NotAlphaNum<T> {
   }) {
     assert(invalidEmail != null);
     assert(shortPassword != null);
+    assert(invalidGoalValue != null);
+    assert(invalidGoalUnit != null);
+    assert(negativeOrNull != null);
     assert(exceedingLength != null);
     assert(empty != null);
     assert(multiline != null);
@@ -1025,6 +1684,9 @@ class _$NotAlphaNum<T> with DiagnosticableTreeMixin implements NotAlphaNum<T> {
   TResult maybeWhen<TResult extends Object>({
     TResult invalidEmail(T failedValue),
     TResult shortPassword(T failedValue),
+    TResult invalidGoalValue(T failedValue),
+    TResult invalidGoalUnit(T failedValue),
+    TResult negativeOrNull(T failedValue),
     TResult exceedingLength(T failedValue, int max),
     TResult empty(T failedValue),
     TResult multiline(T failedValue),
@@ -1043,6 +1705,9 @@ class _$NotAlphaNum<T> with DiagnosticableTreeMixin implements NotAlphaNum<T> {
   TResult map<TResult extends Object>({
     @required TResult invalidEmail(InvalidEmail<T> value),
     @required TResult shortPassword(ShortPassword<T> value),
+    @required TResult invalidGoalValue(InvalidGoalValue<T> value),
+    @required TResult invalidGoalUnit(InvalidGoalUnit<T> value),
+    @required TResult negativeOrNull(NegativeOrNull<T> value),
     @required TResult exceedingLength(ExceedingLength<T> value),
     @required TResult empty(Empty<T> value),
     @required TResult multiline(Multiline<T> value),
@@ -1050,6 +1715,9 @@ class _$NotAlphaNum<T> with DiagnosticableTreeMixin implements NotAlphaNum<T> {
   }) {
     assert(invalidEmail != null);
     assert(shortPassword != null);
+    assert(invalidGoalValue != null);
+    assert(invalidGoalUnit != null);
+    assert(negativeOrNull != null);
     assert(exceedingLength != null);
     assert(empty != null);
     assert(multiline != null);
@@ -1062,6 +1730,9 @@ class _$NotAlphaNum<T> with DiagnosticableTreeMixin implements NotAlphaNum<T> {
   TResult maybeMap<TResult extends Object>({
     TResult invalidEmail(InvalidEmail<T> value),
     TResult shortPassword(ShortPassword<T> value),
+    TResult invalidGoalValue(InvalidGoalValue<T> value),
+    TResult invalidGoalUnit(InvalidGoalUnit<T> value),
+    TResult negativeOrNull(NegativeOrNull<T> value),
     TResult exceedingLength(ExceedingLength<T> value),
     TResult empty(Empty<T> value),
     TResult multiline(Multiline<T> value),

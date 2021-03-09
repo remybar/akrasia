@@ -11,9 +11,7 @@ class GoalUnit extends ValueObject<String> {
 
   factory GoalUnit(String input) {
     assert(input != null);
-    return GoalUnit._(
-      validateMaxStringLength(input, maxLength).flatMap(validateAlphaNumOnly),
-    );
+    return GoalUnit._(validateMaxStringLength(input, maxLength).flatMap(validateAlphaNumOnly));
   }
 
   const GoalUnit._(this.value);

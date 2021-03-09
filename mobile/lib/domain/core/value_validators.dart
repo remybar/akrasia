@@ -1,6 +1,24 @@
 import 'package:dartz/dartz.dart';
 import 'package:akrasia/domain/core/failures.dart';
 
+Either<ValueFailure<double>, double> validateDoubleStrictlyPositive(
+  double input,
+) {
+  if (input <= 0.0) {
+    return left(ValueFailure.negativeOrNull(failedValue: input));
+  }
+  return right(input);
+}
+
+Either<ValueFailure<int>, int> validateIntStrictlyPositive(
+  int input,
+) {
+  if (input <= 0) {
+    return left(ValueFailure.negativeOrNull(failedValue: input));
+  }
+  return right(input);
+}
+
 Either<ValueFailure<String>, String> validateMaxStringLength(
   String input,
   int maxLength,

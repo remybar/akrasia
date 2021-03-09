@@ -3,16 +3,16 @@ import 'package:akrasia/domain/core/failures.dart';
 import 'package:akrasia/domain/core/value_object.dart';
 import 'package:akrasia/domain/core/value_validators.dart';
 
-class GoalValue extends ValueObject<double> {
+class GoalCountValue extends ValueObject<int> {
   @override
-  final Either<ValueFailure<double>, double> value;
+  final Either<ValueFailure<int>, int> value;
 
-  factory GoalValue(double input) {
+  factory GoalCountValue(int input) {
     assert(input != null);
-    return GoalValue._(
-      validateDoubleStrictlyPositive(input),
+    return GoalCountValue._(
+      validateIntStrictlyPositive(input),
     );
   }
 
-  const GoalValue._(this.value);
+  const GoalCountValue._(this.value);
 }

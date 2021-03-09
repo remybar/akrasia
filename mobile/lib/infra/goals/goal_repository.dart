@@ -21,9 +21,10 @@ class GoalRepository implements IGoalRepository {
     try {
       final userDoc = await _firestore.userDocument();
       final goalDTO = GoalDTO.fromDomain(goal);
-      await userDoc.goalCollection.doc(goalDTO.id).set(goalDTO.toJson());
+      final goalJson = goalDTO.toJson();
+      await userDoc.goalCollection.doc(goalDTO.id).set(goalJson);
       return right(unit);
-    } on FirebaseException {
+    } on FirebaseException catch (e) {
       //TODO: to refine
       return left(const GoalFailure.unexpected());
     }
@@ -36,7 +37,7 @@ class GoalRepository implements IGoalRepository {
       final goalDTO = GoalDTO.fromDomain(goal);
       await userDoc.goalCollection.doc(goalDTO.id).update(goalDTO.toJson());
       return right(unit);
-    } on FirebaseException {
+    } on FirebaseException catch (e) {
       //TODO: to refine (permission denied, not found, ...)
       return left(const GoalFailure.unexpected());
     }
@@ -49,7 +50,7 @@ class GoalRepository implements IGoalRepository {
       final goalId = goal.id.getOrCrash();
       await userDoc.goalCollection.doc(goalId).delete();
       return right(unit);
-    } on FirebaseException {
+    } on FirebaseException catch (e) {
       //TODO: to refine (permission denied, not found, ...)
       return left(const GoalFailure.unexpected());
     }

@@ -28,6 +28,20 @@ class _$GoalFormEventTearOff {
   }
 
 // ignore: unused_element
+  _StartDateChanged startDateChanged(DateTime startDate) {
+    return _StartDateChanged(
+      startDate,
+    );
+  }
+
+// ignore: unused_element
+  _EndDateChanged endDateChanged(DateTime endDate) {
+    return _EndDateChanged(
+      endDate,
+    );
+  }
+
+// ignore: unused_element
   _Saved saved() {
     return const _Saved();
   }
@@ -43,12 +57,16 @@ mixin _$GoalFormEvent {
   TResult when<TResult extends Object>({
     @required TResult initialized(Option<Goal> goalOption),
     @required TResult nameChanged(String nameStr),
+    @required TResult startDateChanged(DateTime startDate),
+    @required TResult endDateChanged(DateTime endDate),
     @required TResult saved(),
   });
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object>({
     TResult initialized(Option<Goal> goalOption),
     TResult nameChanged(String nameStr),
+    TResult startDateChanged(DateTime startDate),
+    TResult endDateChanged(DateTime endDate),
     TResult saved(),
     @required TResult orElse(),
   });
@@ -56,12 +74,16 @@ mixin _$GoalFormEvent {
   TResult map<TResult extends Object>({
     @required TResult initialized(_Initialized value),
     @required TResult nameChanged(_NameChanged value),
+    @required TResult startDateChanged(_StartDateChanged value),
+    @required TResult endDateChanged(_EndDateChanged value),
     @required TResult saved(_Saved value),
   });
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object>({
     TResult initialized(_Initialized value),
     TResult nameChanged(_NameChanged value),
+    TResult startDateChanged(_StartDateChanged value),
+    TResult endDateChanged(_EndDateChanged value),
     TResult saved(_Saved value),
     @required TResult orElse(),
   });
@@ -147,10 +169,14 @@ class _$_Initialized implements _Initialized {
   TResult when<TResult extends Object>({
     @required TResult initialized(Option<Goal> goalOption),
     @required TResult nameChanged(String nameStr),
+    @required TResult startDateChanged(DateTime startDate),
+    @required TResult endDateChanged(DateTime endDate),
     @required TResult saved(),
   }) {
     assert(initialized != null);
     assert(nameChanged != null);
+    assert(startDateChanged != null);
+    assert(endDateChanged != null);
     assert(saved != null);
     return initialized(goalOption);
   }
@@ -160,6 +186,8 @@ class _$_Initialized implements _Initialized {
   TResult maybeWhen<TResult extends Object>({
     TResult initialized(Option<Goal> goalOption),
     TResult nameChanged(String nameStr),
+    TResult startDateChanged(DateTime startDate),
+    TResult endDateChanged(DateTime endDate),
     TResult saved(),
     @required TResult orElse(),
   }) {
@@ -175,10 +203,14 @@ class _$_Initialized implements _Initialized {
   TResult map<TResult extends Object>({
     @required TResult initialized(_Initialized value),
     @required TResult nameChanged(_NameChanged value),
+    @required TResult startDateChanged(_StartDateChanged value),
+    @required TResult endDateChanged(_EndDateChanged value),
     @required TResult saved(_Saved value),
   }) {
     assert(initialized != null);
     assert(nameChanged != null);
+    assert(startDateChanged != null);
+    assert(endDateChanged != null);
     assert(saved != null);
     return initialized(this);
   }
@@ -188,6 +220,8 @@ class _$_Initialized implements _Initialized {
   TResult maybeMap<TResult extends Object>({
     TResult initialized(_Initialized value),
     TResult nameChanged(_NameChanged value),
+    TResult startDateChanged(_StartDateChanged value),
+    TResult endDateChanged(_EndDateChanged value),
     TResult saved(_Saved value),
     @required TResult orElse(),
   }) {
@@ -269,10 +303,14 @@ class _$_NameChanged implements _NameChanged {
   TResult when<TResult extends Object>({
     @required TResult initialized(Option<Goal> goalOption),
     @required TResult nameChanged(String nameStr),
+    @required TResult startDateChanged(DateTime startDate),
+    @required TResult endDateChanged(DateTime endDate),
     @required TResult saved(),
   }) {
     assert(initialized != null);
     assert(nameChanged != null);
+    assert(startDateChanged != null);
+    assert(endDateChanged != null);
     assert(saved != null);
     return nameChanged(nameStr);
   }
@@ -282,6 +320,8 @@ class _$_NameChanged implements _NameChanged {
   TResult maybeWhen<TResult extends Object>({
     TResult initialized(Option<Goal> goalOption),
     TResult nameChanged(String nameStr),
+    TResult startDateChanged(DateTime startDate),
+    TResult endDateChanged(DateTime endDate),
     TResult saved(),
     @required TResult orElse(),
   }) {
@@ -297,10 +337,14 @@ class _$_NameChanged implements _NameChanged {
   TResult map<TResult extends Object>({
     @required TResult initialized(_Initialized value),
     @required TResult nameChanged(_NameChanged value),
+    @required TResult startDateChanged(_StartDateChanged value),
+    @required TResult endDateChanged(_EndDateChanged value),
     @required TResult saved(_Saved value),
   }) {
     assert(initialized != null);
     assert(nameChanged != null);
+    assert(startDateChanged != null);
+    assert(endDateChanged != null);
     assert(saved != null);
     return nameChanged(this);
   }
@@ -310,6 +354,8 @@ class _$_NameChanged implements _NameChanged {
   TResult maybeMap<TResult extends Object>({
     TResult initialized(_Initialized value),
     TResult nameChanged(_NameChanged value),
+    TResult startDateChanged(_StartDateChanged value),
+    TResult endDateChanged(_EndDateChanged value),
     TResult saved(_Saved value),
     @required TResult orElse(),
   }) {
@@ -327,6 +373,277 @@ abstract class _NameChanged implements GoalFormEvent {
   String get nameStr;
   @JsonKey(ignore: true)
   _$NameChangedCopyWith<_NameChanged> get copyWith;
+}
+
+/// @nodoc
+abstract class _$StartDateChangedCopyWith<$Res> {
+  factory _$StartDateChangedCopyWith(
+          _StartDateChanged value, $Res Function(_StartDateChanged) then) =
+      __$StartDateChangedCopyWithImpl<$Res>;
+  $Res call({DateTime startDate});
+}
+
+/// @nodoc
+class __$StartDateChangedCopyWithImpl<$Res>
+    extends _$GoalFormEventCopyWithImpl<$Res>
+    implements _$StartDateChangedCopyWith<$Res> {
+  __$StartDateChangedCopyWithImpl(
+      _StartDateChanged _value, $Res Function(_StartDateChanged) _then)
+      : super(_value, (v) => _then(v as _StartDateChanged));
+
+  @override
+  _StartDateChanged get _value => super._value as _StartDateChanged;
+
+  @override
+  $Res call({
+    Object startDate = freezed,
+  }) {
+    return _then(_StartDateChanged(
+      startDate == freezed ? _value.startDate : startDate as DateTime,
+    ));
+  }
+}
+
+/// @nodoc
+class _$_StartDateChanged implements _StartDateChanged {
+  const _$_StartDateChanged(this.startDate) : assert(startDate != null);
+
+  @override
+  final DateTime startDate;
+
+  @override
+  String toString() {
+    return 'GoalFormEvent.startDateChanged(startDate: $startDate)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is _StartDateChanged &&
+            (identical(other.startDate, startDate) ||
+                const DeepCollectionEquality()
+                    .equals(other.startDate, startDate)));
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^ const DeepCollectionEquality().hash(startDate);
+
+  @JsonKey(ignore: true)
+  @override
+  _$StartDateChangedCopyWith<_StartDateChanged> get copyWith =>
+      __$StartDateChangedCopyWithImpl<_StartDateChanged>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object>({
+    @required TResult initialized(Option<Goal> goalOption),
+    @required TResult nameChanged(String nameStr),
+    @required TResult startDateChanged(DateTime startDate),
+    @required TResult endDateChanged(DateTime endDate),
+    @required TResult saved(),
+  }) {
+    assert(initialized != null);
+    assert(nameChanged != null);
+    assert(startDateChanged != null);
+    assert(endDateChanged != null);
+    assert(saved != null);
+    return startDateChanged(startDate);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object>({
+    TResult initialized(Option<Goal> goalOption),
+    TResult nameChanged(String nameStr),
+    TResult startDateChanged(DateTime startDate),
+    TResult endDateChanged(DateTime endDate),
+    TResult saved(),
+    @required TResult orElse(),
+  }) {
+    assert(orElse != null);
+    if (startDateChanged != null) {
+      return startDateChanged(startDate);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object>({
+    @required TResult initialized(_Initialized value),
+    @required TResult nameChanged(_NameChanged value),
+    @required TResult startDateChanged(_StartDateChanged value),
+    @required TResult endDateChanged(_EndDateChanged value),
+    @required TResult saved(_Saved value),
+  }) {
+    assert(initialized != null);
+    assert(nameChanged != null);
+    assert(startDateChanged != null);
+    assert(endDateChanged != null);
+    assert(saved != null);
+    return startDateChanged(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object>({
+    TResult initialized(_Initialized value),
+    TResult nameChanged(_NameChanged value),
+    TResult startDateChanged(_StartDateChanged value),
+    TResult endDateChanged(_EndDateChanged value),
+    TResult saved(_Saved value),
+    @required TResult orElse(),
+  }) {
+    assert(orElse != null);
+    if (startDateChanged != null) {
+      return startDateChanged(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _StartDateChanged implements GoalFormEvent {
+  const factory _StartDateChanged(DateTime startDate) = _$_StartDateChanged;
+
+  DateTime get startDate;
+  @JsonKey(ignore: true)
+  _$StartDateChangedCopyWith<_StartDateChanged> get copyWith;
+}
+
+/// @nodoc
+abstract class _$EndDateChangedCopyWith<$Res> {
+  factory _$EndDateChangedCopyWith(
+          _EndDateChanged value, $Res Function(_EndDateChanged) then) =
+      __$EndDateChangedCopyWithImpl<$Res>;
+  $Res call({DateTime endDate});
+}
+
+/// @nodoc
+class __$EndDateChangedCopyWithImpl<$Res>
+    extends _$GoalFormEventCopyWithImpl<$Res>
+    implements _$EndDateChangedCopyWith<$Res> {
+  __$EndDateChangedCopyWithImpl(
+      _EndDateChanged _value, $Res Function(_EndDateChanged) _then)
+      : super(_value, (v) => _then(v as _EndDateChanged));
+
+  @override
+  _EndDateChanged get _value => super._value as _EndDateChanged;
+
+  @override
+  $Res call({
+    Object endDate = freezed,
+  }) {
+    return _then(_EndDateChanged(
+      endDate == freezed ? _value.endDate : endDate as DateTime,
+    ));
+  }
+}
+
+/// @nodoc
+class _$_EndDateChanged implements _EndDateChanged {
+  const _$_EndDateChanged(this.endDate) : assert(endDate != null);
+
+  @override
+  final DateTime endDate;
+
+  @override
+  String toString() {
+    return 'GoalFormEvent.endDateChanged(endDate: $endDate)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is _EndDateChanged &&
+            (identical(other.endDate, endDate) ||
+                const DeepCollectionEquality().equals(other.endDate, endDate)));
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^ const DeepCollectionEquality().hash(endDate);
+
+  @JsonKey(ignore: true)
+  @override
+  _$EndDateChangedCopyWith<_EndDateChanged> get copyWith =>
+      __$EndDateChangedCopyWithImpl<_EndDateChanged>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object>({
+    @required TResult initialized(Option<Goal> goalOption),
+    @required TResult nameChanged(String nameStr),
+    @required TResult startDateChanged(DateTime startDate),
+    @required TResult endDateChanged(DateTime endDate),
+    @required TResult saved(),
+  }) {
+    assert(initialized != null);
+    assert(nameChanged != null);
+    assert(startDateChanged != null);
+    assert(endDateChanged != null);
+    assert(saved != null);
+    return endDateChanged(endDate);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object>({
+    TResult initialized(Option<Goal> goalOption),
+    TResult nameChanged(String nameStr),
+    TResult startDateChanged(DateTime startDate),
+    TResult endDateChanged(DateTime endDate),
+    TResult saved(),
+    @required TResult orElse(),
+  }) {
+    assert(orElse != null);
+    if (endDateChanged != null) {
+      return endDateChanged(endDate);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object>({
+    @required TResult initialized(_Initialized value),
+    @required TResult nameChanged(_NameChanged value),
+    @required TResult startDateChanged(_StartDateChanged value),
+    @required TResult endDateChanged(_EndDateChanged value),
+    @required TResult saved(_Saved value),
+  }) {
+    assert(initialized != null);
+    assert(nameChanged != null);
+    assert(startDateChanged != null);
+    assert(endDateChanged != null);
+    assert(saved != null);
+    return endDateChanged(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object>({
+    TResult initialized(_Initialized value),
+    TResult nameChanged(_NameChanged value),
+    TResult startDateChanged(_StartDateChanged value),
+    TResult endDateChanged(_EndDateChanged value),
+    TResult saved(_Saved value),
+    @required TResult orElse(),
+  }) {
+    assert(orElse != null);
+    if (endDateChanged != null) {
+      return endDateChanged(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _EndDateChanged implements GoalFormEvent {
+  const factory _EndDateChanged(DateTime endDate) = _$_EndDateChanged;
+
+  DateTime get endDate;
+  @JsonKey(ignore: true)
+  _$EndDateChangedCopyWith<_EndDateChanged> get copyWith;
 }
 
 /// @nodoc
@@ -367,10 +684,14 @@ class _$_Saved implements _Saved {
   TResult when<TResult extends Object>({
     @required TResult initialized(Option<Goal> goalOption),
     @required TResult nameChanged(String nameStr),
+    @required TResult startDateChanged(DateTime startDate),
+    @required TResult endDateChanged(DateTime endDate),
     @required TResult saved(),
   }) {
     assert(initialized != null);
     assert(nameChanged != null);
+    assert(startDateChanged != null);
+    assert(endDateChanged != null);
     assert(saved != null);
     return saved();
   }
@@ -380,6 +701,8 @@ class _$_Saved implements _Saved {
   TResult maybeWhen<TResult extends Object>({
     TResult initialized(Option<Goal> goalOption),
     TResult nameChanged(String nameStr),
+    TResult startDateChanged(DateTime startDate),
+    TResult endDateChanged(DateTime endDate),
     TResult saved(),
     @required TResult orElse(),
   }) {
@@ -395,10 +718,14 @@ class _$_Saved implements _Saved {
   TResult map<TResult extends Object>({
     @required TResult initialized(_Initialized value),
     @required TResult nameChanged(_NameChanged value),
+    @required TResult startDateChanged(_StartDateChanged value),
+    @required TResult endDateChanged(_EndDateChanged value),
     @required TResult saved(_Saved value),
   }) {
     assert(initialized != null);
     assert(nameChanged != null);
+    assert(startDateChanged != null);
+    assert(endDateChanged != null);
     assert(saved != null);
     return saved(this);
   }
@@ -408,6 +735,8 @@ class _$_Saved implements _Saved {
   TResult maybeMap<TResult extends Object>({
     TResult initialized(_Initialized value),
     TResult nameChanged(_NameChanged value),
+    TResult startDateChanged(_StartDateChanged value),
+    TResult endDateChanged(_EndDateChanged value),
     TResult saved(_Saved value),
     @required TResult orElse(),
   }) {

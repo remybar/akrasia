@@ -7,6 +7,7 @@ import 'package:injectable/injectable.dart';
 import 'package:meta/meta.dart';
 
 import 'package:akrasia/domain/goals/goal.dart';
+import 'package:akrasia/domain/goals/goal_date.dart';
 import 'package:akrasia/domain/goals/goal_failure.dart';
 import 'package:akrasia/domain/goals/goal_name.dart';
 import 'package:akrasia/domain/goals/i_goal_repository.dart';
@@ -35,6 +36,18 @@ class GoalFormBloc extends Bloc<GoalFormEvent, GoalFormState> {
       nameChanged: (e) async* {
         yield state.copyWith(
           goal: state.goal.copyWith(name: GoalName(e.nameStr)),
+          goalFailureOrSuccessOption: none(),
+        );
+      },
+      startDateChanged: (e) async* {
+        yield state.copyWith(
+          goal: state.goal.copyWith(startDate: GoalDate(e.startDate)),
+          goalFailureOrSuccessOption: none(),
+        );
+      },
+      endDateChanged: (e) async* {
+        yield state.copyWith(
+          goal: state.goal.copyWith(endDate: GoalDate(e.endDate)),
           goalFailureOrSuccessOption: none(),
         );
       },

@@ -1,3 +1,4 @@
+import 'package:akrasia/ui/goals/goal_form/widgets/goal_date_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -20,6 +21,8 @@ class GoalFormWidget extends StatelessWidget {
             child: Column(
               children: [
                 GoalNameField(),
+                GoalDateField(),
+                GoalDateField(),
               ],
             ),
           ),
