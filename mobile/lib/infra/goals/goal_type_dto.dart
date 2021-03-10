@@ -26,7 +26,7 @@ abstract class GoalTypeDTO with _$GoalTypeDTO {
       ),
       timerGoal: (goal) => GoalTypeDTO(
         name: "timer",
-        value: goal.timeValue.getOrCrash(),
+        value: goal.timeValue.getOrCrash().toDouble(),
       ),
       valueGoal: (goal) => GoalTypeDTO(
         name: "value",
@@ -47,7 +47,7 @@ extension GoalTypeDTOX on GoalTypeDTO {
       case "count":
         return GoalType.countGoal(countValue: GoalCountValue(value?.toInt()));
       case "timer":
-        return GoalType.timerGoal(timeValue: GoalTimeValue(value));
+        return GoalType.timerGoal(timeValue: GoalTimeValue(value.toInt()));
       case "value":
         return GoalType.valueGoal(
           value: GoalValue(value),

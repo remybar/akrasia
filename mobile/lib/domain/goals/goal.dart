@@ -8,11 +8,11 @@ import 'package:akrasia/domain/core/unique_id.dart';
 
 import 'package:akrasia/domain/goals/goal_name.dart';
 import 'package:akrasia/domain/goals/goal_type.dart';
-import 'package:akrasia/domain/goals/goal_date.dart';
 import 'package:akrasia/domain/goals/goal_pledge.dart';
 import 'package:akrasia/domain/goals/goal_period.dart';
 import 'package:akrasia/domain/goals/goal_unit.dart';
 import 'package:akrasia/domain/goals/goal_value.dart';
+import 'package:akrasia/domain/goals/goal_period_count.dart';
 
 part 'goal.freezed.dart';
 
@@ -24,12 +24,12 @@ abstract class Goal with _$Goal implements IEntity {
     @required bool toReach,
     @required GoalType type,
     @required GoalPeriod period,
-    @required GoalDate startDate,
-    GoalDate endDate,
+    @required DateTime startDate,
+    DateTime endDate,
     GoalPledge startPledge,
     GoalPledge endPledge,
-    GoalDate startPause,
-    GoalDate endPause,
+    DateTime startPause,
+    DateTime endPause,
   }) = _Goal;
 
   factory Goal.empty() => Goal(
@@ -37,8 +37,8 @@ abstract class Goal with _$Goal implements IEntity {
         name: GoalName(''),
         toReach: true,
         type: GoalType.valueGoal(value: GoalValue(2.0), unit: GoalUnit("km")),
-        startDate: GoalDate(DateTime.now()),
-        period: GoalPeriod.every_day,
+        startDate: DateTime.now(),
+        period: GoalPeriod.every(count: GoalPeriodCount(1), kind: GoalPeriodKind.day),
       );
 }
 
@@ -52,12 +52,7 @@ extension GoalX on Goal {
           timerGoal: (goal) => goal.timeValue.failureOrUnit,
           valueGoal: (goal) => goal.value.failureOrUnit.andThen(goal.unit.failureOrUnit),
         ))
-        .andThen(startDate.failureOrUnit)
-        // .andThen(endDate?.failureOrUnit)
-        // .andThen(startPledge?.failureOrUnit)
-        // .andThen(endPledge?.failureOrUnit)
-        // .andThen(startPause?.failureOrUnit)
-        // .andThen(endPause?.failureOrUnit)
+        // TODO: validate entity
         .fold((f) => some(f), (_) => none());
   }
 }

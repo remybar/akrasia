@@ -1,20 +1,18 @@
 import 'package:dartz/dartz.dart';
 import 'package:akrasia/domain/core/failures.dart';
 
-Either<ValueFailure<double>, double> validateDoubleStrictlyPositive(
-  double input,
-) {
-  if (input <= 0.0) {
-    return left(ValueFailure.negativeOrNull(failedValue: input));
+/// validate that the value [input] is in the specified range [minValue] - [maxValue].
+/// [minValue] or [maxValue] may be null. In this case, it is just ignored
+Either<ValueFailure<T>, T> validateValueRange<T extends Comparable>(
+  T input, {
+  T minValue,
+  T maxValue,
+}) {
+  if (minValue != null && input.compareTo(minValue) < 0) {
+    return left(ValueFailure.outOfRange(failedValue: input));
   }
-  return right(input);
-}
-
-Either<ValueFailure<int>, int> validateIntStrictlyPositive(
-  int input,
-) {
-  if (input <= 0) {
-    return left(ValueFailure.negativeOrNull(failedValue: input));
+  if (maxValue != null && input.compareTo(maxValue) > 0) {
+    return left(ValueFailure.outOfRange(failedValue: input));
   }
   return right(input);
 }

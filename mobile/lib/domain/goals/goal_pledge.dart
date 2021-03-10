@@ -7,9 +7,15 @@ class GoalPledge extends ValueObject<int> {
   @override
   final Either<ValueFailure<int>, int> value;
 
+  static const int maxValue = 100;
+
   factory GoalPledge(int input) {
     assert(input != null);
-    return GoalPledge._(validateIntStrictlyPositive(input));
+    return GoalPledge._(validateValueRange<int>(
+      input,
+      minValue: 1,
+      maxValue: maxValue,
+    ));
   }
 
   const GoalPledge._(this.value);

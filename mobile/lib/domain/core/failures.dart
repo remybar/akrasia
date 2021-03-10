@@ -14,15 +14,9 @@ abstract class ValueFailure<T> with _$ValueFailure<T> {
     @required T failedValue,
   }) = ShortPassword<T>;
   // Core failures
-  const factory ValueFailure.invalidGoalValue({
+  const factory ValueFailure.outOfRange({
     @required T failedValue,
-  }) = InvalidGoalValue<T>;
-  const factory ValueFailure.invalidGoalUnit({
-    @required T failedValue,
-  }) = InvalidGoalUnit<T>;
-  const factory ValueFailure.negativeOrNull({
-    @required T failedValue,
-  }) = NegativeOrNull<T>;
+  }) = OutOfRange<T>;
   const factory ValueFailure.exceedingLength({
     @required T failedValue,
     @required int max,

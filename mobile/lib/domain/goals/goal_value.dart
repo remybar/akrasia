@@ -7,10 +7,17 @@ class GoalValue extends ValueObject<double> {
   @override
   final Either<ValueFailure<double>, double> value;
 
+  static const double minValue = 0.001;
+  static const double maxValue = 1000000.0;
+
   factory GoalValue(double input) {
     assert(input != null);
     return GoalValue._(
-      validateDoubleStrictlyPositive(input),
+      validateValueRange<double>(
+        input,
+        minValue: minValue,
+        maxValue: maxValue,
+      ),
     );
   }
 
