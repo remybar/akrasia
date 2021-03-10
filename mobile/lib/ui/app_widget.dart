@@ -19,10 +19,12 @@ class AppWidget extends StatelessWidget {
           title: 'Akrasia',
           debugShowCheckedModeBanner: false,
           theme: ThemeData.light().copyWith(
-              primaryColor: Colors.deepPurple[300],
-              accentColor: Colors.blueAccent,
-              inputDecorationTheme:
-                  InputDecorationTheme(border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)))),
+            primaryColor: Colors.deepPurple[300],
+            accentColor: Colors.blueAccent,
+            // TODO: to clean
+            // inputDecorationTheme:
+            //     InputDecorationTheme(border: OutlineInputBorder(borderRadius: BorderRadius.circular(8))),
+          ),
           builder: ExtendedNavigator.builder<AkrasiaRouter>(
             router: AkrasiaRouter(),
           ),
