@@ -30,6 +30,13 @@
 .pub-cache/
 .pub/
 /build/
+**/*.freezed.*
+**/*.g.*
+**/*.super.*
+**/*.gr.*
+lib/injection.config.dart
+pubspec.lock
+
 
 # Web related
 lib/generated_plugin_registrant.dart
