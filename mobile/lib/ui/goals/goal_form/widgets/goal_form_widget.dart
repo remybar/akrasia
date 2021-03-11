@@ -28,14 +28,14 @@ class GoalFormWidget extends StatelessWidget {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                GoalNameField(),
+                const GoalNameField(),
                 GoalDataField(),
-                GoalPeriodField(),
+                const GoalPeriodField(),
                 Row(
                   mainAxisSize: MainAxisSize.min,
-                  children: [
+                  children: const <Widget>[
                     Flexible(child: GoalStartDateField()),
-                    const SizedBox(width: 10),
+                    SizedBox(width: 10),
                     Flexible(child: GoalEndDateField()),
                   ],
                 ),

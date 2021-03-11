@@ -16,24 +16,35 @@ class GoalEndDateField extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DateTimeField(
-      decoration: InputDecoration(
-        labelText: 'Goal end date',
-      ),
-      format: DateFormat("dd-MM-yyyy"),
-      onShowPicker: (context, currentValue) {
-        final startDate = context.read<GoalFormBloc>().state.goal.startDate;
-        final endDate = context.read<GoalFormBloc>().state.goal.endDate;
-        final now = DateTime.now();
-        return showDatePicker(
-          context: context,
-          firstDate: startDate ?? shiftDate(endDate ?? now, year: -dateYearRange),
-          initialDate: endDate ?? startDate ?? now,
-          lastDate: shiftDate(endDate ?? startDate ?? now, year: dateYearRange),
+    return BlocBuilder<GoalFormBloc, GoalFormState>(
+      buildWhen: (prev, cur) {
+        return (prev.goal.endDate != cur.goal.endDate) || (prev.goal.startDate != cur.goal.startDate);
+      },
+      builder: (context, state) {
+        final endDate = state.goal.endDate;
+        final startDate = state.goal.startDate.getOrCrash();
+        return DateTimeField(
+          decoration: const InputDecoration(
+            labelText: 'Goal end date',
+          ),
+          format: DateFormat("dd-MM-yyyy"),
+          initialValue: endDate,
+          onShowPicker: (context, currentValue) {
+            return showDatePicker(
+              context: context,
+              firstDate: startDate,
+              initialDate: endDate ?? startDate,
+              lastDate: shiftDate(startDate, year: dateYearRange),
+            );
+          },
+          onChanged: (value) {
+            (value == null)
+                ? context.read<GoalFormBloc>().add(const GoalFormEvent.endDateRemoved())
+                : context.read<GoalFormBloc>().add(GoalFormEvent.endDateChanged(value));
+          },
+          validator: (_) => null,
         );
       },
-      onChanged: (value) => context.read<GoalFormBloc>().add(GoalFormEvent.endDateChanged(value)),
-      validator: (_) => null,
     );
   }
 }

@@ -123,7 +123,7 @@ class GoalFormPageBody extends StatelessWidget {
           )
         ],
       ),
-      body: GoalFormWidget(),
+      body: const GoalFormWidget(),
     );
   }
 }

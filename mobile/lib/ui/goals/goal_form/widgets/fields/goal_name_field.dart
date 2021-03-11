@@ -21,7 +21,7 @@ class GoalNameField extends HookWidget {
       },
       child: TextFormField(
           controller: textEditingController,
-          decoration: InputDecoration(
+          decoration: const InputDecoration(
             labelText: 'Goal name',
             counterText: "",
           ),

@@ -19,7 +19,7 @@ abstract class GoalTypeDTO with _$GoalTypeDTO {
 
   factory GoalTypeDTO.fromDomain(GoalType goalType) {
     return goalType.when(
-      yesNoGoal: () => GoalTypeDTO(name: "yesno"),
+      yesNoGoal: () => const GoalTypeDTO(name: "yesno"),
       countGoal: (goal) => GoalTypeDTO(
         name: "count",
         value: goal.countValue.getOrCrash().toDouble(),

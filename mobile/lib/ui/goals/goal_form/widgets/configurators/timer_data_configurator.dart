@@ -31,7 +31,7 @@ class _TimerDataConfiguratorState extends State<TimerDataConfigurator> {
               maxValue: 23,
               onChanged: (num value) {
                 setState(() {
-                  _currentHours = value;
+                  _currentHours = value.toInt();
                 });
               },
             ),
@@ -45,7 +45,7 @@ class _TimerDataConfiguratorState extends State<TimerDataConfigurator> {
               maxValue: 59,
               onChanged: (num value) {
                 setState(() {
-                  _currentMinutes = value;
+                  _currentMinutes = value.toInt();
                 });
               },
             ),
@@ -59,7 +59,7 @@ class _TimerDataConfiguratorState extends State<TimerDataConfigurator> {
               maxValue: 59,
               onChanged: (num value) {
                 setState(() {
-                  _currentSeconds = value;
+                  _currentSeconds = value.toInt();
                 });
               },
             ),

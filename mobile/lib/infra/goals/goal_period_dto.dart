@@ -12,9 +12,10 @@ abstract class GoalPeriodDTO with _$GoalPeriodDTO {
     String name,
   ) = _GoalPeriodDTO;
 
+  // ignore: avoid_unused_constructor_parameters
   factory GoalPeriodDTO.fromDomain(GoalPeriod goalPeriod) {
     //TODO
-    return GoalPeriodDTO("TODO");
+    return const GoalPeriodDTO("TODO");
   }
 
   factory GoalPeriodDTO.fromJson(Map<String, dynamic> json) => _$GoalPeriodDTOFromJson(json);

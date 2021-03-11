@@ -59,7 +59,7 @@ class _DataFieldConfiguratorState extends State<DataFieldConfigurator> {
         bNext: false);
   }
 
-  Widget _buildCountData(context) {
+  Widget _buildCountData(BuildContext context) {
     return _buildRadio(
         title: "Compteur",
         subtitle: "à faire plusieurs fois par période",
@@ -70,7 +70,7 @@ class _DataFieldConfiguratorState extends State<DataFieldConfigurator> {
         });
   }
 
-  Widget _buildTimerData(context) {
+  Widget _buildTimerData(BuildContext context) {
     return _buildRadio(
         title: "Timer",
         subtitle: "basé sur le temps passé",
@@ -81,7 +81,7 @@ class _DataFieldConfiguratorState extends State<DataFieldConfigurator> {
         });
   }
 
-  Widget _buildAppData(context) {
+  Widget _buildAppData(BuildContext context) {
     return _buildRadio(
         title: "A partir d'une application",
         subtitle: "la mise à jour est automatique",
@@ -92,7 +92,7 @@ class _DataFieldConfiguratorState extends State<DataFieldConfigurator> {
         });
   }
 
-  Widget _buildManualData(context) {
+  Widget _buildManualData(BuildContext context) {
     return _buildRadio(
         title: "Valeur manuelle",
         subtitle: "pour n'importe quelle autre valeur",

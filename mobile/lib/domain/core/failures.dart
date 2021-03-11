@@ -17,6 +17,9 @@ abstract class ValueFailure<T> with _$ValueFailure<T> {
   const factory ValueFailure.outOfRange({
     @required T failedValue,
   }) = OutOfRange<T>;
+  const factory ValueFailure.isNull({
+    @required T failedValue,
+  }) = IsNull<T>;
   const factory ValueFailure.exceedingLength({
     @required T failedValue,
     @required int max,

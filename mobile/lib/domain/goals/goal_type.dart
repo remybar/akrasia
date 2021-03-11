@@ -11,14 +11,18 @@ part 'goal_type.super.dart';
 @superEnum
 enum _GoalType {
   @object
+  // ignore: constant_identifier_names
   YesNoGoal,
 
   @Data(fields: [DataField<GoalCountValue>('countValue')])
+  // ignore: constant_identifier_names
   CountGoal,
 
   @Data(fields: [DataField<GoalTimeValue>('timeValue')])
+  // ignore: constant_identifier_names
   TimerGoal,
 
   @Data(fields: [DataField<GoalValue>('value'), DataField<GoalUnit>('unit')])
+  // ignore: constant_identifier_names
   ValueGoal,
 }

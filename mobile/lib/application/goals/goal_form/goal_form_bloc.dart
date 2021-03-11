@@ -9,6 +9,7 @@ import 'package:meta/meta.dart';
 import 'package:akrasia/domain/goals/goal.dart';
 import 'package:akrasia/domain/goals/goal_failure.dart';
 import 'package:akrasia/domain/goals/goal_name.dart';
+import 'package:akrasia/domain/goals/goal_start_date.dart';
 import 'package:akrasia/domain/goals/i_goal_repository.dart';
 
 part 'goal_form_event.dart';
@@ -39,8 +40,12 @@ class GoalFormBloc extends Bloc<GoalFormEvent, GoalFormState> {
         );
       },
       startDateChanged: (e) async* {
+        final endDate = state.goal.endDate;
         yield state.copyWith(
-          goal: state.goal.copyWith(startDate: e.startDate),
+          goal: state.goal.copyWith(
+            startDate: GoalStartDate(e.startDate),
+            endDate: (endDate != null && endDate.isAfter(e.startDate)) ? endDate : null,
+          ),
           goalFailureOrSuccessOption: none(),
         );
       },
@@ -50,19 +55,28 @@ class GoalFormBloc extends Bloc<GoalFormEvent, GoalFormState> {
           goalFailureOrSuccessOption: none(),
         );
       },
+      endDateRemoved: (e) async* {
+        yield state.copyWith(
+          goal: state.goal.copyWith(endDate: null),
+          goalFailureOrSuccessOption: none(),
+        );
+      },
       saved: (e) async* {
         Either<GoalFailure, Unit> failureOrSuccess;
 
+        // inform that we are starting saving the goal
         yield state.copyWith(
           isSaving: true,
           goalFailureOrSuccessOption: none(),
         );
 
-        if (state.goal.failureOption.isNone()) {
+        // save if the goal is valid
+        if (state.goal.isValid()) {
           failureOrSuccess =
               state.isEditing ? await _repository.update(state.goal) : await _repository.create(state.goal);
         }
 
+        // inform that the goal has been saved or some failures have been raised
         yield state.copyWith(
           isSaving: false,
           showErrorMessages: true,

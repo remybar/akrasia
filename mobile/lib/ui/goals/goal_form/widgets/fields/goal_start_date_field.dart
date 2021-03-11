@@ -16,22 +16,35 @@ class GoalStartDateField extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DateTimeField(
-      decoration: InputDecoration(
-        labelText: 'Goal start date',
-      ),
-      format: DateFormat("dd-MM-yyyy"),
-      onShowPicker: (context, currentValue) {
-        final initialDate = context.read<GoalFormBloc>().state.goal.startDate ?? DateTime.now();
-        return showDatePicker(
-          context: context,
-          firstDate: shiftDate(initialDate, year: -dateYearRange),
-          initialDate: initialDate,
-          lastDate: shiftDate(initialDate, year: dateYearRange),
+    return BlocBuilder<GoalFormBloc, GoalFormState>(
+      buildWhen: (prev, cur) => prev.goal.startDate != cur.goal.startDate,
+      builder: (context, state) {
+        final initialDate = state.goal.startDate.getOrCrash();
+        return DateTimeField(
+          decoration: const InputDecoration(
+            labelText: 'Goal start date',
+          ),
+          format: DateFormat("dd-MM-yyyy"),
+          resetIcon: null,
+          initialValue: initialDate,
+          onShowPicker: (context, currentValue) {
+            return showDatePicker(
+              context: context,
+              firstDate: shiftDate(initialDate, year: -dateYearRange),
+              initialDate: initialDate,
+              lastDate: shiftDate(initialDate, year: dateYearRange),
+            );
+          },
+          onChanged: (value) => context.read<GoalFormBloc>().add(GoalFormEvent.startDateChanged(value)),
+          validator: (_) => context.read<GoalFormBloc>().state.goal.startDate.value.fold(
+                (f) => f.maybeMap(
+                  isNull: (_) => 'must be set',
+                  orElse: () => 'unknown error',
+                ),
+                (_) => null,
+              ),
         );
       },
-      onChanged: (value) => context.read<GoalFormBloc>().add(GoalFormEvent.startDateChanged(value)),
-      validator: (_) => null,
     );
   }
 }

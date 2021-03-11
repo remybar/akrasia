@@ -18,8 +18,8 @@ class _ValueTypeFieldState extends State<ValueTypeField> {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Text("Type:"),
-        Spacer(),
+        const Text("Type:"),
+        const Spacer(),
         Radio<bool>(
             value: true,
             groupValue: isToReach,
@@ -29,12 +29,13 @@ class _ValueTypeFieldState extends State<ValueTypeField> {
               });
             }),
         GestureDetector(
-            child: Text("A atteindre"),
-            onTap: () {
-              setState(() {
-                isToReach = true;
-              });
-            }),
+          onTap: () {
+            setState(() {
+              isToReach = true;
+            });
+          },
+          child: const Text("A atteindre"),
+        ),
         Radio<bool>(
             value: false,
             groupValue: isToReach,
@@ -44,12 +45,13 @@ class _ValueTypeFieldState extends State<ValueTypeField> {
               });
             }),
         GestureDetector(
-            child: Text("A ne pas dépasser"),
-            onTap: () {
-              setState(() {
-                isToReach = false;
-              });
-            }),
+          onTap: () {
+            setState(() {
+              isToReach = false;
+            });
+          },
+          child: const Text("A ne pas dépasser"),
+        ),
       ],
     );
   }

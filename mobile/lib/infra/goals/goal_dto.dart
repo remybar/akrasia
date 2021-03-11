@@ -4,8 +4,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:akrasia/domain/core/unique_id.dart';
 import 'package:akrasia/domain/goals/goal.dart';
 import 'package:akrasia/domain/goals/goal_name.dart';
+import 'package:akrasia/domain/goals/goal_start_date.dart';
 import 'package:akrasia/infra/goals/goal_period_dto.dart';
-
 import 'package:akrasia/infra/goals/goal_type_dto.dart';
 
 part 'goal_dto.freezed.dart';
@@ -34,7 +34,7 @@ abstract class GoalDTO implements _$GoalDTO {
       type: GoalTypeDTO.fromDomain(goal.type),
       period: GoalPeriodDTO.fromDomain(goal.period),
       toReach: goal.toReach,
-      startDate: goal.startDate,
+      startDate: goal.startDate.getOrCrash(),
       // endDate: goal.endDate?.getOrCrash(),
     );
   }
@@ -54,7 +54,7 @@ extension GoalDTOX on GoalDTO {
       type: type.toDomain(),
       period: period.toDomain(),
       toReach: toReach,
-      startDate: startDate,
+      startDate: GoalStartDate(startDate),
     );
   }
 }

@@ -16,6 +16,7 @@ enum _GoalPeriod {
     DataField<GoalPeriodCount>('count'),
     DataField<GoalPeriodKind>('kind'),
   ])
+  // ignore: constant_identifier_names
   Every,
 
   @Data(fields: [
@@ -27,5 +28,6 @@ enum _GoalPeriod {
     DataField<bool>('onSaturday'),
     DataField<bool>('onSunday'),
   ])
-  On,
+  // ignore: constant_identifier_names
+  OnDay,
 }
