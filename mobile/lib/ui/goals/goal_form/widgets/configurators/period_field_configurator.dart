@@ -7,6 +7,7 @@ import 'package:akrasia/ui/core/widgets/custom_bottom_sheet.dart';
 import 'package:akrasia/domain/goals/goal_period_count.dart';
 import 'package:akrasia/domain/goals/goal_period.dart';
 import 'package:akrasia/application/goals/goal_form/goal_form_bloc.dart';
+import 'package:akrasia/ui/goals/goal_form/widgets/misc/utils.dart';
 
 enum UIPeriodType {
   everyPeriod,
@@ -100,7 +101,7 @@ class _PeriodFieldConfiguratorState extends State<PeriodFieldConfigurator> {
           items: GoalPeriodKind.values.map((GoalPeriodKind value) {
             return DropdownMenuItem<GoalPeriodKind>(
               value: value,
-              child: Text(value.toString()),
+              child: Text(kindToString(value)),
             );
           }).toList(),
         ),

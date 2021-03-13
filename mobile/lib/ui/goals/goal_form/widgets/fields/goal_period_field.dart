@@ -5,19 +5,12 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:akrasia/application/goals/goal_form/goal_form_bloc.dart';
 import 'package:akrasia/ui/goals/goal_form/widgets/configurators/period_field_configurator.dart';
 import 'package:akrasia/domain/goals/goal_period.dart';
+import 'package:akrasia/ui/goals/goal_form/widgets/misc/utils.dart';
 
 class GoalPeriodField extends HookWidget {
   const GoalPeriodField({
     Key key,
   }) : super(key: key);
-
-  // TODO: clean conversion
-  static String periodToString(GoalPeriod period) {
-    return period.when(
-      every: (p) => "Every ${p.count.getOrCrash()} ${p.kind}",
-      onDay: (p) => "On TODO", // X, Y, Z ou All except X, Y or week-ends, week days w/o week-ends, ...
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
