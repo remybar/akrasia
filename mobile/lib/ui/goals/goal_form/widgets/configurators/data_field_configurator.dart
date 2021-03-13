@@ -66,7 +66,8 @@ class _DataFieldConfiguratorState extends State<DataFieldConfigurator> {
         icon: Icons.exposure_plus_1,
         onPressed: () {
 //          Navigator.pop(context);
-          showCustomBottomSheet(title: "Compteur", child: CounterDataConfigurator(), context: context);
+          showCustomBottomSheet(
+              title: "Compteur", child: CounterDataConfigurator(), context: context, onValidate: () {});
         });
   }
 
@@ -77,7 +78,7 @@ class _DataFieldConfiguratorState extends State<DataFieldConfigurator> {
         icon: Icons.access_alarms_sharp,
         onPressed: () {
 //          Navigator.pop(context);
-          showCustomBottomSheet(title: "Timer", child: TimerDataConfigurator(), context: context);
+          showCustomBottomSheet(title: "Timer", child: TimerDataConfigurator(), context: context, onValidate: () {});
         });
   }
 
@@ -88,7 +89,8 @@ class _DataFieldConfiguratorState extends State<DataFieldConfigurator> {
         icon: Icons.mobile_friendly,
         onPressed: () {
 //          Navigator.pop(context);
-          showCustomBottomSheet(title: "Application", child: AppDataConfigurator(), context: context);
+          showCustomBottomSheet(
+              title: "Application", child: AppDataConfigurator(), context: context, onValidate: () {});
         });
   }
 
@@ -99,7 +101,8 @@ class _DataFieldConfiguratorState extends State<DataFieldConfigurator> {
         icon: Icons.keyboard,
         onPressed: () {
 //          Navigator.pop(context);
-          showCustomBottomSheet(title: "Manuelle", child: ManualDataConfigurator(), context: context);
+          showCustomBottomSheet(
+              title: "Manuelle", child: ManualDataConfigurator(), context: context, onValidate: () {});
         });
   }
 

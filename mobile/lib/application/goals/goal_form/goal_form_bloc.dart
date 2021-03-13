@@ -10,6 +10,7 @@ import 'package:akrasia/domain/goals/goal.dart';
 import 'package:akrasia/domain/goals/goal_failure.dart';
 import 'package:akrasia/domain/goals/goal_name.dart';
 import 'package:akrasia/domain/goals/goal_start_date.dart';
+import 'package:akrasia/domain/goals/goal_period.dart';
 import 'package:akrasia/domain/goals/i_goal_repository.dart';
 
 part 'goal_form_event.dart';
@@ -58,6 +59,12 @@ class GoalFormBloc extends Bloc<GoalFormEvent, GoalFormState> {
       endDateRemoved: (e) async* {
         yield state.copyWith(
           goal: state.goal.copyWith(endDate: null),
+          goalFailureOrSuccessOption: none(),
+        );
+      },
+      periodChanged: (e) async* {
+        yield state.copyWith(
+          goal: state.goal.copyWith(period: e.period),
           goalFailureOrSuccessOption: none(),
         );
       },

@@ -1,3 +1,4 @@
+import 'package:kt_dart/kt.dart';
 import 'package:super_enum/super_enum.dart';
 
 import 'package:akrasia/domain/goals/goal_period_count.dart';
@@ -20,14 +21,22 @@ enum _GoalPeriod {
   Every,
 
   @Data(fields: [
-    DataField<bool>('onMonday'),
-    DataField<bool>('onTuesday'),
-    DataField<bool>('onWednesday'),
-    DataField<bool>('onThursday'),
-    DataField<bool>('onFriday'),
-    DataField<bool>('onSaturday'),
-    DataField<bool>('onSunday'),
+    DataField<KtList<bool>>('weekdays'),
   ])
   // ignore: constant_identifier_names
   OnDay,
+}
+
+extension GoalPeriodX on GoalPeriod {
+  static final _defaultCount = GoalPeriodCount(1);
+  static const _defaultKind = GoalPeriodKind.day;
+  static final _defaultWeekdays = listOf(true, true, true, true, true, true, true);
+
+  static GoalPeriod defaultEvery() {
+    return GoalPeriod.every(count: _defaultCount, kind: _defaultKind);
+  }
+
+  static GoalPeriod defaultOn() {
+    return GoalPeriod.onDay(weekdays: _defaultWeekdays);
+  }
 }

@@ -1,20 +1,25 @@
 import 'package:flutter/material.dart';
 
-Future<T> showCustomBottomSheet<T>({@required BuildContext context, @required String title, @required Widget child}) {
+Future<T> showCustomBottomSheet<T>(
+    {@required BuildContext context,
+    @required String title,
+    @required VoidCallback onValidate,
+    @required Widget child}) {
   return showModalBottomSheet<T>(
       context: context,
       isScrollControlled: true,
       shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(12))),
       builder: (BuildContext bc) {
-        return CustomBottomSheet(title: title, child: child);
+        return CustomBottomSheet(title: title, onValidate: onValidate, child: child);
       });
 }
 
 class CustomBottomSheet extends StatelessWidget {
   final String title;
   final Widget child;
+  final VoidCallback onValidate;
 
-  const CustomBottomSheet({this.title, this.child});
+  const CustomBottomSheet({this.title, this.child, this.onValidate});
 
   Widget _buildInnerWidget(BuildContext context) {
     return Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
@@ -25,9 +30,7 @@ class CustomBottomSheet extends StatelessWidget {
               style: TextStyle(color: Theme.of(context).primaryColor, fontWeight: FontWeight.w600, fontSize: 18)),
           const Spacer(),
           TextButton(
-            onPressed: () {
-//              Navigator.pop(context);
-            },
+            onPressed: onValidate,
             child: const Text("Valider", style: TextStyle(fontSize: 16)),
           )
         ],
@@ -46,9 +49,9 @@ class CustomBottomSheet extends StatelessWidget {
         padding: const EdgeInsets.only(left: 10, right: 10, top: 10, bottom: 15),
         decoration: const BoxDecoration(
           color: Colors.white,
-          borderRadius: const BorderRadius.only(
-            topLeft: const Radius.circular(25.0),
-            topRight: const Radius.circular(25.0),
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(25.0),
+            topRight: Radius.circular(25.0),
           ),
         ),
         child: _buildInnerWidget(context),

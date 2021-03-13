@@ -16,7 +16,8 @@ class GoalReminderField extends StatelessWidget {
         showCustomBottomSheet(
             title: "Rappel",
             child: ReminderFieldConfigurator(initialTime: TimeOfDay(hour: 9, minute: 0)),
-            context: context);
+            context: context,
+            onValidate: () {});
       },
     );
   }

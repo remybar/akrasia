@@ -15,7 +15,7 @@ class GoalDataField extends StatelessWidget {
       ),
       readOnly: true,
       onTap: () {
-        showCustomBottomSheet(title: title, child: DataFieldConfigurator(), context: context);
+        showCustomBottomSheet(title: title, child: DataFieldConfigurator(), context: context, onValidate: () {});
       },
     );
   }

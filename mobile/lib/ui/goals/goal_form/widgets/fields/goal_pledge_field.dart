@@ -15,7 +15,7 @@ class GoalPledgeField extends StatelessWidget {
       ),
       readOnly: true,
       onTap: () {
-        showCustomBottomSheet(title: title, child: PledgeFieldConfigurator(), context: context);
+        showCustomBottomSheet(title: title, child: PledgeFieldConfigurator(), context: context, onValidate: () {});
       },
     );
   }

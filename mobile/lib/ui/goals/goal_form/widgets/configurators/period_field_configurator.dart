@@ -1,125 +1,178 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:kt_dart/kt.dart';
 import 'package:weekday_selector/weekday_selector.dart';
 
-enum RepeatKind { RepeatEvery, RepeatOn }
+import 'package:akrasia/ui/core/widgets/custom_bottom_sheet.dart';
+import 'package:akrasia/domain/goals/goal_period_count.dart';
+import 'package:akrasia/domain/goals/goal_period.dart';
+import 'package:akrasia/application/goals/goal_form/goal_form_bloc.dart';
+
+enum UIPeriodType {
+  everyPeriod,
+  onPeriod,
+}
 
 class PeriodFieldConfigurator extends StatefulWidget {
+  final GoalPeriod initialPeriod;
+
+  const PeriodFieldConfigurator({Key key, this.initialPeriod}) : super(key: key);
+
   @override
   _PeriodFieldConfiguratorState createState() => _PeriodFieldConfiguratorState();
 }
 
 class _PeriodFieldConfiguratorState extends State<PeriodFieldConfigurator> {
-  final periodNames = ["jour", "semaine", "mois"];
-  final defaultShortWeekdays = <String>["D", "L", "M", "M", "J", "V", "S"];
-
-  final periodCounts = List<int>.generate(30, (int index) => index + 1);
-
-  RepeatKind selectedKind;
-  String periodName;
-  int periodCount;
-  List<bool> dowSelected = List.filled(7, true);
-
-  void setSelectedRadio(RepeatKind val) {
-    setState(() {
-      selectedKind = val;
-    });
-  }
+  static const defaultShortWeekdays = <String>["D", "L", "M", "M", "J", "V", "S"];
+  GoalPeriod currentPeriod;
 
   @override
   void initState() {
     super.initState();
-    selectedKind = RepeatKind.RepeatEvery;
-    periodCount = periodCounts[0];
-    periodName = periodNames[0];
+    currentPeriod = widget.initialPeriod;
   }
 
-  Widget _buildPeriodCountWidget(BuildContext context, bool enabled) {
-    return DropdownButton<int>(
-      value: periodCount,
-      disabledHint: Text(periodCount.toString()),
-      onChanged: enabled
-          ? (int newValue) {
+  Widget _buildEveryPeriodSelector(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Row(
+          children: [
+            Radio<UIPeriodType>(
+              value: UIPeriodType.everyPeriod,
+              groupValue: currentPeriod.when(
+                every: (_) => UIPeriodType.everyPeriod,
+                onDay: (_) => UIPeriodType.onPeriod,
+              ),
+              onChanged: (type) {
+                setState(() {
+                  currentPeriod = GoalPeriodX.defaultEvery();
+                });
+              },
+            ),
+            const Text("Chaque"),
+          ],
+        ),
+        const Spacer(),
+        DropdownButton<int>(
+          value: currentPeriod.when(
+            every: (data) => data.count.getOrCrash(),
+            onDay: (_) => null,
+          ),
+          onChanged: currentPeriod.when(
+            every: (data) => (value) {
               setState(() {
-                periodCount = newValue;
+                currentPeriod = GoalPeriod.every(
+                  count: GoalPeriodCount(value),
+                  kind: data.kind,
+                );
               });
-            }
-          : null,
-      items: periodCounts.map<DropdownMenuItem<int>>((int value) {
-        return DropdownMenuItem<int>(
-          value: value,
-          child: Text(value.toString()),
-        );
-      }).toList(),
+            },
+            onDay: (_) => null,
+          ),
+          items: List<int>.generate(
+            GoalPeriodCount.maxValue,
+            (int index) => index + 1,
+          ).map<DropdownMenuItem<int>>((int value) {
+            return DropdownMenuItem<int>(
+              value: value,
+              child: Text(value.toString()),
+            );
+          }).toList(),
+        ),
+        const SizedBox(width: 10),
+        DropdownButton<GoalPeriodKind>(
+          value: currentPeriod.when(
+            every: (data) => data.kind,
+            onDay: (_) => null,
+          ),
+          onChanged: currentPeriod.when(
+            every: (data) => (value) {
+              setState(() {
+                currentPeriod = GoalPeriod.every(
+                  count: data.count,
+                  kind: value,
+                );
+              });
+            },
+            onDay: (_) => null,
+          ),
+          items: GoalPeriodKind.values.map((GoalPeriodKind value) {
+            return DropdownMenuItem<GoalPeriodKind>(
+              value: value,
+              child: Text(value.toString()),
+            );
+          }).toList(),
+        ),
+      ],
     );
   }
 
-  Widget _buildPeriodNameWidget(BuildContext context, bool enabled) {
-    return DropdownButton<String>(
-      value: periodName,
-      disabledHint: Text(periodName),
-      onChanged: enabled
-          ? (String newValue) {
-              setState(() {
-                periodName = newValue;
-              });
-            }
-          : null,
-      items: periodNames.map<DropdownMenuItem<String>>((String value) {
-        return DropdownMenuItem<String>(
-          value: value,
-          child: Text(value),
+  Widget _buildOnPeriodSelector(BuildContext context) {
+    return BlocBuilder<GoalFormBloc, GoalFormState>(
+      builder: (context, state) {
+        return Column(
+          children: [
+            Row(
+              children: [
+                Radio<UIPeriodType>(
+                  value: UIPeriodType.onPeriod,
+                  groupValue: currentPeriod.when(
+                    every: (_) => UIPeriodType.everyPeriod,
+                    onDay: (_) => UIPeriodType.onPeriod,
+                  ),
+                  onChanged: (type) {
+                    setState(() {
+                      currentPeriod = GoalPeriodX.defaultOn();
+                    });
+                  },
+                ),
+                const Text("Sélectionner les jours de la semaine"),
+              ],
+            ),
+            WeekdaySelector(
+              shortWeekdays: defaultShortWeekdays,
+              firstDayOfWeek: 1,
+              selectedColor: Colors.white,
+              selectedFillColor: Theme.of(context).primaryColor,
+              onChanged: (int day) {
+                currentPeriod.when(
+                  every: (_) => null,
+                  onDay: (data) {
+                    setState(() {
+                      currentPeriod = GoalPeriod.onDay(
+                          weekdays: data.weekdays.mapIndexed((index, value) => index == (day % 7) ? !value : value));
+                    });
+                  },
+                );
+              },
+              values: currentPeriod.when(
+                every: (_) => List<bool>.filled(7, null),
+                onDay: (data) => data.weekdays.asList(),
+              ),
+            ),
+          ],
         );
-      }).toList(),
+      },
     );
-  }
-
-  Widget _buildRepeatEvery(BuildContext context) {
-    return Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-      Row(children: [
-        Radio<RepeatKind>(
-          value: RepeatKind.RepeatEvery,
-          groupValue: selectedKind,
-          onChanged: setSelectedRadio,
-        ),
-        Text("Chaque"),
-      ]),
-      Spacer(),
-      _buildPeriodCountWidget(context, selectedKind == RepeatKind.RepeatEvery),
-      SizedBox(width: 10),
-      _buildPeriodNameWidget(context, selectedKind == RepeatKind.RepeatEvery),
-    ]);
-  }
-
-  Widget _buildRepeatOn(BuildContext context) {
-    return Column(children: [
-      Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-        Radio<RepeatKind>(
-          value: RepeatKind.RepeatOn,
-          groupValue: selectedKind,
-          onChanged: setSelectedRadio,
-        ),
-        Text("Sélectionner les jours de la semaine"),
-      ]),
-      WeekdaySelector(
-        shortWeekdays: defaultShortWeekdays,
-        selectedColor: Colors.white,
-        selectedFillColor: Theme.of(context).primaryColor,
-        onChanged: (int day) {
-          setState(() {
-            final index = day % 7;
-            dowSelected[index] = !dowSelected[index];
-          });
-        },
-        values: (selectedKind == RepeatKind.RepeatOn) ? dowSelected : List.filled(7, null),
-      )
-    ]);
   }
 
   @override
   Widget build(BuildContext context) {
-    return Column(children: [
-      _buildRepeatEvery(context),
-      _buildRepeatOn(context),
-    ]);
+    return CustomBottomSheet(
+      title: 'Period',
+      onValidate: () {
+        context.read<GoalFormBloc>().add(
+              GoalFormEvent.periodChanged(currentPeriod),
+            );
+        Navigator.pop(context);
+      },
+      child: Column(
+        children: [
+          _buildEveryPeriodSelector(context),
+          _buildOnPeriodSelector(context),
+        ],
+      ),
+    );
   }
 }
