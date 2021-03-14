@@ -17,6 +17,13 @@ Either<ValueFailure<T>, T> validateValueRange<T extends Comparable>(
   return right(input);
 }
 
+Either<ValueFailure<T>, T> validateAcceptedValues<T extends Comparable>(T input, List<T> acceptedValues) {
+  if (!acceptedValues.any((element) => element == input)) {
+    return left(ValueFailure.outOfAcceptedValues(failedValue: input));
+  }
+  return right(input);
+}
+
 Either<ValueFailure<T>, T> validateNotNull<T>(T input) {
   if (input == null) {
     return left(ValueFailure.isNull(failedValue: input));

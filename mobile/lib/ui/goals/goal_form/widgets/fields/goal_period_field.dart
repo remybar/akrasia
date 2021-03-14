@@ -4,7 +4,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 
 import 'package:akrasia/application/goals/goal_form/goal_form_bloc.dart';
 import 'package:akrasia/ui/goals/goal_form/widgets/configurators/period_field_configurator.dart';
-import 'package:akrasia/domain/goals/goal_period.dart';
+import 'package:akrasia/ui/goals/goal_form/widgets/configurators/configurators.dart';
 import 'package:akrasia/ui/goals/goal_form/widgets/misc/utils.dart';
 
 class GoalPeriodField extends HookWidget {
@@ -29,22 +29,13 @@ class GoalPeriodField extends HookWidget {
         ),
         readOnly: true,
         onTap: () {
-          showModalBottomSheet(
-              context: context,
-              isScrollControlled: true,
-              shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.vertical(
-                  top: Radius.circular(12),
-                ),
-              ),
-              builder: (BuildContext bc) {
-                return BlocProvider<GoalFormBloc>.value(
-                  value: BlocProvider.of<GoalFormBloc>(context),
-                  child: PeriodFieldConfigurator(
-                    initialPeriod: context.read<GoalFormBloc>().state.goal.period,
-                  ),
-                );
-              });
+          showConfigurator<GoalFormBloc>(
+            context: context,
+            value: BlocProvider.of<GoalFormBloc>(context),
+            child: PeriodFieldConfigurator(
+              initialPeriod: context.read<GoalFormBloc>().state.goal.period,
+            ),
+          );
         },
       ),
     );

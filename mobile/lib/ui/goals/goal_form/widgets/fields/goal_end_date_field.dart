@@ -27,7 +27,7 @@ class GoalEndDateField extends HookWidget {
           decoration: const InputDecoration(
             labelText: 'Goal end date',
           ),
-          format: DateFormat("dd-MM-yyyy"),
+          format: DateFormat("dd/MM/yyyy"),
           initialValue: endDate,
           onShowPicker: (context, currentValue) {
             return showDatePicker(

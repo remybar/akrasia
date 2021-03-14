@@ -1,5 +1,13 @@
 import 'package:kt_dart/kt.dart';
 import 'package:akrasia/domain/goals/goal_period.dart';
+import 'package:akrasia/domain/goals/goal_pledge.dart';
+
+String pledgeToString(GoalPledge pledge) {
+  return pledge.when(
+    noPledge: () => "aucun",
+    pledge: (data) => "départ: ${data.start.getOrCrash()}€ max: ${data.max.getOrCrash()}€",
+  );
+}
 
 String periodToString(GoalPeriod period) {
   const days = ["Dim", "Lun", "Mar", "Mer", "Jeu", "Ven", "Sam"];

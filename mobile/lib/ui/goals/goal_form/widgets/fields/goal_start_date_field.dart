@@ -24,7 +24,7 @@ class GoalStartDateField extends HookWidget {
           decoration: const InputDecoration(
             labelText: 'Goal start date',
           ),
-          format: DateFormat("dd-MM-yyyy"),
+          format: DateFormat("dd/MM/yyyy"),
           resetIcon: null,
           initialValue: initialDate,
           onShowPicker: (context, currentValue) {

@@ -12,7 +12,6 @@ import 'package:akrasia/domain/goals/goal_pledge.dart';
 import 'package:akrasia/domain/goals/goal_period.dart';
 import 'package:akrasia/domain/goals/goal_unit.dart';
 import 'package:akrasia/domain/goals/goal_value.dart';
-import 'package:akrasia/domain/goals/goal_period_count.dart';
 import 'package:akrasia/domain/goals/goal_start_date.dart';
 
 part 'goal.freezed.dart';
@@ -26,9 +25,8 @@ abstract class Goal with _$Goal implements IEntity {
     @required GoalType type,
     @required GoalPeriod period,
     @required GoalStartDate startDate,
+    @required GoalPledge pledge,
     DateTime endDate,
-    GoalPledge startPledge,
-    GoalPledge endPledge,
     DateTime startPause,
     DateTime endPause,
   }) = _Goal;
@@ -37,9 +35,10 @@ abstract class Goal with _$Goal implements IEntity {
         id: UniqueId(),
         name: GoalName(''),
         toReach: true,
-        type: GoalType.valueGoal(value: GoalValue(2.0), unit: GoalUnit("km")),
+        type: GoalType.valueGoal(value: GoalValue(0), unit: GoalUnit("")),
         startDate: GoalStartDate.empty(),
-        period: GoalPeriod.every(count: GoalPeriodCount(1), kind: GoalPeriodKind.day),
+        period: GoalPeriodX.defaultEvery(),
+        pledge: GoalPledge.noPledge(),
       );
 }
 
@@ -58,6 +57,12 @@ extension GoalX on Goal {
           valueGoal: (goal) => goal.value.failureOrUnit.andThen(goal.unit.failureOrUnit),
         ))
         .andThen(startDate.failureOrUnit)
+        .andThen(
+          pledge.when(
+            noPledge: () => right(unit),
+            pledge: (data) => data.start.failureOrUnit.andThen(data.max.failureOrUnit),
+          ),
+        )
         // TODO: validate entity
         .fold((f) => some(f), (_) => none());
   }

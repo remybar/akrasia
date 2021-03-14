@@ -1,22 +1,25 @@
-import 'package:dartz/dartz.dart';
-import 'package:akrasia/domain/core/failures.dart';
-import 'package:akrasia/domain/core/value_object.dart';
-import 'package:akrasia/domain/core/value_validators.dart';
+import 'package:super_enum/super_enum.dart';
 
-class GoalPledge extends ValueObject<int> {
-  @override
-  final Either<ValueFailure<int>, int> value;
+import 'package:akrasia/domain/goals/goal_pledge_value.dart';
 
-  static const int maxValue = 100;
+part 'goal_pledge.super.dart';
 
-  factory GoalPledge(int input) {
-    assert(input != null);
-    return GoalPledge._(validateValueRange<int>(
-      input,
-      minValue: 1,
-      maxValue: maxValue,
-    ));
+@superEnum
+enum _GoalPledge {
+  @object
+  // ignore: constant_identifier_names
+  NoPledge,
+
+  @Data(fields: [
+    DataField<GoalPledgeValue>('start'),
+    DataField<GoalPledgeValue>('max'),
+  ])
+  // ignore: constant_identifier_names
+  Pledge,
+}
+
+extension GoalPledgeX on GoalPledge {
+  static GoalPledge defaultPledge() {
+    return GoalPledge.pledge(start: GoalPledgeValue(1), max: GoalPledgeValue(10));
   }
-
-  const GoalPledge._(this.value);
 }

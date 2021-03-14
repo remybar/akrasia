@@ -7,6 +7,7 @@ import 'package:akrasia/domain/goals/goal_name.dart';
 import 'package:akrasia/domain/goals/goal_start_date.dart';
 import 'package:akrasia/infra/goals/goal_period_dto.dart';
 import 'package:akrasia/infra/goals/goal_type_dto.dart';
+import 'package:akrasia/infra/goals/goal_pledge_dto.dart';
 
 part 'goal_dto.freezed.dart';
 part 'goal_dto.g.dart';
@@ -20,9 +21,8 @@ abstract class GoalDTO implements _$GoalDTO {
     @required GoalTypeDTO type,
     @required GoalPeriodDTO period,
     @required DateTime startDate,
+    @required GoalPledgeDTO pledge,
     DateTime endDate,
-    int startPledge,
-    int endPledge,
     DateTime startPause,
     DateTime endPause,
   }) = _GoalDTO;
@@ -35,6 +35,7 @@ abstract class GoalDTO implements _$GoalDTO {
       period: GoalPeriodDTO.fromDomain(goal.period),
       toReach: goal.toReach,
       startDate: goal.startDate.getOrCrash(),
+      pledge: GoalPledgeDTO.fromDomain(goal.pledge),
       // endDate: goal.endDate?.getOrCrash(),
     );
   }
@@ -55,6 +56,7 @@ extension GoalDTOX on GoalDTO {
       period: period.toDomain(),
       toReach: toReach,
       startDate: GoalStartDate(startDate),
+      pledge: pledge.toDomain(),
     );
   }
 }
