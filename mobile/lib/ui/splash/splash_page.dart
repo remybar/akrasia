@@ -1,6 +1,11 @@
-import 'package:auto_route/auto_route.dart';
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+// Project imports:
 import 'package:akrasia/application/auth/auth_bloc.dart';
 import 'package:akrasia/ui/routes/router.gr.dart';
 

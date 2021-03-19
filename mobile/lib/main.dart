@@ -1,7 +1,11 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:injectable/injectable.dart';
-import 'package:firebase_core/firebase_core.dart';
 
+// Package imports:
+import 'package:firebase_core/firebase_core.dart';
+import 'package:injectable/injectable.dart';
+
+// Project imports:
 import 'package:akrasia/injection.dart';
 import 'package:akrasia/ui/app_widget.dart';
 

@@ -1,9 +1,13 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
-import 'package:akrasia/domain/goals/goal_name.dart';
+// Project imports:
 import 'package:akrasia/application/goals/goal_form/goal_form_bloc.dart';
+import 'package:akrasia/domain/goals/value_objects/goal_name.dart';
 
 class GoalNameField extends HookWidget {
   const GoalNameField({
@@ -22,7 +26,7 @@ class GoalNameField extends HookWidget {
       child: TextFormField(
           controller: textEditingController,
           decoration: const InputDecoration(
-            labelText: 'Goal name',
+            labelText: "Nom de l'objectif",
             counterText: "",
           ),
           maxLength: GoalName.maxLength,
@@ -31,10 +35,10 @@ class GoalNameField extends HookWidget {
           onChanged: (value) => context.read<GoalFormBloc>().add(GoalFormEvent.nameChanged(value)),
           validator: (_) => context.read<GoalFormBloc>().state.goal.name.value.fold(
                 (failure) => failure.maybeMap(
-                  empty: (f) => 'Cannot be empty',
-                  exceedingLength: (f) => 'Exceeding length',
-                  notAlphaNum: (f) => 'Not alphanum string',
-                  orElse: () => 'Unknown error',
+                  empty: (f) => "Ne peut pas être vide",
+                  exceedingLength: (f) => "Trop long",
+                  notAlphaNum: (f) => "Ne doit contenir que des caractères alphanumériques",
+                  orElse: () => "Erreur inconnue",
                 ),
                 (r) => null,
               )),

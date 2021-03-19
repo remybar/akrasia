@@ -1,5 +1,7 @@
+// Dart imports:
 import 'dart:async';
 
+// Package imports:
 import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -7,6 +9,7 @@ import 'package:injectable/injectable.dart';
 import 'package:kt_dart/kt.dart';
 import 'package:meta/meta.dart';
 
+// Project imports:
 import 'package:akrasia/domain/goals/goal.dart';
 import 'package:akrasia/domain/goals/goal_failure.dart';
 import 'package:akrasia/domain/goals/i_goal_repository.dart';
@@ -31,12 +34,6 @@ class GoalWatcherBloc extends Bloc<GoalWatcherEvent, GoalWatcherState> {
         yield const GoalWatcherState.loading();
         await _streamSubscription?.cancel();
         _streamSubscription = _repository.watchAll().listen((goals) => add(GoalWatcherEvent.goalsReceived(goals)));
-      },
-      watchAllStartedAtDate: (e) async* {
-        yield const GoalWatcherState.loading();
-        await _streamSubscription?.cancel();
-        _streamSubscription =
-            _repository.watchAtDate(e.date).listen((goals) => add(GoalWatcherEvent.goalsReceived(goals)));
       },
       goalsReceived: (e) async* {
         yield e.failureOrGoals.fold(

@@ -1,12 +1,16 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kt_dart/kt.dart';
 import 'package:weekday_selector/weekday_selector.dart';
 
-import 'package:akrasia/ui/core/widgets/custom_bottom_sheet.dart';
-import 'package:akrasia/domain/goals/goal_period_count.dart';
-import 'package:akrasia/domain/goals/goal_period.dart';
+// Project imports:
 import 'package:akrasia/application/goals/goal_form/goal_form_bloc.dart';
+import 'package:akrasia/domain/goals/value_objects/goal_period.dart';
+import 'package:akrasia/domain/goals/value_objects/goal_period_count.dart';
+import 'package:akrasia/ui/core/widgets/custom_bottom_sheet.dart';
 import 'package:akrasia/ui/goals/goal_form/widgets/misc/utils.dart';
 
 enum UIPeriodType {
@@ -133,7 +137,6 @@ class _PeriodFieldConfiguratorState extends State<PeriodFieldConfigurator> {
             ),
             WeekdaySelector(
               shortWeekdays: defaultShortWeekdays,
-              firstDayOfWeek: 1,
               selectedColor: Colors.white,
               selectedFillColor: Theme.of(context).primaryColor,
               onChanged: (int day) {

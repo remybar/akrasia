@@ -1,15 +1,18 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+// Project imports:
 import 'package:akrasia/application/goals/goal_form/goal_form_bloc.dart';
-import 'package:akrasia/ui/goals/goal_form/widgets/fields/goal_name_field.dart';
-import 'package:akrasia/ui/goals/goal_form/widgets/fields/goal_start_date_field.dart';
-import 'package:akrasia/ui/goals/goal_form/widgets/fields/goal_end_date_field.dart';
-import 'package:akrasia/ui/goals/goal_form/widgets/fields/goal_period_field.dart';
-
 import 'package:akrasia/ui/goals/goal_form/widgets/fields/goal_data_field.dart';
-import 'package:akrasia/ui/goals/goal_form/widgets/fields/goal_reminder_field.dart';
+import 'package:akrasia/ui/goals/goal_form/widgets/fields/goal_end_date_field.dart';
+import 'package:akrasia/ui/goals/goal_form/widgets/fields/goal_name_field.dart';
+import 'package:akrasia/ui/goals/goal_form/widgets/fields/goal_period_field.dart';
 import 'package:akrasia/ui/goals/goal_form/widgets/fields/goal_pledge_field.dart';
+import 'package:akrasia/ui/goals/goal_form/widgets/fields/goal_reminder_field.dart';
+import 'package:akrasia/ui/goals/goal_form/widgets/fields/goal_start_date_field.dart';
 
 class GoalFormWidget extends StatelessWidget {
   const GoalFormWidget({

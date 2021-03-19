@@ -1,3 +1,4 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
 
 Future<T> showCustomBottomSheet<T>(
@@ -29,10 +30,11 @@ class CustomBottomSheet extends StatelessWidget {
               textAlign: TextAlign.left,
               style: TextStyle(color: Theme.of(context).primaryColor, fontWeight: FontWeight.w600, fontSize: 18)),
           const Spacer(),
-          TextButton(
-            onPressed: onValidate,
-            child: const Text("Valider", style: TextStyle(fontSize: 16)),
-          )
+          if (onValidate != null)
+            TextButton(
+              onPressed: onValidate,
+              child: const Text("Valider", style: TextStyle(fontSize: 16)),
+            )
         ],
       ),
       const Divider(),

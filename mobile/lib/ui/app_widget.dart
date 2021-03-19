@@ -1,10 +1,14 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:auto_route/auto_route.dart';
 
+// Package imports:
+import 'package:auto_route/auto_route.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+// Project imports:
 import 'package:akrasia/application/auth/auth_bloc.dart';
-import 'package:akrasia/ui/routes/router.gr.dart';
 import 'package:akrasia/injection.dart';
+import 'package:akrasia/ui/routes/router.gr.dart';
 
 class AppWidget extends StatelessWidget {
   @override
@@ -21,7 +25,6 @@ class AppWidget extends StatelessWidget {
           theme: ThemeData.light().copyWith(
             primaryColor: Colors.deepPurple[300],
             accentColor: Colors.blueAccent,
-            // TODO: to clean
             // inputDecorationTheme:
             //     InputDecorationTheme(border: OutlineInputBorder(borderRadius: BorderRadius.circular(8))),
           ),

@@ -1,6 +1,9 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+
+// Package imports:
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
+import 'package:intl/intl.dart';
 
 class ReminderFieldConfigurator extends StatelessWidget {
   final TimeOfDay initialTime;

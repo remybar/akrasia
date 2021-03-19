@@ -1,72 +1,131 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:numberpicker/numberpicker.dart';
 
-import 'package:akrasia/ui/goals/goal_form/widgets/fields/value_type_field.dart';
+// Project imports:
+import 'package:akrasia/application/goals/goal_form/goal_form_bloc.dart';
+import 'package:akrasia/domain/goals/value_objects/goal_time_value.dart';
+import 'package:akrasia/domain/goals/value_objects/goal_type.dart';
+import 'package:akrasia/ui/core/widgets/custom_bottom_sheet.dart';
 
 class TimerDataConfigurator extends StatefulWidget {
+  final GoalType initialType;
+  final String title;
+
+  const TimerDataConfigurator({Key key, this.initialType, this.title}) : super(key: key);
+
   @override
-  _TimerDataConfiguratorState createState() => _TimerDataConfiguratorState();
+  _CounterDataConfiguratorState createState() => _CounterDataConfiguratorState();
 }
 
-class _TimerDataConfiguratorState extends State<TimerDataConfigurator> {
-  int _currentHours = 0;
-  int _currentMinutes = 0;
-  int _currentSeconds = 0;
+class _CounterDataConfiguratorState extends State<TimerDataConfigurator> {
+  GoalType currentType;
+
+  @override
+  void initState() {
+    super.initState();
+    currentType = widget.initialType;
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        ValueTypeField(),
-        Row(
-          children: [
-            Text("Durée:"),
-            NumberPicker.integer(
-              zeroPad: true,
-              listViewWidth: 70,
-              itemExtent: 30,
-              initialValue: _currentHours,
-              minValue: 0,
-              maxValue: 23,
-              onChanged: (num value) {
-                setState(() {
-                  _currentHours = value.toInt();
-                });
-              },
-            ),
-            Text("h."),
-            NumberPicker.integer(
-              zeroPad: true,
-              listViewWidth: 70,
-              itemExtent: 30,
-              initialValue: _currentMinutes,
-              minValue: 0,
-              maxValue: 59,
-              onChanged: (num value) {
-                setState(() {
-                  _currentMinutes = value.toInt();
-                });
-              },
-            ),
-            Text("min."),
-            NumberPicker.integer(
-              zeroPad: true,
-              listViewWidth: 70,
-              itemExtent: 30,
-              initialValue: _currentSeconds,
-              minValue: 0,
-              maxValue: 59,
-              onChanged: (num value) {
-                setState(() {
-                  _currentSeconds = value.toInt();
-                });
-              },
-            ),
-            Text("sec."),
-          ],
-        )
-      ],
+    return CustomBottomSheet(
+      title: widget.title,
+      onValidate: () {
+        context.read<GoalFormBloc>().add(GoalFormEvent.typeChanged(currentType));
+        Navigator.pop(context);
+      },
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              const Text("Durée:"),
+              NumberPicker.integer(
+                zeroPad: true,
+                listViewWidth: 70,
+                itemExtent: 30,
+                initialValue: currentType.whenOrElse(
+                  timerGoal: (data) => data.timeValue.getHoursOrCrash(),
+                  orElse: (_) => 0,
+                ),
+                minValue: 0,
+                maxValue: 23,
+                onChanged: (num value) {
+                  setState(() {
+                    currentType = currentType.whenOrElse(
+                      timerGoal: (data) => data.copyWith(
+                        timeValue: GoalTimeValue.from(
+                          hours: value.toInt(),
+                          minutes: data.timeValue.getMinutesOrCrash(),
+                          seconds: data.timeValue.getSecondsOrCrash(),
+                        ),
+                      ),
+                      orElse: (_) => null,
+                    );
+                  });
+                },
+              ),
+              const Text("h."),
+              NumberPicker.integer(
+                zeroPad: true,
+                listViewWidth: 70,
+                itemExtent: 30,
+                initialValue: currentType.whenOrElse(
+                  timerGoal: (data) => data.timeValue.getMinutesOrCrash(),
+                  orElse: (_) => 0,
+                ),
+                minValue: 0,
+                maxValue: 59,
+                onChanged: (num value) {
+                  setState(() {
+                    currentType = currentType.whenOrElse(
+                      timerGoal: (data) => data.copyWith(
+                        timeValue: GoalTimeValue.from(
+                          hours: data.timeValue.getHoursOrCrash(),
+                          minutes: value.toInt(),
+                          seconds: data.timeValue.getSecondsOrCrash(),
+                        ),
+                      ),
+                      orElse: (_) => null,
+                    );
+                  });
+                },
+              ),
+              const Text("min."),
+              NumberPicker.integer(
+                zeroPad: true,
+                listViewWidth: 70,
+                itemExtent: 30,
+                initialValue: currentType.whenOrElse(
+                  timerGoal: (data) => data.timeValue.getSecondsOrCrash(),
+                  orElse: (_) => 0,
+                ),
+                minValue: 0,
+                maxValue: 59,
+                onChanged: (num value) {
+                  setState(() {
+                    currentType = currentType.whenOrElse(
+                      timerGoal: (data) => data.copyWith(
+                        timeValue: GoalTimeValue.from(
+                          hours: data.timeValue.getHoursOrCrash(),
+                          minutes: data.timeValue.getMinutesOrCrash(),
+                          seconds: value.toInt(),
+                        ),
+                      ),
+                      orElse: (_) => null,
+                    );
+                  });
+                },
+              ),
+              const Text("sec."),
+            ],
+          )
+        ],
+      ),
     );
   }
 }

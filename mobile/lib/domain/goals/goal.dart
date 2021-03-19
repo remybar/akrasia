@@ -1,21 +1,25 @@
-import 'package:dartz/dartz.dart';
+// Flutter imports:
 import 'package:flutter/foundation.dart';
+
+// Package imports:
+import 'package:dartz/dartz.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+// Project imports:
 import 'package:akrasia/domain/core/entity.dart';
-import 'package:akrasia/domain/core/failures.dart';
 import 'package:akrasia/domain/core/unique_id.dart';
-
-import 'package:akrasia/domain/goals/goal_name.dart';
-import 'package:akrasia/domain/goals/goal_type.dart';
-import 'package:akrasia/domain/goals/goal_pledge.dart';
-import 'package:akrasia/domain/goals/goal_period.dart';
-import 'package:akrasia/domain/goals/goal_unit.dart';
-import 'package:akrasia/domain/goals/goal_value.dart';
-import 'package:akrasia/domain/goals/goal_start_date.dart';
+import 'package:akrasia/domain/core/value_objects/value_failure.dart';
+import 'package:akrasia/domain/goals/value_objects/goal_name.dart';
+import 'package:akrasia/domain/goals/value_objects/goal_period.dart';
+import 'package:akrasia/domain/goals/value_objects/goal_pledge.dart';
+import 'package:akrasia/domain/goals/value_objects/goal_start_date.dart';
+import 'package:akrasia/domain/goals/value_objects/goal_type.dart';
 
 part 'goal.freezed.dart';
 
+/// Goal Entity.
+/// Represents a goal with all its characteristics such as its name,
+/// its period, its type, ...
 @freezed
 abstract class Goal with _$Goal implements IEntity {
   factory Goal({
@@ -27,15 +31,13 @@ abstract class Goal with _$Goal implements IEntity {
     @required GoalStartDate startDate,
     @required GoalPledge pledge,
     DateTime endDate,
-    DateTime startPause,
-    DateTime endPause,
   }) = _Goal;
 
   factory Goal.empty() => Goal(
         id: UniqueId(),
         name: GoalName(''),
         toReach: true,
-        type: GoalType.valueGoal(value: GoalValue(0), unit: GoalUnit("")),
+        type: GoalType.yesNoGoal(),
         startDate: GoalStartDate.empty(),
         period: GoalPeriodX.defaultEvery(),
         pledge: GoalPledge.noPledge(),
@@ -63,7 +65,6 @@ extension GoalX on Goal {
             pledge: (data) => data.start.failureOrUnit.andThen(data.max.failureOrUnit),
           ),
         )
-        // TODO: validate entity
         .fold((f) => some(f), (_) => none());
   }
 }

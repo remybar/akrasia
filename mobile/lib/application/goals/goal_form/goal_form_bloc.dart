@@ -1,18 +1,22 @@
+// Dart imports:
 import 'dart:async';
 
+// Package imports:
 import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:meta/meta.dart';
 
+// Project imports:
 import 'package:akrasia/domain/goals/goal.dart';
 import 'package:akrasia/domain/goals/goal_failure.dart';
-import 'package:akrasia/domain/goals/goal_name.dart';
-import 'package:akrasia/domain/goals/goal_start_date.dart';
-import 'package:akrasia/domain/goals/goal_period.dart';
-import 'package:akrasia/domain/goals/goal_pledge.dart';
 import 'package:akrasia/domain/goals/i_goal_repository.dart';
+import 'package:akrasia/domain/goals/value_objects/goal_name.dart';
+import 'package:akrasia/domain/goals/value_objects/goal_period.dart';
+import 'package:akrasia/domain/goals/value_objects/goal_pledge.dart';
+import 'package:akrasia/domain/goals/value_objects/goal_start_date.dart';
+import 'package:akrasia/domain/goals/value_objects/goal_type.dart';
 
 part 'goal_form_event.dart';
 part 'goal_form_state.dart';
@@ -72,6 +76,12 @@ class GoalFormBloc extends Bloc<GoalFormEvent, GoalFormState> {
       pledgeChanged: (e) async* {
         yield state.copyWith(
           goal: state.goal.copyWith(pledge: e.pledge),
+          goalFailureOrSuccessOption: none(),
+        );
+      },
+      typeChanged: (e) async* {
+        yield state.copyWith(
+          goal: state.goal.copyWith(type: e.type),
           goalFailureOrSuccessOption: none(),
         );
       },

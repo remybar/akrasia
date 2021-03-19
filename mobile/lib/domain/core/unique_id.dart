@@ -1,9 +1,12 @@
+// Package imports:
 import 'package:dartz/dartz.dart';
 import 'package:uuid/uuid.dart';
 
-import 'package:akrasia/domain/core/failures.dart';
-import 'value_object.dart';
+// Project imports:
+import './value_objects/value_failure.dart';
+import './value_objects/value_object.dart';
 
+/// Unique ID for an entity.
 class UniqueId extends ValueObject<String> {
   @override
   final Either<ValueFailure<String>, String> value;

@@ -1,11 +1,15 @@
-import 'package:akrasia/application/auth/auth_bloc.dart';
-import 'package:auto_route/auto_route.dart';
+// Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:another_flushbar/flushbar_helper.dart';
 
-import 'package:akrasia/ui/routes/router.gr.dart';
+// Package imports:
+import 'package:another_flushbar/flushbar_helper.dart';
+import 'package:auto_route/auto_route.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+// Project imports:
+import 'package:akrasia/application/auth/auth_bloc.dart';
 import 'package:akrasia/application/auth/sign_in_form/sign_in_form_bloc.dart';
+import 'package:akrasia/ui/routes/router.gr.dart';
 
 class SignInForm extends StatelessWidget {
   @override

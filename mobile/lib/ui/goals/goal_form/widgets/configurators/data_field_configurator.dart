@@ -1,108 +1,120 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
 
+// Package imports:
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+// Project imports:
+import 'package:akrasia/application/goals/goal_form/goal_form_bloc.dart';
+import 'package:akrasia/domain/goals/value_objects/goal_type.dart';
 import 'package:akrasia/ui/core/widgets/custom_bottom_sheet.dart';
-import 'package:akrasia/ui/goals/goal_form/widgets/configurators/counter_data_configurator.dart';
-import 'package:akrasia/ui/goals/goal_form/widgets/configurators/timer_data_configurator.dart';
 import 'package:akrasia/ui/goals/goal_form/widgets/configurators/app_data_configurator.dart';
+import 'package:akrasia/ui/goals/goal_form/widgets/configurators/configurators.dart';
+import 'package:akrasia/ui/goals/goal_form/widgets/configurators/counter_data_configurator.dart';
 import 'package:akrasia/ui/goals/goal_form/widgets/configurators/manual_data_configurator.dart';
+import 'package:akrasia/ui/goals/goal_form/widgets/configurators/timer_data_configurator.dart';
 
-enum DataKind { YesNoData, CountData, TimerData, AppData, ManualData }
+class DataFieldConfigurator extends StatelessWidget {
+  final GoalType initialType;
+  final bool toReach;
 
-class DataFieldConfigurator extends StatefulWidget {
-  @override
-  _DataFieldConfiguratorState createState() => _DataFieldConfiguratorState();
-}
+  const DataFieldConfigurator({Key key, this.initialType, this.toReach}) : super(key: key);
 
-class _DataFieldConfiguratorState extends State<DataFieldConfigurator> {
-  DataKind selectedDataKind;
-
-  @override
-  void initState() {
-    super.initState();
-    selectedDataKind = null;
-  }
-
-  void setSelectedDataKind(DataKind kind) {
-    setState(() {
-      selectedDataKind = kind;
-    });
-  }
-
-  Widget _buildRadio({String title, String subtitle, IconData icon, VoidCallback onPressed, bool bNext = true}) {
-    return Container(
-        margin: EdgeInsets.all(5),
-        child: FlatButton(
-          padding: EdgeInsets.all(8),
-          child: Row(children: [
-            Icon(icon, color: Colors.deepPurple),
-            SizedBox(width: 10),
-            Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              Text(title, style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600)),
-              SizedBox(height: 5),
-              Text(subtitle, style: TextStyle(fontSize: 12, color: Colors.grey[600], fontWeight: FontWeight.normal))
-            ]),
-            Spacer(),
-            bNext ? Icon(Icons.arrow_forward_ios, color: Colors.deepPurple) : Container()
-          ]),
-          onPressed: onPressed,
-        ));
-  }
-
-  Widget _buildYesNoData(context) {
-    return _buildRadio(
+  Widget _buildYesNoData(BuildContext context) {
+    return _RadioWidget(
         title: "Oui/Non",
         subtitle: "à faire une fois par période",
         icon: Icons.check,
         onPressed: () {
-//          Navigator.pop(context);
+          context.read<GoalFormBloc>().add(
+                GoalFormEvent.typeChanged(GoalType.yesNoGoal()),
+              );
+          Navigator.pop(context);
         },
         bNext: false);
   }
 
   Widget _buildCountData(BuildContext context) {
-    return _buildRadio(
-        title: "Compteur",
+    const String title = 'Compteur';
+    return _RadioWidget(
+        title: title,
         subtitle: "à faire plusieurs fois par période",
         icon: Icons.exposure_plus_1,
         onPressed: () {
-//          Navigator.pop(context);
-          showCustomBottomSheet(
-              title: "Compteur", child: CounterDataConfigurator(), context: context, onValidate: () {});
+          Navigator.pop(context);
+          showConfigurator(
+            context: context,
+            value: BlocProvider.of<GoalFormBloc>(context),
+            child: CounterDataConfigurator(
+              title: title,
+              initialType: initialType.whenOrElse(
+                countGoal: (_) => initialType,
+                orElse: (_) => GoalTypeX.defaultCountGoal(),
+              ),
+            ),
+          );
         });
   }
 
   Widget _buildTimerData(BuildContext context) {
-    return _buildRadio(
-        title: "Timer",
+    const String title = 'Timer';
+    return _RadioWidget(
+        title: title,
         subtitle: "basé sur le temps passé",
         icon: Icons.access_alarms_sharp,
         onPressed: () {
-//          Navigator.pop(context);
-          showCustomBottomSheet(title: "Timer", child: TimerDataConfigurator(), context: context, onValidate: () {});
+          Navigator.pop(context);
+          showConfigurator(
+            context: context,
+            value: BlocProvider.of<GoalFormBloc>(context),
+            child: TimerDataConfigurator(
+              title: title,
+              initialType: initialType.whenOrElse(
+                timerGoal: (_) => initialType,
+                orElse: (_) => GoalTypeX.defaultTimeGoal(),
+              ),
+            ),
+          );
         });
   }
 
   Widget _buildAppData(BuildContext context) {
-    return _buildRadio(
-        title: "A partir d'une application",
+    const String title = "A partir d'une application";
+    return _RadioWidget(
+        title: title,
         subtitle: "la mise à jour est automatique",
         icon: Icons.mobile_friendly,
         onPressed: () {
-//          Navigator.pop(context);
-          showCustomBottomSheet(
-              title: "Application", child: AppDataConfigurator(), context: context, onValidate: () {});
+          Navigator.pop(context);
+          showConfigurator(
+            context: context,
+            value: BlocProvider.of<GoalFormBloc>(context),
+            child: AppDataConfigurator(
+              initialType: GoalTypeX.defaultValueGoal(),
+            ),
+          );
         });
   }
 
   Widget _buildManualData(BuildContext context) {
-    return _buildRadio(
-        title: "Valeur manuelle",
+    const String title = "Valeur manuelle";
+    return _RadioWidget(
+        title: title,
         subtitle: "pour n'importe quelle autre valeur",
         icon: Icons.keyboard,
         onPressed: () {
-//          Navigator.pop(context);
-          showCustomBottomSheet(
-              title: "Manuelle", child: ManualDataConfigurator(), context: context, onValidate: () {});
+          Navigator.pop(context);
+          showConfigurator(
+            context: context,
+            value: BlocProvider.of<GoalFormBloc>(context),
+            child: ManualDataConfigurator(
+              title: title,
+              initialType: initialType.whenOrElse(
+                valueGoal: (_) => initialType,
+                orElse: (_) => GoalTypeX.defaultValueGoal(),
+              ),
+            ),
+          );
         });
   }
 
@@ -110,13 +122,13 @@ class _DataFieldConfiguratorState extends State<DataFieldConfigurator> {
     return Column(
       children: [
         _buildYesNoData(context),
-        Divider(),
+        const Divider(),
         _buildCountData(context),
-        Divider(),
+        const Divider(),
         _buildTimerData(context),
-        Divider(),
+        const Divider(),
         _buildAppData(context),
-        Divider(),
+        const Divider(),
         _buildManualData(context),
       ],
     );
@@ -124,6 +136,50 @@ class _DataFieldConfiguratorState extends State<DataFieldConfigurator> {
 
   @override
   Widget build(BuildContext context) {
-    return _buildDataKindSelectionScreen(context);
+    return CustomBottomSheet(
+      title: 'Données',
+      child: Column(
+        children: [
+          _buildDataKindSelectionScreen(context),
+        ],
+      ),
+    );
+  }
+}
+
+class _RadioWidget extends StatelessWidget {
+  final String title;
+  final String subtitle;
+  final IconData icon;
+  final VoidCallback onPressed;
+  final bool bNext;
+
+  const _RadioWidget({Key key, this.title, this.subtitle, this.icon, this.onPressed, this.bNext = true})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+        margin: const EdgeInsets.all(5),
+        child: TextButton(
+          onPressed: onPressed,
+          child: Row(children: [
+            Icon(icon, color: Colors.deepPurple),
+            const SizedBox(width: 20),
+            Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              Text(
+                title,
+                style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
+              ),
+              const SizedBox(height: 5),
+              Text(
+                subtitle,
+                style: TextStyle(fontSize: 12, color: Colors.grey[600], fontWeight: FontWeight.normal),
+              )
+            ]),
+            const Spacer(),
+            if (bNext) const Icon(Icons.arrow_forward_ios, color: Colors.deepPurple)
+          ]),
+        ));
   }
 }

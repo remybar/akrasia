@@ -1,14 +1,18 @@
-import 'package:akrasia/ui/routes/router.gr.dart';
+// Flutter imports:
+import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:another_flushbar/flushbar_helper.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:dartz/dartz.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+// Project imports:
 import 'package:akrasia/application/goals/goal_form/goal_form_bloc.dart';
-import 'package:akrasia/ui/goals/goal_form/widgets/goal_form_widget.dart';
 import 'package:akrasia/domain/goals/goal.dart';
 import 'package:akrasia/injection.dart';
+import 'package:akrasia/ui/goals/goal_form/widgets/goal_form_widget.dart';
+import 'package:akrasia/ui/routes/router.gr.dart';
 
 class GoalFormPage extends StatelessWidget {
   final Goal editedGoal;
@@ -111,7 +115,7 @@ class GoalFormPageBody extends StatelessWidget {
         title: BlocBuilder<GoalFormBloc, GoalFormState>(
           buildWhen: (prev, cur) => prev.isEditing != cur.isEditing,
           builder: (context, state) {
-            return Text(state.isEditing ? 'Edit a goal' : 'Create a goal');
+            return Text(state.isEditing ? 'Editer un objectif' : 'Créer un objectif');
           },
         ),
         actions: [

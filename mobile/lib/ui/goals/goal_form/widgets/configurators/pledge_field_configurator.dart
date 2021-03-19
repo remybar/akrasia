@@ -1,10 +1,14 @@
-import 'package:akrasia/domain/goals/goal_pledge_value.dart';
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:akrasia/domain/goals/goal_pledge.dart';
-import 'package:akrasia/ui/core/widgets/custom_bottom_sheet.dart';
+// Project imports:
 import 'package:akrasia/application/goals/goal_form/goal_form_bloc.dart';
+import 'package:akrasia/domain/goals/value_objects/goal_pledge.dart';
+import 'package:akrasia/domain/goals/value_objects/goal_pledge_value.dart';
+import 'package:akrasia/ui/core/widgets/custom_bottom_sheet.dart';
 
 class PledgeFieldConfigurator extends StatefulWidget {
   final GoalPledge initialPledge;
@@ -29,7 +33,7 @@ class _PledgeFieldConfiguratorState extends State<PledgeFieldConfigurator> {
       children: [
         Row(
           children: [
-            const Text("Pledge: "),
+            const Text("Gage: "),
             Switch(
                 value: currentPledge.when(
                   noPledge: () => false,
@@ -46,10 +50,7 @@ class _PledgeFieldConfiguratorState extends State<PledgeFieldConfigurator> {
           Column(
             children: [
               Row(children: [
-                Container(
-                  width: 120,
-                  child: const Text("Valeur de départ:"),
-                ),
+                const Text("Valeur de départ:"),
                 const SizedBox(width: 10),
                 DropdownButton<int>(
                   value: currentPledge.when(
@@ -78,10 +79,7 @@ class _PledgeFieldConfiguratorState extends State<PledgeFieldConfigurator> {
               // TODO: be sure that the maximal value is not strictly lower than the start value
               Row(
                 children: [
-                  Container(
-                    width: 120,
-                    child: const Text("Valeur maximale:"),
-                  ),
+                  const Text("Valeur maximale:"),
                   const SizedBox(width: 10),
                   DropdownButton<int>(
                     value: currentPledge.when(

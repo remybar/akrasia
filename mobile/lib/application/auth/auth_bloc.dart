@@ -1,11 +1,15 @@
+// Dart imports:
 import 'dart:async';
+
+// Package imports:
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:meta/meta.dart';
 
-import 'package:akrasia/domain/auth/user.dart';
+// Project imports:
 import 'package:akrasia/domain/auth/i_auth_facade.dart';
+import 'package:akrasia/domain/auth/user.dart';
 
 part 'auth_event.dart';
 part 'auth_state.dart';

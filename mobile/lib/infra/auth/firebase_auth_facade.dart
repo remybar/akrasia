@@ -1,14 +1,16 @@
+// Package imports:
 import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart' as firebase;
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:injectable/injectable.dart';
 import 'package:meta/meta.dart';
 
+// Project imports:
 import 'package:akrasia/domain/auth/auth_failure.dart';
 import 'package:akrasia/domain/auth/i_auth_facade.dart';
 import 'package:akrasia/domain/auth/user.dart';
-import 'package:akrasia/domain/auth/email_address.dart';
-import 'package:akrasia/domain/auth/password.dart';
+import 'package:akrasia/domain/auth/value_objects/email_address.dart';
+import 'package:akrasia/domain/auth/value_objects/password.dart';
 import 'package:akrasia/infra/auth/firebase_user_mapper.dart';
 
 @prod

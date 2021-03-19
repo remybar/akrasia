@@ -1,10 +1,14 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
+// Project imports:
 import 'package:akrasia/application/goals/goal_form/goal_form_bloc.dart';
-import 'package:akrasia/ui/goals/goal_form/widgets/configurators/period_field_configurator.dart';
 import 'package:akrasia/ui/goals/goal_form/widgets/configurators/configurators.dart';
+import 'package:akrasia/ui/goals/goal_form/widgets/configurators/period_field_configurator.dart';
 import 'package:akrasia/ui/goals/goal_form/widgets/misc/utils.dart';
 
 class GoalPeriodField extends HookWidget {
@@ -25,7 +29,7 @@ class GoalPeriodField extends HookWidget {
       child: TextFormField(
         controller: textEditingController,
         decoration: const InputDecoration(
-          labelText: 'Goal Period',
+          labelText: "Période",
         ),
         readOnly: true,
         onTap: () {

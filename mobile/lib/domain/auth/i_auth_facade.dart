@@ -1,10 +1,12 @@
+// Package imports:
 import 'package:dartz/dartz.dart';
 import 'package:meta/meta.dart';
 
+// Project imports:
 import 'package:akrasia/domain/auth/auth_failure.dart';
 import 'package:akrasia/domain/auth/user.dart';
-import 'package:akrasia/domain/auth/email_address.dart';
-import 'package:akrasia/domain/auth/password.dart';
+import 'package:akrasia/domain/auth/value_objects/email_address.dart';
+import 'package:akrasia/domain/auth/value_objects/password.dart';
 
 abstract class IAuthFacade {
   Future<Option<User>> getSignedInUser();

@@ -1,4 +1,5 @@
-import 'package:akrasia/domain/core/failures.dart';
+// Project imports:
+import 'package:akrasia/domain/core/value_objects/value_failure.dart';
 
 class NotAuthenticatedError extends Error {}
 
