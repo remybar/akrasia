@@ -63,8 +63,6 @@ String kindToString(GoalPeriodKind kind, {bool toPlural = false}) {
       return toPlural ? "jours" : "jour";
     case GoalPeriodKind.week:
       return toPlural ? "semaines" : "semaine";
-    case GoalPeriodKind.month:
-      return "mois";
   }
   return "";
 }

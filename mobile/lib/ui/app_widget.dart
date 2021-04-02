@@ -9,6 +9,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:akrasia/application/auth/auth_bloc.dart';
 import 'package:akrasia/injection.dart';
 import 'package:akrasia/ui/routes/router.gr.dart';
+import 'akrasia_theme.dart';
 
 class AppWidget extends StatelessWidget {
   @override
@@ -22,12 +23,8 @@ class AppWidget extends StatelessWidget {
         child: MaterialApp(
           title: 'Akrasia',
           debugShowCheckedModeBanner: false,
-          theme: ThemeData.light().copyWith(
-            primaryColor: Colors.deepPurple[300],
-            accentColor: Colors.blueAccent,
-            // inputDecorationTheme:
-            //     InputDecorationTheme(border: OutlineInputBorder(borderRadius: BorderRadius.circular(8))),
-          ),
+          theme: AkrasiaTheme.light,
+          darkTheme: AkrasiaTheme.dark,
           builder: ExtendedNavigator.builder<AkrasiaRouter>(
             router: AkrasiaRouter(),
           ),

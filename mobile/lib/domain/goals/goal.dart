@@ -9,6 +9,8 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:akrasia/domain/core/entity.dart';
 import 'package:akrasia/domain/core/unique_id.dart';
 import 'package:akrasia/domain/core/value_objects/value_failure.dart';
+import 'package:akrasia/domain/goals/goal_step.dart';
+import 'package:akrasia/domain/goals/value_objects/goal_end_date.dart';
 import 'package:akrasia/domain/goals/value_objects/goal_name.dart';
 import 'package:akrasia/domain/goals/value_objects/goal_period.dart';
 import 'package:akrasia/domain/goals/value_objects/goal_pledge.dart';
@@ -18,8 +20,12 @@ import 'package:akrasia/domain/goals/value_objects/goal_type.dart';
 part 'goal.freezed.dart';
 
 /// Goal Entity.
-/// Represents a goal with all its characteristics such as its name,
-/// its period, its type, ...
+/// Represents a goal to realize from [startDate] to [endDate] or forever.
+/// A goal is then splitted into step according to the defined [period].
+/// The fields [toReach] and [startDate] (if already started) cannot be modified.
+/// Modification of the fields [name], [startDate], [endDate], [pledge] and [type] are global to all steps.
+/// Modification of the field [period] and the goal value stored in the field [type] are applied
+/// to the next steps.
 @freezed
 abstract class Goal with _$Goal implements IEntity {
   factory Goal({
@@ -29,8 +35,8 @@ abstract class Goal with _$Goal implements IEntity {
     @required GoalType type,
     @required GoalPeriod period,
     @required GoalStartDate startDate,
+    GoalEndDate endDate,
     @required GoalPledge pledge,
-    DateTime endDate,
   }) = _Goal;
 
   factory Goal.empty() => Goal(
@@ -47,6 +53,31 @@ abstract class Goal with _$Goal implements IEntity {
 extension GoalX on Goal {
   bool isValid() {
     return failureOption.isNone();
+  }
+
+  // Create a new step from the current goal.
+  // If a [fromStep] is specified, create a new step just after this [fromStep].
+  GoalStep createStep({GoalStep fromStep}) {
+    if (fromStep != null) {
+      return GoalStep.empty(
+        goalId: this.id,
+        startDate: GoalStartDate(period.shiftDate(fromStep.startDate.getOrCrash())),
+        name: name,
+        toReach: toReach,
+        period: period,
+        type: type,
+      );
+    } else {
+      return GoalStep.empty(
+        goalId: this.id,
+        startDate: GoalStartDate(startDate.getOrCrash()),
+        name: name,
+        toReach: toReach,
+        period: period,
+        type: type,
+        pledge: pledge.when(noPledge: () => null, pledge: (value) => value.start.getOrCrash()),
+      );
+    }
   }
 
   /// Validate the whole goal by checking all its value objects

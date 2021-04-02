@@ -2,20 +2,20 @@
 import 'package:flutter/material.dart';
 
 // Project imports:
-import 'package:akrasia/domain/goals/goal.dart';
+import 'package:akrasia/domain/goals/goal_step.dart';
 import '../common/goal_card_data_value.dart';
 
 class TimerGoalCardDataValue extends GoalCardDataValue {
-  const TimerGoalCardDataValue({Goal goal}) : super(goal: goal);
+  const TimerGoalCardDataValue({GoalStep goalStep}) : super(goalStep: goalStep);
 
   @override
-  Widget buildInProgressDataValue() {
+  Widget buildInProgressDataValue(BuildContext context) {
     return ActiveDataValueWidget(
-      icon: const Icon(Icons.add),
       hasBorder: true,
-      fillColor: Colors.white,
+      fillColor: Colors.green,
       borderColor: Colors.green,
       onPressed: () {},
+      child: const Icon(Icons.play_arrow), // Icon(Icons.pause) si actif
     );
   }
 }

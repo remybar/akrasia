@@ -13,7 +13,6 @@ part 'goal_period.super.dart';
 enum GoalPeriodKind {
   week,
   day,
-  month,
 }
 
 @superEnum
@@ -55,10 +54,31 @@ extension GoalPeriodX on GoalPeriod {
         return GoalPeriodKind.week;
       case "day":
         return GoalPeriodKind.day;
-      case 'month':
-        return GoalPeriodKind.month;
       default:
         return null;
     }
+  }
+
+  DateTime computeEndDate(DateTime startDate) {
+    final DateTime date = shiftDate(startDate);
+    return date.subtract(const Duration(seconds: 1));
+  }
+
+  // shift [date] of one period
+  DateTime shiftDate(DateTime date) {
+    return when(
+      every: (value) {
+        final count = value.count.getOrCrash();
+        switch (value.kind) {
+          case GoalPeriodKind.day:
+            return date.add(Duration(days: count));
+          case GoalPeriodKind.week:
+            return date.add(Duration(days: 7 * count));
+          default:
+            return null;
+        }
+      },
+      onDay: (_) => date.add(const Duration(days: 7)),
+    );
   }
 }

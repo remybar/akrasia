@@ -12,8 +12,14 @@ extension FirestoreX on FirebaseFirestore {
     final user = userOption.getOrElse(() => throw NotAuthenticatedError());
     return FirebaseFirestore.instance.collection('users').doc(user.id.getOrCrash());
   }
+
+  Future<String> uid() async {
+    final userOption = await getIt<IAuthFacade>().getSignedInUser();
+    final user = userOption.getOrElse(() => throw NotAuthenticatedError());
+    return user.id.getOrCrash();
+  }
 }
 
 extension DocumentReferenceX on DocumentReference {
-  CollectionReference get goalCollection => collection('goals');
+  CollectionReference get goals => collection('goals');
 }

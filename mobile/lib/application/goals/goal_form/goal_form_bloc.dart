@@ -11,7 +11,8 @@ import 'package:meta/meta.dart';
 // Project imports:
 import 'package:akrasia/domain/goals/goal.dart';
 import 'package:akrasia/domain/goals/goal_failure.dart';
-import 'package:akrasia/domain/goals/i_goal_repository.dart';
+import 'package:akrasia/domain/goals/i_goal_manager.dart';
+import 'package:akrasia/domain/goals/value_objects/goal_end_date.dart';
 import 'package:akrasia/domain/goals/value_objects/goal_name.dart';
 import 'package:akrasia/domain/goals/value_objects/goal_period.dart';
 import 'package:akrasia/domain/goals/value_objects/goal_pledge.dart';
@@ -24,9 +25,9 @@ part 'goal_form_bloc.freezed.dart';
 
 @injectable
 class GoalFormBloc extends Bloc<GoalFormEvent, GoalFormState> {
-  final IGoalRepository _repository;
+  final IGoalManager _manager;
 
-  GoalFormBloc(this._repository) : super(GoalFormState.initial());
+  GoalFormBloc(this._manager) : super(GoalFormState.initial());
 
   @override
   Stream<GoalFormState> mapEventToState(
@@ -50,14 +51,14 @@ class GoalFormBloc extends Bloc<GoalFormEvent, GoalFormState> {
         yield state.copyWith(
           goal: state.goal.copyWith(
             startDate: GoalStartDate(e.startDate),
-            endDate: (endDate != null && endDate.isAfter(e.startDate)) ? endDate : null,
+            endDate: (endDate?.value != null && endDate.value.isAfter(e.startDate)) ? endDate : null,
           ),
           goalFailureOrSuccessOption: none(),
         );
       },
       endDateChanged: (e) async* {
         yield state.copyWith(
-          goal: state.goal.copyWith(endDate: e.endDate),
+          goal: state.goal.copyWith(endDate: GoalEndDate(e.endDate)),
           goalFailureOrSuccessOption: none(),
         );
       },
@@ -97,7 +98,7 @@ class GoalFormBloc extends Bloc<GoalFormEvent, GoalFormState> {
         // save if the goal is valid
         if (state.goal.isValid()) {
           failureOrSuccess =
-              state.isEditing ? await _repository.update(state.goal) : await _repository.create(state.goal);
+              state.isEditing ? await _manager.update(goal: state.goal) : await _manager.create(goal: state.goal);
         }
 
         // inform that the goal has been saved or some failures have been raised

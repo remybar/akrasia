@@ -1,9 +1,9 @@
 // Flutter imports:
 
 // Project imports:
-import 'package:akrasia/domain/goals/goal.dart';
+import 'package:akrasia/domain/goals/goal_step.dart';
 import '../common/goal_card_info.dart';
 
 class TimerGoalCardInfo extends GoalCardInfo {
-  TimerGoalCardInfo({Goal goal}) : super(goal: goal);
+  TimerGoalCardInfo({GoalStep goalStep}) : super(goalStep: goalStep);
 }

@@ -20,10 +20,7 @@ class GoalOverviewPage extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider<GoalWatcherBloc>(
-          create: (context) => getIt<GoalWatcherBloc>()
-            ..add(
-              const GoalWatcherEvent.watchAllStarted(),
-            ),
+          create: (context) => getIt<GoalWatcherBloc>()..add(GoalWatcherEvent.watchAllStarted(DateTime.now())),
         ),
         BlocProvider<GoalActorBloc>(
           create: (context) => getIt<GoalActorBloc>(),
@@ -42,7 +39,7 @@ class GoalOverviewPage extends StatelessWidget {
           BlocListener<GoalActorBloc, GoalActorState>(
             listener: (context, state) {
               state.maybeMap(
-                deleteFailure: (state) {
+                failure: (state) {
                   FlushbarHelper.createError(
                     duration: const Duration(seconds: 5),
                     message: state.failure.map(

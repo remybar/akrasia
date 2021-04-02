@@ -27,7 +27,7 @@ class GoalEndDateField extends HookWidget {
             (prev.goal.startDate != cur.goal.startDate);
       },
       builder: (context, state) {
-        final endDate = state.goal.endDate;
+        final endDate = state.goal.endDate?.value;
         final startDate = state.goal.startDate.getOrCrash();
         return DateTimeField(
           decoration: const InputDecoration(

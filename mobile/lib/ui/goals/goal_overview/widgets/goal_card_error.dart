@@ -12,10 +12,18 @@ class GoalCardError extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-        color: Colors.red,
-        child: Column(children: [
-          const Text("Invalid goal, please contact support"),
-          Text(goal.failureOption.fold(() => '', (f) => f.toString())),
-        ]));
+      color: Colors.red,
+      child: Column(
+        children: [
+          const Text("Impossible de charger cet objectif. Veuillez contacter le support."),
+          Text(
+            goal.failureOption.fold(
+              () => '',
+              (f) => f.toString(),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }

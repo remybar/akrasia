@@ -2,12 +2,12 @@
 import 'package:flutter/material.dart';
 
 // Project imports:
-import 'package:akrasia/domain/goals/goal.dart';
+import 'package:akrasia/domain/goals/goal_step.dart';
 
 class GoalCardControl extends StatelessWidget {
-  final Goal goal;
+  final GoalStep goalStep;
 
-  const GoalCardControl({Key key, this.goal}) : super(key: key);
+  const GoalCardControl({Key key, this.goalStep}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

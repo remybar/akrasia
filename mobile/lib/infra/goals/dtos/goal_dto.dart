@@ -5,6 +5,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 // Project imports:
 import 'package:akrasia/domain/core/unique_id.dart';
 import 'package:akrasia/domain/goals/goal.dart';
+import 'package:akrasia/domain/goals/value_objects/goal_end_date.dart';
 import 'package:akrasia/domain/goals/value_objects/goal_name.dart';
 import 'package:akrasia/domain/goals/value_objects/goal_start_date.dart';
 import './goal_period_dto.dart';
@@ -36,7 +37,7 @@ abstract class GoalDTO implements _$GoalDTO {
       toReach: goal.toReach,
       startDate: goal.startDate.getOrCrash(),
       pledge: GoalPledgeDTO.fromDomain(goal.pledge),
-      endDate: goal.endDate,
+      endDate: goal.endDate?.value,
     );
   }
 
@@ -57,7 +58,7 @@ extension GoalDTOX on GoalDTO {
       toReach: toReach,
       startDate: GoalStartDate(startDate),
       pledge: pledge.toDomain(),
-      endDate: endDate,
+      endDate: GoalEndDate(endDate),
     );
   }
 }

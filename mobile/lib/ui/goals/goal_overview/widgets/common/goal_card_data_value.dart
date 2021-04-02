@@ -5,13 +5,13 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 // Project imports:
-import 'package:akrasia/domain/goals/goal.dart';
+import 'package:akrasia/domain/goals/goal_step.dart';
 
 abstract class GoalCardDataValue extends StatelessWidget {
-  final Goal goal;
-  const GoalCardDataValue({Key key, this.goal}) : super(key: key);
+  final GoalStep goalStep;
+  const GoalCardDataValue({Key key, this.goalStep}) : super(key: key);
 
-  Widget buildInProgressDataValue();
+  Widget buildInProgressDataValue(BuildContext context);
 
   Widget _buildNotStartedDataValue(DateTime startDate) {
     return InactiveDataValueWidget(
@@ -30,8 +30,8 @@ abstract class GoalCardDataValue extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final startDate = goal.startDate.getOrCrash();
-    final endDate = goal.endDate;
+    final startDate = goalStep.startDate.getOrCrash();
+    final endDate = goalStep.endDate;
 
     // NOT STARTED
     if (startDate.isAfter(DateTime.now())) {
@@ -39,12 +39,12 @@ abstract class GoalCardDataValue extends StatelessWidget {
     }
 
     // FINISHED
-    if (endDate != null && endDate.isBefore(DateTime.now())) {
+    if (endDate?.value != null && endDate.value.isBefore(DateTime.now())) {
       return _buildFinishedDataValue();
     }
 
     // IN PROGRESS
-    return buildInProgressDataValue();
+    return buildInProgressDataValue(context);
   }
 }
 
@@ -79,7 +79,7 @@ class ActiveDataValueWidget extends StatelessWidget {
   final Color fillColor;
   final Color borderColor;
   final bool hasBorder;
-  final Icon icon;
+  final Widget child;
 
   const ActiveDataValueWidget({
     Key key,
@@ -87,7 +87,7 @@ class ActiveDataValueWidget extends StatelessWidget {
     this.fillColor,
     this.borderColor,
     this.hasBorder,
-    this.icon,
+    this.child,
   }) : super(key: key);
 
   @override
@@ -101,7 +101,7 @@ class ActiveDataValueWidget extends StatelessWidget {
         constraints: const BoxConstraints(minWidth: 36.0, minHeight: 36.0),
         padding: const EdgeInsets.all(5.0),
         shape: CircleBorder(side: BorderSide(color: borderColor, width: hasBorder ? 3.0 : 0.0)),
-        child: icon,
+        child: child,
       ),
     );
   }

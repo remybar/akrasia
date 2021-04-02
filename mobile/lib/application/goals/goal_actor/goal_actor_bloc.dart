@@ -3,13 +3,15 @@ import 'dart:async';
 
 // Package imports:
 import 'package:bloc/bloc.dart';
+import 'package:dartz/dartz.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 
 // Project imports:
-import 'package:akrasia/domain/goals/goal.dart';
+import 'package:akrasia/domain/core/unique_id.dart';
 import 'package:akrasia/domain/goals/goal_failure.dart';
-import 'package:akrasia/domain/goals/i_goal_repository.dart';
+import 'package:akrasia/domain/goals/goal_step.dart';
+import 'package:akrasia/domain/goals/i_goal_manager.dart';
 
 part 'goal_actor_event.dart';
 part 'goal_actor_state.dart';
@@ -17,9 +19,18 @@ part 'goal_actor_bloc.freezed.dart';
 
 @injectable
 class GoalActorBloc extends Bloc<GoalActorEvent, GoalActorState> {
-  final IGoalRepository _repository;
+  final IGoalManager _manager;
 
-  GoalActorBloc(this._repository) : super(const GoalActorState.initial());
+  GoalActorBloc(this._manager) : super(const GoalActorState.initial());
+
+  Stream<GoalActorState> _processEvent(e, {Future<Either<GoalFailure, Unit>> future}) async* {
+    yield const GoalActorState.processing();
+    final result = await future;
+    yield result.fold(
+      (f) => GoalActorState.failure(f),
+      (_) => const GoalActorState.success(),
+    );
+  }
 
   @override
   Stream<GoalActorState> mapEventToState(
@@ -27,15 +38,13 @@ class GoalActorBloc extends Bloc<GoalActorEvent, GoalActorState> {
   ) async* {
     yield* event.map(
       deleted: (e) async* {
-        yield const GoalActorState.deleting();
-        final result = await _repository.delete(event.goal);
-        yield result.fold(
-          (f) => GoalActorState.deleteFailure(f),
-          (_) => const GoalActorState.deleteSuccess(),
-        );
+        yield* _processEvent(e, future: _manager.delete(goalId: e.goalId));
       },
       paused: (e) async* {
         // TODO: pause event
+      },
+      stepUpdated: (e) async* {
+        yield* _processEvent(e, future: _manager.updateStep(step: e.step));
       },
     );
   }
