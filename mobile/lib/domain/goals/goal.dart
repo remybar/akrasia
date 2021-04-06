@@ -59,23 +59,15 @@ extension GoalX on Goal {
   // If a [fromStep] is specified, create a new step just after this [fromStep].
   GoalStep createStep({GoalStep fromStep}) {
     if (fromStep != null) {
-      return GoalStep.empty(
-        goalId: this.id,
+      return GoalStep.fromGoal(
+        goal: this,
         startDate: GoalStartDate(period.shiftDate(fromStep.startDate.getOrCrash())),
-        name: name,
-        toReach: toReach,
-        period: period,
-        type: type,
       );
     } else {
-      return GoalStep.empty(
-        goalId: this.id,
+      return GoalStep.fromGoal(
+        goal: this,
         startDate: GoalStartDate(startDate.getOrCrash()),
-        name: name,
-        toReach: toReach,
-        period: period,
-        type: type,
-        pledge: pledge.when(noPledge: () => null, pledge: (value) => value.start.getOrCrash()),
+        pledge: fromStep.pledge,
       );
     }
   }

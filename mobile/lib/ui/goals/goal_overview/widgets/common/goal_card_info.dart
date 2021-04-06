@@ -16,10 +16,10 @@ class GoalCardInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final title = goalStep.name.getOrCrash();
-    final String period = periodToString(goalStep.period);
-    final String prefix = goalStep.toReach ? "min. " : "max. ";
-    final subtitle = goalStep.type.when(
+    final title = goalStep.goal.name.getOrCrash();
+    final String period = periodToString(goalStep.goal.period);
+    final String prefix = goalStep.goal.toReach ? "min. " : "max. ";
+    final subtitle = goalStep.goal.type.when(
       yesNoGoal: () => period,
       countGoal: (data) => "$prefix ${data.countValue.getOrCrash()} fois · $period",
       timerGoal: (data) => "$prefix ${data.timeValue.getOrCrash()} · $period",

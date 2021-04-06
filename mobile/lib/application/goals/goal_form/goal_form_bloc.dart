@@ -2,6 +2,7 @@
 import 'dart:async';
 
 // Package imports:
+import 'package:akrasia/domain/goals/i_goal_repository.dart';
 import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -11,7 +12,6 @@ import 'package:meta/meta.dart';
 // Project imports:
 import 'package:akrasia/domain/goals/goal.dart';
 import 'package:akrasia/domain/goals/goal_failure.dart';
-import 'package:akrasia/domain/goals/i_goal_manager.dart';
 import 'package:akrasia/domain/goals/value_objects/goal_end_date.dart';
 import 'package:akrasia/domain/goals/value_objects/goal_name.dart';
 import 'package:akrasia/domain/goals/value_objects/goal_period.dart';
@@ -25,9 +25,9 @@ part 'goal_form_bloc.freezed.dart';
 
 @injectable
 class GoalFormBloc extends Bloc<GoalFormEvent, GoalFormState> {
-  final IGoalManager _manager;
+  final IGoalRepository _repository;
 
-  GoalFormBloc(this._manager) : super(GoalFormState.initial());
+  GoalFormBloc(this._repository) : super(GoalFormState.initial());
 
   @override
   Stream<GoalFormState> mapEventToState(
@@ -98,7 +98,7 @@ class GoalFormBloc extends Bloc<GoalFormEvent, GoalFormState> {
         // save if the goal is valid
         if (state.goal.isValid()) {
           failureOrSuccess =
-              state.isEditing ? await _manager.update(goal: state.goal) : await _manager.create(goal: state.goal);
+              state.isEditing ? await _repository.update(goal: state.goal) : await _repository.create(goal: state.goal);
         }
 
         // inform that the goal has been saved or some failures have been raised

@@ -1,4 +1,6 @@
 // Package imports:
+import 'package:akrasia/domain/goals/goal.dart';
+import 'package:akrasia/domain/goals/value_objects/goal_pledge_value.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:kt_dart/kt.dart';
@@ -6,12 +8,8 @@ import 'package:kt_dart/kt.dart';
 // Project imports:
 import 'package:akrasia/domain/core/unique_id.dart';
 import 'package:akrasia/domain/goals/goal_step.dart';
-import 'package:akrasia/domain/goals/value_objects/goal_end_date.dart';
-import 'package:akrasia/domain/goals/value_objects/goal_name.dart';
 import 'package:akrasia/domain/goals/value_objects/goal_start_date.dart';
 import 'package:akrasia/infra/goals/dtos/goal_data_dto.dart';
-import 'package:akrasia/infra/goals/dtos/goal_period_dto.dart';
-import 'package:akrasia/infra/goals/dtos/goal_type_dto.dart';
 
 part 'goal_step_dto.freezed.dart';
 part 'goal_step_dto.g.dart';
@@ -24,24 +22,15 @@ abstract class GoalStepDTO with _$GoalStepDTO {
     int pledge,
     @required DateTime startDate,
     @required DateTime endDate,
-    @required String name,
-    @required bool toReach,
-    @required GoalPeriodDTO period,
-    @required GoalTypeDTO type,
     @required List<GoalDataDTO> data,
   }) = _GoalStepDTO;
 
   factory GoalStepDTO.fromDomain(GoalStep step) {
     return GoalStepDTO(
       id: step.id.getOrCrash(),
-      goalId: step.goalId.getOrCrash(),
+      goalId: step.goal.id.getOrCrash(),
       startDate: step.startDate.getOrCrash(),
       endDate: step.endDate.value,
-      pledge: step.pledge,
-      name: step.name.getOrCrash(),
-      toReach: step.toReach,
-      period: GoalPeriodDTO.fromDomain(step.period),
-      type: GoalTypeDTO.fromDomain(step.type),
       data: step.data
           .mapIndexed(
             (index, item) => GoalDataDTO.fromDomain(item),
@@ -53,22 +42,20 @@ abstract class GoalStepDTO with _$GoalStepDTO {
   factory GoalStepDTO.fromJson(Map<String, dynamic> json) => _$GoalStepDTOFromJson(json);
 
   factory GoalStepDTO.fromFirestore(DocumentSnapshot document) {
-    return GoalStepDTO.fromJson(document.data()).copyWith(id: document.id, goalId: document.reference.parent.parent.id);
+    return GoalStepDTO.fromJson(document.data()).copyWith(
+      id: document.id,
+      goalId: document.reference.parent.parent.id,
+    );
   }
 }
 
 extension GoalStepDTOX on GoalStepDTO {
-  GoalStep toDomain() {
-    return GoalStep(
+  GoalStep toDomain(Goal parentGoal) {
+    return GoalStep.fromGoal(
       id: UniqueId.fromUniqueString(id),
-      goalId: UniqueId.fromUniqueString(goalId),
+      goal: parentGoal,
       startDate: GoalStartDate(startDate),
-      endDate: GoalEndDate(endDate),
-      name: GoalName(name),
-      toReach: toReach,
-      period: period.toDomain(),
-      type: type.toDomain(),
-      pledge: pledge,
+      pledge: GoalPledgeValue(pledge),
       data: data.map((item) => item.toDomain()).toImmutableList(),
     );
   }

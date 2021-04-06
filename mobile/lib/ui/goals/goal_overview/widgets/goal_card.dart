@@ -51,21 +51,21 @@ class GoalCard extends StatelessWidget {
             ),
             child: Row(
               children: [
-                goalStep.type.when(
+                goalStep.goal.type.when(
                   yesNoGoal: () => YesNoGoalCardDataValue(goalStep: goalStep),
                   countGoal: (_) => CountGoalCardDataValue(goalStep: goalStep),
                   timerGoal: (_) => TimerGoalCardDataValue(goalStep: goalStep),
                   valueGoal: (_) => ValueGoalCardDataValue(goalStep: goalStep),
                 ),
                 const SizedBox(width: 10),
-                goalStep.type.when(
+                goalStep.goal.type.when(
                   yesNoGoal: () => YesNoGoalCardInfo(goalStep: goalStep),
                   countGoal: (_) => CountGoalCardInfo(goalStep: goalStep),
                   timerGoal: (_) => TimerGoalCardInfo(goalStep: goalStep),
                   valueGoal: (_) => ValueGoalCardInfo(goalStep: goalStep),
                 ),
                 const Spacer(),
-                goalStep.type.when(
+                goalStep.goal.type.when(
                   yesNoGoal: () => YesNoGoalCardControl(goalStep: goalStep),
                   countGoal: (_) => CountGoalCardControl(goalStep: goalStep),
                   timerGoal: (_) => TimerGoalCardControl(goalStep: goalStep),
@@ -79,10 +79,10 @@ class GoalCard extends StatelessWidget {
                   onSelected: (_ContextMenuChoice value) {
                     switch (value) {
                       case _ContextMenuChoice.delete:
-                        context.read<GoalActorBloc>().add(GoalActorEvent.deleted(goalId: goalStep.goalId));
+                        context.read<GoalActorBloc>().add(GoalActorEvent.deleted(goalId: goalStep.goal.id));
                         break;
                       case _ContextMenuChoice.pause:
-                        context.read<GoalActorBloc>().add(GoalActorEvent.paused(goalId: goalStep.goalId));
+                        context.read<GoalActorBloc>().add(GoalActorEvent.paused(goalId: goalStep.goal.id));
                         break;
                       default:
                     }

@@ -1,0 +1,32 @@
+"goal": {
+    id,
+    version,
+    name,
+    to_reach,
+    type,
+    unit,
+    start_date,
+    end_date,
+    pledge,
+    value,
+    period,
+    history: [
+        1: {
+            value,
+            period,
+        }
+    ]
+}
+
+goal_step : {
+    goal_id,
+    goal_version,
+    start_date,
+    end_date,
+    data: [
+        {
+            date,
+            value
+        }
+    ]
+}

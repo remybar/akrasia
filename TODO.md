@@ -25,11 +25,11 @@ BETA
     2) avoir des interactions sur la partie forum/discussion
     3) me faire connaitre, diffuser les infos
 
-
 DEV
 ===
 
 NEXT STEPS:
+- affichage de la liste des steps
 - ajout des données (check, count, timer, manual)
 - finaliser le widget goal (overview page)
 - améliorer la gestion des erreurs / la validation des entities/value objects

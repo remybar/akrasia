@@ -2,6 +2,7 @@
 import 'dart:async';
 
 // Package imports:
+import 'package:akrasia/domain/goals/i_goal_repository.dart';
 import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -12,7 +13,6 @@ import 'package:meta/meta.dart';
 // Project imports:
 import 'package:akrasia/domain/goals/goal_failure.dart';
 import 'package:akrasia/domain/goals/goal_step.dart';
-import 'package:akrasia/domain/goals/i_goal_manager.dart';
 
 part 'goal_watcher_event.dart';
 part 'goal_watcher_state.dart';
@@ -23,8 +23,8 @@ part 'goal_watcher_bloc.freezed.dart';
 /// change in goal step list through the event [goalsReceived].
 @injectable
 class GoalWatcherBloc extends Bloc<GoalWatcherEvent, GoalWatcherState> {
-  final IGoalManager _manager;
-  GoalWatcherBloc(this._manager) : super(const GoalWatcherState.initial());
+  final IGoalRepository _repository;
+  GoalWatcherBloc(this._repository) : super(const GoalWatcherState.initial());
 
   StreamSubscription<Either<GoalFailure, KtList<GoalStep>>> _goalStreamSubscription;
 
@@ -36,7 +36,7 @@ class GoalWatcherBloc extends Bloc<GoalWatcherEvent, GoalWatcherState> {
       watchAllStarted: (e) async* {
         yield const GoalWatcherState.loading();
         await _goalStreamSubscription?.cancel();
-        _goalStreamSubscription = _manager.watchAll(fromDate: e.fromDate).listen(
+        _goalStreamSubscription = _repository.watchAll(fromDate: e.fromDate).listen(
               (goals) => add(GoalWatcherEvent.goalsReceived(goals)),
             );
       },

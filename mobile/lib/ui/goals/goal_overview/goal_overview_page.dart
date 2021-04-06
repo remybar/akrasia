@@ -45,6 +45,8 @@ class GoalOverviewPage extends StatelessWidget {
                     message: state.failure.map(
                       insufficientPermission: (_) => 'Insufficient permission',
                       unexpected: (_) => 'Unexpected error occured',
+                      invalidGoalID: (_) => 'Invalid Goal ID',
+                      invalidGoal: (_) => 'Invalid Goal',
                     ),
                   ).show(context);
                 },

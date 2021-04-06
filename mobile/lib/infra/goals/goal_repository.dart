@@ -25,16 +25,15 @@ import 'package:meta/meta.dart';
 class GoalRepository implements IGoalRepository {
   /// access to the firebase database
   final FirebaseFirestore _firestore;
+  final _stepsController = StreamController<Either<GoalFailure, KtList<GoalStep>>>.broadcast();
 
-  /// streams to get goals and steps
-  StreamSubscription<Either<GoalFailure, KtList<Goal>>> _goalStreamSubscription;
-  StreamSubscription<Either<GoalFailure, KtList<GoalStep>>> _stepStreamSubscription;
+  StreamSubscription<List<GoalStepDTO>> _stepStreamSubscription;
 
   GoalRepository(this._firestore);
 
   Future<void> dispose() async {
-    _goalStreamSubscription?.cancel();
     _stepStreamSubscription?.cancel();
+    _stepsController.close();
   }
 
   /// Return the user steps collection name.
@@ -44,40 +43,51 @@ class GoalRepository implements IGoalRepository {
     return "${uid}_steps";
   }
 
-  @override
-  Stream<Either<GoalFailure, KtList<GoalStep>>> watchAll_({@required DateTime fromDate}) async* {
-    /// if not yet set, start listening for goals
+  // ignore: avoid_void_async
+  void _onGoalStepUpdate(List<GoalStepDTO> goalStepsDTO) async {
+    final userDoc = await _firestore.userDocument();
+    final Map<UniqueId, Goal> goals = await userDoc.goals.get().then(
+      (snapshot) {
+        final steps = snapshot.docs.map<Goal>(
+          (doc) => GoalDTO.fromFirestore(doc).toDomain(),
+        );
+        return {for (var s in steps) s.id: s};
+      },
+    );
 
-    ///
+    // convert the goal steps DTO to goal step by reading parent goal info
+    final steps = goalStepsDTO
+        .map(
+          (stepDTO) => stepDTO.toDomain(
+            goals[stepDTO.goalId],
+          ),
+        )
+        .toImmutableList();
 
-    _goalStreamSubscription?.cancel();
-    _stepStreamSubscription?.cancel();
+    _stepsController.sink.add(right(steps));
   }
 
-  /// Get a stream of the actual goal steps of the user, at a specific date [fromDate].
   @override
   Stream<Either<GoalFailure, KtList<GoalStep>>> watchAll({@required DateTime fromDate}) async* {
     final uid = await _firestore.uid();
 
-    try {
-      yield* _firestore
-          .collectionGroup(_stepCollectionName(uid))
-          .snapshots()
-          .map(
-            (snapshot) => snapshot.docs.map(
-              (doc) => GoalStepDTO.fromFirestore(doc).toDomain(),
-            ),
-          )
-          .map(
-            (steps) => right<GoalFailure, KtList<GoalStep>>(
-              steps.where((step) => step.isActiveAtDate(fromDate)).toImmutableList(),
-            ),
-          );
-    } on Exception catch (e) {
-      // TODO: improve management error
-      getLogger('infra').e('watchAll::firebase exception');
-      yield left(const GoalFailure.unexpected());
-    }
+    // stop previous stream subscriptions
+    _stepStreamSubscription?.cancel();
+
+    // listen for goal steps updates
+    _stepStreamSubscription = _firestore
+        .collectionGroup(_stepCollectionName(uid))
+        .snapshots()
+        .map(
+          (snapshot) => snapshot.docs
+              .map(
+                (doc) => GoalStepDTO.fromFirestore(doc),
+              )
+              .toList(),
+        )
+        .listen(_onGoalStepUpdate);
+
+    yield* _stepsController.stream;
   }
 
   /// create a new goal
@@ -88,6 +98,8 @@ class GoalRepository implements IGoalRepository {
       getLogger('infra').e('create::invalid goal');
       return left(const GoalFailure.invalidGoal());
     }
+
+    // TODO: create the first step
 
     try {
       final userDoc = await _firestore.userDocument();
@@ -146,7 +158,7 @@ class GoalRepository implements IGoalRepository {
       final uid = await _firestore.uid();
       final goalStepJson = GoalStepDTO.fromDomain(step).toJson();
       await userDoc.goals
-          .doc(step.goalId.getOrCrash())
+          .doc(step.goal.id.getOrCrash())
           .collection(_stepCollectionName(uid))
           .doc(step.id.getOrCrash())
           .set(goalStepJson);
@@ -162,7 +174,7 @@ class GoalRepository implements IGoalRepository {
     try {
       final uid = await _firestore.uid();
       final userDoc = await _firestore.userDocument();
-      final steps = userDoc.goals.doc(step.goalId.getOrCrash()).collection(_stepCollectionName(uid));
+      final steps = userDoc.goals.doc(step.goal.id.getOrCrash()).collection(_stepCollectionName(uid));
       steps.doc(step.id.getOrCrash()).update(GoalStepDTO.fromDomain(step).toJson());
       return right(unit);
     } on FirebaseException catch (e) {
