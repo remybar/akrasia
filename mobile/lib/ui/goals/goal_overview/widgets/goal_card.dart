@@ -1,4 +1,5 @@
 // Flutter imports:
+import 'package:akrasia/domain/goals/goal_state.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -7,7 +8,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 // Project imports:
 import 'package:akrasia/application/goals/goal_actor/goal_actor_bloc.dart';
-import 'package:akrasia/domain/goals/goal_step.dart';
 import 'package:akrasia/ui/akrasia_theme.dart';
 import 'package:akrasia/ui/core/widgets/more_menu_widget.dart';
 import 'package:akrasia/ui/routes/router.gr.dart';
@@ -30,9 +30,10 @@ enum _ContextMenuChoice {
 }
 
 class GoalCard extends StatelessWidget {
-  final GoalStep goalStep;
+  final DateTime selectedDate;
+  final GoalState goalState;
 
-  const GoalCard({Key key, @required this.goalStep}) : super(key: key);
+  const GoalCard({Key key, @required this.goalState, this.selectedDate}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +41,7 @@ class GoalCard extends StatelessWidget {
       child: InkWell(
         onTap: () {
           // TODO
-//          ExtendedNavigator.of(context).pushGoalFormPage(editedGoal: goalStep);
+//          ExtendedNavigator.of(context).pushGoalFormPage(editedGoal: goalState);
         },
         child: Container(
             padding: const EdgeInsets.all(5),
@@ -51,25 +52,25 @@ class GoalCard extends StatelessWidget {
             ),
             child: Row(
               children: [
-                goalStep.goal.type.when(
-                  yesNoGoal: () => YesNoGoalCardDataValue(goalStep: goalStep),
-                  countGoal: (_) => CountGoalCardDataValue(goalStep: goalStep),
-                  timerGoal: (_) => TimerGoalCardDataValue(goalStep: goalStep),
-                  valueGoal: (_) => ValueGoalCardDataValue(goalStep: goalStep),
+                goalState.goal.type.when(
+                  yesNoGoal: () => YesNoGoalCardDataValue(selectedDate: selectedDate, goalState: goalState),
+                  countGoal: (_) => CountGoalCardDataValue(selectedDate: selectedDate, goalState: goalState),
+                  timerGoal: (_) => TimerGoalCardDataValue(selectedDate: selectedDate, goalState: goalState),
+                  valueGoal: (_) => ValueGoalCardDataValue(selectedDate: selectedDate, goalState: goalState),
                 ),
                 const SizedBox(width: 10),
-                goalStep.goal.type.when(
-                  yesNoGoal: () => YesNoGoalCardInfo(goalStep: goalStep),
-                  countGoal: (_) => CountGoalCardInfo(goalStep: goalStep),
-                  timerGoal: (_) => TimerGoalCardInfo(goalStep: goalStep),
-                  valueGoal: (_) => ValueGoalCardInfo(goalStep: goalStep),
+                goalState.goal.type.when(
+                  yesNoGoal: () => YesNoGoalCardInfo(goalState: goalState),
+                  countGoal: (_) => CountGoalCardInfo(goalState: goalState),
+                  timerGoal: (_) => TimerGoalCardInfo(goalState: goalState),
+                  valueGoal: (_) => ValueGoalCardInfo(goalState: goalState),
                 ),
                 const Spacer(),
-                goalStep.goal.type.when(
-                  yesNoGoal: () => YesNoGoalCardControl(goalStep: goalStep),
-                  countGoal: (_) => CountGoalCardControl(goalStep: goalStep),
-                  timerGoal: (_) => TimerGoalCardControl(goalStep: goalStep),
-                  valueGoal: (_) => ValueGoalCardControl(goalStep: goalStep),
+                goalState.goal.type.when(
+                  yesNoGoal: () => YesNoGoalCardControl(goalState: goalState),
+                  countGoal: (_) => CountGoalCardControl(goalState: goalState),
+                  timerGoal: (_) => TimerGoalCardControl(goalState: goalState),
+                  valueGoal: (_) => ValueGoalCardControl(goalState: goalState),
                 ),
                 MoreMenuWidget<_ContextMenuChoice>(
                   menuChoices: const {
@@ -79,10 +80,10 @@ class GoalCard extends StatelessWidget {
                   onSelected: (_ContextMenuChoice value) {
                     switch (value) {
                       case _ContextMenuChoice.delete:
-                        context.read<GoalActorBloc>().add(GoalActorEvent.deleted(goalId: goalStep.goal.id));
+                        context.read<GoalActorBloc>().add(GoalActorEvent.deleted(goalId: goalState.goal.id));
                         break;
                       case _ContextMenuChoice.pause:
-                        context.read<GoalActorBloc>().add(GoalActorEvent.paused(goalId: goalStep.goal.id));
+                        context.read<GoalActorBloc>().add(GoalActorEvent.paused(goalId: goalState.goal.id));
                         break;
                       default:
                     }

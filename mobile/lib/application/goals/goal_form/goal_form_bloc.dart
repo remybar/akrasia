@@ -2,7 +2,6 @@
 import 'dart:async';
 
 // Package imports:
-import 'package:akrasia/domain/goals/i_goal_repository.dart';
 import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -12,6 +11,7 @@ import 'package:meta/meta.dart';
 // Project imports:
 import 'package:akrasia/domain/goals/goal.dart';
 import 'package:akrasia/domain/goals/goal_failure.dart';
+import 'package:akrasia/domain/goals/i_goal_repository.dart';
 import 'package:akrasia/domain/goals/value_objects/goal_end_date.dart';
 import 'package:akrasia/domain/goals/value_objects/goal_name.dart';
 import 'package:akrasia/domain/goals/value_objects/goal_period.dart';

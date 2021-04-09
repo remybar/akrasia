@@ -2,31 +2,31 @@
 import 'package:flutter/material.dart';
 
 // Project imports:
-import 'package:akrasia/domain/goals/goal_step.dart';
+import 'package:akrasia/domain/goals/goal_state.dart';
 import 'package:akrasia/ui/core/widgets/tag_widget.dart';
 import 'package:akrasia/ui/goals/goal_form/widgets/misc/utils.dart';
 
 class GoalCardInfo extends StatelessWidget {
-  final GoalStep goalStep;
+  final GoalState goalState;
 
   // TODO: move theme stuff in the Theme
   final Color backgroundColor = Colors.blueGrey[50];
 
-  GoalCardInfo({Key key, this.goalStep}) : super(key: key);
+  GoalCardInfo({Key key, this.goalState}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final title = goalStep.goal.name.getOrCrash();
-    final String period = periodToString(goalStep.goal.period);
-    final String prefix = goalStep.goal.toReach ? "min. " : "max. ";
-    final subtitle = goalStep.goal.type.when(
+    final title = goalState.goal.name.getOrCrash();
+    final String period = periodToString(goalState.goal.period);
+    final String prefix = goalState.goal.toReach ? "min. " : "max. ";
+    final subtitle = goalState.goal.type.when(
       yesNoGoal: () => period,
       countGoal: (data) => "$prefix ${data.countValue.getOrCrash()} fois · $period",
       timerGoal: (data) => "$prefix ${data.timeValue.getOrCrash()} · $period",
       valueGoal: (data) => "$prefix ${data.value.getOrCrash()} ${data.unit.getOrCrash()} · $period",
     );
-    final hasPledge = goalStep.pledge != null;
-    final currentPledge = hasPledge ? "${goalStep.pledge}€" : "";
+    final hasPledge = goalState.step?.pledge != null;
+    final currentPledge = hasPledge ? "${goalState.step.pledge}€" : "";
     const isInProgress = true; // TODO
 
     return Column(

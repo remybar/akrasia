@@ -2,7 +2,6 @@
 import 'dart:async';
 
 // Package imports:
-import 'package:akrasia/domain/goals/i_goal_repository.dart';
 import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -12,6 +11,7 @@ import 'package:injectable/injectable.dart';
 import 'package:akrasia/domain/core/unique_id.dart';
 import 'package:akrasia/domain/goals/goal_failure.dart';
 import 'package:akrasia/domain/goals/goal_step.dart';
+import 'package:akrasia/domain/goals/i_goal_repository.dart';
 
 part 'goal_actor_event.dart';
 part 'goal_actor_state.dart';

@@ -43,8 +43,6 @@ class GoalFormPage extends StatelessWidget {
                       message: failure.map(
                         insufficientPermission: (_) => 'Insufficient permission',
                         unexpected: (_) => 'Unexpected failure',
-                        invalidGoalID: (_) => 'Invalid Goal ID',
-                        invalidGoal: (_) => 'Invalid Goal',
                       ),
                     ).show(context);
                   },

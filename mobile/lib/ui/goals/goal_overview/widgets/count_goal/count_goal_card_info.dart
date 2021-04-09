@@ -1,9 +1,9 @@
 // Flutter imports:
 
 // Project imports:
-import 'package:akrasia/domain/goals/goal_step.dart';
+import 'package:akrasia/domain/goals/goal_state.dart';
 import '../common/goal_card_info.dart';
 
 class CountGoalCardInfo extends GoalCardInfo {
-  CountGoalCardInfo({GoalStep goalStep}) : super(goalStep: goalStep);
+  CountGoalCardInfo({GoalState goalState}) : super(goalState: goalState);
 }

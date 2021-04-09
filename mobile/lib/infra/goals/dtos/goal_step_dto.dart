@@ -1,6 +1,5 @@
 // Package imports:
-import 'package:akrasia/domain/goals/goal.dart';
-import 'package:akrasia/domain/goals/value_objects/goal_pledge_value.dart';
+import 'package:akrasia/domain/goals/value_objects/goal_end_date.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:kt_dart/kt.dart';
@@ -8,6 +7,7 @@ import 'package:kt_dart/kt.dart';
 // Project imports:
 import 'package:akrasia/domain/core/unique_id.dart';
 import 'package:akrasia/domain/goals/goal_step.dart';
+import 'package:akrasia/domain/goals/value_objects/goal_pledge_value.dart';
 import 'package:akrasia/domain/goals/value_objects/goal_start_date.dart';
 import 'package:akrasia/infra/goals/dtos/goal_data_dto.dart';
 
@@ -28,7 +28,7 @@ abstract class GoalStepDTO with _$GoalStepDTO {
   factory GoalStepDTO.fromDomain(GoalStep step) {
     return GoalStepDTO(
       id: step.id.getOrCrash(),
-      goalId: step.goal.id.getOrCrash(),
+      goalId: step.goalId.getOrCrash(),
       startDate: step.startDate.getOrCrash(),
       endDate: step.endDate.value,
       data: step.data
@@ -50,11 +50,12 @@ abstract class GoalStepDTO with _$GoalStepDTO {
 }
 
 extension GoalStepDTOX on GoalStepDTO {
-  GoalStep toDomain(Goal parentGoal) {
-    return GoalStep.fromGoal(
+  GoalStep toDomain() {
+    return GoalStep(
       id: UniqueId.fromUniqueString(id),
-      goal: parentGoal,
+      goalId: UniqueId.fromUniqueString(goalId),
       startDate: GoalStartDate(startDate),
+      endDate: GoalEndDate(endDate),
       pledge: GoalPledgeValue(pledge),
       data: data.map((item) => item.toDomain()).toImmutableList(),
     );

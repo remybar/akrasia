@@ -1,16 +1,17 @@
 // Package imports:
-import 'package:akrasia/domain/goals/goal.dart';
-import 'package:akrasia/domain/goals/value_objects/goal_pledge_value.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:kt_dart/kt.dart';
 
 // Project imports:
+import 'package:akrasia/core/misc/utils.dart';
 import 'package:akrasia/domain/core/entity.dart';
 import 'package:akrasia/domain/core/unique_id.dart';
+import 'package:akrasia/domain/goals/goal.dart';
 import 'package:akrasia/domain/goals/value_objects/goal_data.dart';
 import 'package:akrasia/domain/goals/value_objects/goal_data_value.dart';
 import 'package:akrasia/domain/goals/value_objects/goal_end_date.dart';
 import 'package:akrasia/domain/goals/value_objects/goal_period.dart';
+import 'package:akrasia/domain/goals/value_objects/goal_pledge_value.dart';
 import 'package:akrasia/domain/goals/value_objects/goal_start_date.dart';
 
 part 'goal_step.freezed.dart';
@@ -20,11 +21,11 @@ part 'goal_step.freezed.dart';
 @freezed
 abstract class GoalStep with _$GoalStep implements IEntity {
   /// default goal step constructor.
-  const factory GoalStep._({
+  const factory GoalStep({
     @required UniqueId id,
 
     // the goal ID used to create this step
-    @required Goal goal,
+    @required UniqueId goalId,
 
     // the goal step starting date
     @required GoalStartDate startDate,
@@ -47,54 +48,29 @@ abstract class GoalStep with _$GoalStep implements IEntity {
     GoalPledgeValue pledge,
     KtList<GoalData> data,
   }) {
-    return GoalStep._(
+    return GoalStep(
       id: id ?? UniqueId(),
-      goal: goal,
+      goalId: goal.id,
       startDate: startDate,
       endDate: GoalEndDate(goal.period.computeEndDate(startDate.getOrCrash())),
-      pledge: pledge,
+      pledge: pledge ??
+          goal.pledge.when(
+            noPledge: () => GoalPledgeValue(0),
+            pledge: (p) => p.start,
+          ),
       data: data ?? emptyList(),
     );
   }
 }
 
 extension GoalStepX on GoalStep {
-  // indicate if the goal step is active at [fromDate]
-  bool isActiveAtDate(DateTime fromDate) {
-    return startDate.getOrCrash().isBefore(fromDate) && endDate.value.isAfter(fromDate);
+  // indicate if the goal step is active at [date]
+  bool isActiveAtDate(DateTime date) {
+    return startDate.getOrCrash().isBeforeOrEqual(date) && endDate.value.isAfterOrEqual(date);
   }
 
   // get the current global step value from the list of goal data
   GoalDataValue getCurrentGoalValue() {
     return data.sum();
-  }
-
-  // indicate if this step has reached the goal value
-  bool isReached() {
-    final currentValue = getCurrentGoalValue();
-    return (currentValue != null) &&
-        goal.type.when(
-          yesNoGoal: () => currentValue.whenOrElse(integerData: (d) => d.value > 0, orElse: (_) => null),
-          countGoal: (data) => currentValue.whenOrElse(
-            integerData: (d) => d.value >= data.countValue.getOrCrash(),
-            orElse: (_) => null,
-          ),
-          timerGoal: (data) => currentValue.whenOrElse(
-            integerData: (d) => d.value >= data.timeValue.getOrCrash(),
-            orElse: (_) => null,
-          ),
-          valueGoal: (data) => currentValue.whenOrElse(
-            doubleData: (d) => d.value >= data.value.getOrCrash(),
-            orElse: (_) => null,
-          ),
-        );
-  }
-
-  // indicate if this step is achieved
-  // that means, reached the goal value for a goal where toReach is true,
-  // not reached the goal value else.
-  bool isAchieved() {
-    final bAchieved = isReached();
-    return goal.toReach ? bAchieved : !bAchieved;
   }
 }

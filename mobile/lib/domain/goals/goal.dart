@@ -6,6 +6,7 @@ import 'package:dartz/dartz.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 // Project imports:
+import 'package:akrasia/core/misc/utils.dart';
 import 'package:akrasia/domain/core/entity.dart';
 import 'package:akrasia/domain/core/unique_id.dart';
 import 'package:akrasia/domain/core/value_objects/value_failure.dart';
@@ -21,7 +22,7 @@ part 'goal.freezed.dart';
 
 /// Goal Entity.
 /// Represents a goal to realize from [startDate] to [endDate] or forever.
-/// A goal is then splitted into step according to the defined [period].
+/// A goal is then splitted into steps according to the defined [period].
 /// The fields [toReach] and [startDate] (if already started) cannot be modified.
 /// Modification of the fields [name], [startDate], [endDate], [pledge] and [type] are global to all steps.
 /// Modification of the field [period] and the goal value stored in the field [type] are applied
@@ -53,6 +54,19 @@ abstract class Goal with _$Goal implements IEntity {
 extension GoalX on Goal {
   bool isValid() {
     return failureOption.isNone();
+  }
+
+  bool isActiveAtDate(DateTime date) {
+    return startDate.getOrCrash().isBeforeOrEqual(date) &&
+        (endDate?.value == null || endDate.value.isAfterOrEqual(date));
+  }
+
+  bool isStarted(DateTime date) {
+    return startDate.getOrCrash().isBeforeOrEqual(date);
+  }
+
+  bool isFinished(DateTime date) {
+    return endDate?.value != null && endDate.value.isBefore(date);
   }
 
   // Create a new step from the current goal.

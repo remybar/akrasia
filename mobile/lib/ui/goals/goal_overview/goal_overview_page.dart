@@ -15,12 +15,16 @@ import 'package:akrasia/ui/goals/goal_overview/goal_overview_body.dart';
 import 'package:akrasia/ui/routes/router.gr.dart';
 
 class GoalOverviewPage extends StatelessWidget {
+  final DateTime selectedDate = DateTime.now();
+
+  GoalOverviewPage({Key key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
         BlocProvider<GoalWatcherBloc>(
-          create: (context) => getIt<GoalWatcherBloc>()..add(GoalWatcherEvent.watchAllStarted(DateTime.now())),
+          create: (context) => getIt<GoalWatcherBloc>()..add(GoalWatcherEvent.watchAllStarted(selectedDate)),
         ),
         BlocProvider<GoalActorBloc>(
           create: (context) => getIt<GoalActorBloc>(),
@@ -45,8 +49,6 @@ class GoalOverviewPage extends StatelessWidget {
                     message: state.failure.map(
                       insufficientPermission: (_) => 'Insufficient permission',
                       unexpected: (_) => 'Unexpected error occured',
-                      invalidGoalID: (_) => 'Invalid Goal ID',
-                      invalidGoal: (_) => 'Invalid Goal',
                     ),
                   ).show(context);
                 },
@@ -71,7 +73,7 @@ class GoalOverviewPage extends StatelessWidget {
             },
             child: const Icon(Icons.add),
           ),
-          body: GoalOverviewBody(),
+          body: GoalOverviewBody(selectedDate: selectedDate),
         ),
       ),
     );

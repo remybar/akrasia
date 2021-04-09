@@ -3,27 +3,28 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:kt_dart/kt.dart';
 
 // Project imports:
 import 'package:akrasia/application/goals/goal_actor/goal_actor_bloc.dart';
-import 'package:akrasia/domain/goals/goal_step.dart';
+import 'package:akrasia/domain/goals/goal_state.dart';
 import 'package:akrasia/domain/goals/value_objects/goal_data.dart';
 import 'package:akrasia/domain/goals/value_objects/goal_data_value.dart';
-import 'package:kt_dart/kt.dart';
 import '../common/goal_card_data_value.dart';
 
 class YesNoGoalCardDataValue extends GoalCardDataValue {
-  const YesNoGoalCardDataValue({GoalStep goalStep}) : super(goalStep: goalStep);
+  const YesNoGoalCardDataValue({GoalState goalState, DateTime selectedDate})
+      : super(selectedDate: selectedDate, goalState: goalState);
 
   @override
   Widget buildInProgressDataValue(BuildContext context) {
-    final isAchieved = goalStep.isAchieved();
+    final isAchieved = goalState.isAchieved();
     return ActiveDataValueWidget(
       hasBorder: true,
       fillColor: Colors.green,
       borderColor: Colors.green,
       onPressed: () {
-        final KtList<GoalData> data = goalStep.data.size > 0
+        final KtList<GoalData> data = goalState.step.data.size > 0
             ? emptyList()
             : KtList.from([
                 GoalData(
@@ -32,7 +33,7 @@ class YesNoGoalCardDataValue extends GoalCardDataValue {
                 ),
               ]);
         context.read<GoalActorBloc>().add(
-              GoalActorEvent.stepUpdated(step: goalStep.copyWith(data: data)),
+              GoalActorEvent.stepUpdated(step: goalState.step.copyWith(data: data)),
             );
       },
       child: isAchieved ? const Icon(Icons.check) : Container(),

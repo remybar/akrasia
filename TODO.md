@@ -29,11 +29,12 @@ DEV
 ===
 
 NEXT STEPS:
-- affichage de la liste des steps
+- après création d'un goal, rafraichir la liste des steps (overview)
 - ajout des données (check, count, timer, manual)
 - finaliser le widget goal (overview page)
 - améliorer la gestion des erreurs / la validation des entities/value objects
 - support des reminders
+- affichage de la liste des steps avec filtrage par date
 
 Debug
 - logguer des infos

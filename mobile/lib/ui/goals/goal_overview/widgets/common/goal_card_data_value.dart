@@ -5,11 +5,13 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 // Project imports:
-import 'package:akrasia/domain/goals/goal_step.dart';
+import 'package:akrasia/domain/goals/goal_state.dart';
+import 'package:akrasia/domain/goals/goal.dart';
 
 abstract class GoalCardDataValue extends StatelessWidget {
-  final GoalStep goalStep;
-  const GoalCardDataValue({Key key, this.goalStep}) : super(key: key);
+  final GoalState goalState;
+  final DateTime selectedDate;
+  const GoalCardDataValue({Key key, this.goalState, this.selectedDate}) : super(key: key);
 
   Widget buildInProgressDataValue(BuildContext context);
 
@@ -30,16 +32,13 @@ abstract class GoalCardDataValue extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final startDate = goalStep.startDate.getOrCrash();
-    final endDate = goalStep.endDate;
-
     // NOT STARTED
-    if (startDate.isAfter(DateTime.now())) {
-      return _buildNotStartedDataValue(startDate);
+    if (!goalState.goal.isStarted(selectedDate)) {
+      return _buildNotStartedDataValue(goalState.goal.startDate.getOrCrash());
     }
 
     // FINISHED
-    if (endDate?.value != null && endDate.value.isBefore(DateTime.now())) {
+    if (goalState.goal.isFinished(selectedDate)) {
       return _buildFinishedDataValue();
     }
 

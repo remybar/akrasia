@@ -5,3 +5,13 @@ DateTime shiftDate(DateTime date, {int year, int month, int day}) {
     date.day + (day ?? 0),
   );
 }
+
+extension DateTimeX on DateTime {
+  bool isBeforeOrEqual(DateTime d) {
+    return isBefore(d) || isAtSameMomentAs(d);
+  }
+
+  bool isAfterOrEqual(DateTime d) {
+    return isAfter(d) || isAtSameMomentAs(d);
+  }
+}

@@ -1,9 +1,9 @@
 // Flutter imports:
 
 // Project imports:
-import 'package:akrasia/domain/goals/goal_step.dart';
+import 'package:akrasia/domain/goals/goal_state.dart';
 import '../common/goal_card_info.dart';
 
 class ValueGoalCardInfo extends GoalCardInfo {
-  ValueGoalCardInfo({GoalStep goalStep}) : super(goalStep: goalStep);
+  ValueGoalCardInfo({GoalState goalState}) : super(goalState: goalState);
 }

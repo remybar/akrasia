@@ -2,11 +2,12 @@
 import 'package:flutter/material.dart';
 
 // Project imports:
-import 'package:akrasia/domain/goals/goal_step.dart';
+import 'package:akrasia/domain/goals/goal_state.dart';
 import '../common/goal_card_data_value.dart';
 
 class CountGoalCardDataValue extends GoalCardDataValue {
-  const CountGoalCardDataValue({GoalStep goalStep}) : super(goalStep: goalStep);
+  const CountGoalCardDataValue({GoalState goalState, DateTime selectedDate})
+      : super(goalState: goalState, selectedDate: selectedDate);
 
   @override
   Widget buildInProgressDataValue(BuildContext context) {

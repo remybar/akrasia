@@ -10,6 +10,10 @@ import 'goal_overview_failure.dart';
 import 'widgets/goal_card.dart';
 
 class GoalOverviewBody extends StatelessWidget {
+  final DateTime selectedDate;
+
+  const GoalOverviewBody({Key key, this.selectedDate}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<GoalWatcherBloc, GoalWatcherState>(
@@ -21,12 +25,12 @@ class GoalOverviewBody extends StatelessWidget {
             return ListView.builder(
               itemCount: state.goals.size,
               itemBuilder: (context, index) {
-                final goalStep = state.goals[index];
+                final goalState = state.goals[index];
                 // TODO: handle invalid goal step
                 // if (goal.failureOption.isSome()) {
                 //   return GoalCardError(goal: goal);
                 // }
-                return GoalCard(goalStep: goalStep);
+                return GoalCard(selectedDate: selectedDate, goalState: goalState);
               },
             );
           },

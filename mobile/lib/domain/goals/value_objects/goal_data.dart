@@ -1,9 +1,9 @@
 // Package imports:
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:kt_dart/kt.dart';
 
 // Project imports:
 import 'package:akrasia/domain/goals/value_objects/goal_data_value.dart';
-import 'package:kt_dart/kt.dart';
 
 part 'goal_data.freezed.dart';
 
