@@ -47,25 +47,36 @@ class GoalRepository implements IGoalRepository {
     return const GoalFailure.unexpected();
   }
 
-  // Listen to steps update and return a stream with a list of goal states at a specific [fromDate],
-  // where a goal state is a goal and an optional step.
-  @override
-  Stream<Either<GoalFailure, KtPair<DateTime, Map<UniqueId, GoalStep>>>> watchSteps(DateTime fromDate) async* {
-    try {
-      final uid = await _firestore.uid();
+  Map<UniqueId, Goal> _getGoalsFromSnapshot(QuerySnapshot snapshot, DateTime fromDate) {
+    final goals = snapshot.docs
+        .map(
+          (doc) => GoalDTO.fromFirestore(doc).toDomain(),
+        )
+        .where(
+          (goal) => goal.isActiveAtDate(fromDate),
+        );
+    return {for (var g in goals) g.id: g};
+  }
 
-      yield* _firestore.collectionGroup(_stepCollectionName(uid)).snapshots().map(
-        (snapshot) {
-          final steps = snapshot.docs
-              .map(
-                (doc) => GoalStepDTO.fromFirestore(doc).toDomain(),
-              )
-              .where(
-                (step) => step.isActiveAtDate(fromDate),
-              );
-          return right(KtPair(fromDate, {for (var s in steps) s.goalId: s}));
-        },
-      );
+  Map<UniqueId, GoalStep> _getGoalStepsFromSnapshot(QuerySnapshot snapshot, DateTime fromDate) {
+    final steps = snapshot.docs
+        .map(
+          (doc) => GoalStepDTO.fromFirestore(doc).toDomain(),
+        )
+        .where(
+          (step) => step.isActiveAtDate(fromDate),
+        );
+    return {for (var s in steps) s.goalId: s};
+  }
+
+  @override
+  Stream<Either<GoalFailure, KtPair<DateTime, Map<UniqueId, Goal>>>> watchGoals(DateTime fromDate) async* {
+    try {
+      final userDoc = await _firestore.userDocument();
+
+      yield* userDoc.goals.snapshots().map(
+            (snapshot) => right(KtPair(fromDate, _getGoalsFromSnapshot(snapshot, fromDate))),
+          );
     } on FirebaseException catch (e) {
       _logFirebaseException("watchSteps", e);
       yield left(_exceptionToFailure(e));
@@ -79,17 +90,8 @@ class GoalRepository implements IGoalRepository {
       final userDoc = await _firestore.userDocument();
 
       return userDoc.goals.get().then(
-        (snapshot) {
-          final goals = snapshot.docs
-              .map(
-                (doc) => GoalDTO.fromFirestore(doc).toDomain(),
-              )
-              .where(
-                (goal) => goal.isActiveAtDate(fromDate),
-              );
-          return right({for (var g in goals) g.id: g});
-        },
-      );
+            (snapshot) => right(_getGoalsFromSnapshot(snapshot, fromDate)),
+          );
     } on FirebaseException catch (e) {
       _logFirebaseException("getGoals", e);
       return left(_exceptionToFailure(e));
@@ -151,6 +153,36 @@ class GoalRepository implements IGoalRepository {
       return right(unit);
     } on FirebaseException catch (e) {
       _logFirebaseException("delete", e);
+      return left(_exceptionToFailure(e));
+    }
+  }
+
+  // Listen to steps update and return a stream with a list of goal states at a specific [fromDate],
+  // where a goal state is a goal and an optional step.
+  @override
+  Stream<Either<GoalFailure, KtPair<DateTime, Map<UniqueId, GoalStep>>>> watchSteps(DateTime fromDate) async* {
+    try {
+      final uid = await _firestore.uid();
+
+      yield* _firestore.collectionGroup(_stepCollectionName(uid)).snapshots().map(
+            (snapshot) => right(KtPair(fromDate, _getGoalStepsFromSnapshot(snapshot, fromDate))),
+          );
+    } on FirebaseException catch (e) {
+      _logFirebaseException("watchSteps", e);
+      yield left(_exceptionToFailure(e));
+    }
+  }
+
+  @override
+  Future<Either<GoalFailure, Map<UniqueId, GoalStep>>> getSteps({DateTime fromDate}) async {
+    try {
+      final uid = await _firestore.uid();
+
+      return _firestore.collectionGroup(_stepCollectionName(uid)).get().then(
+            (snapshot) => right(_getGoalStepsFromSnapshot(snapshot, fromDate)),
+          );
+    } on FirebaseException catch (e) {
+      _logFirebaseException("watchSteps", e);
       return left(_exceptionToFailure(e));
     }
   }

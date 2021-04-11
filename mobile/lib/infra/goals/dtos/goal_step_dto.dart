@@ -1,5 +1,4 @@
 // Package imports:
-import 'package:akrasia/domain/goals/value_objects/goal_end_date.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:kt_dart/kt.dart';
@@ -7,6 +6,7 @@ import 'package:kt_dart/kt.dart';
 // Project imports:
 import 'package:akrasia/domain/core/unique_id.dart';
 import 'package:akrasia/domain/goals/goal_step.dart';
+import 'package:akrasia/domain/goals/value_objects/goal_end_date.dart';
 import 'package:akrasia/domain/goals/value_objects/goal_pledge_value.dart';
 import 'package:akrasia/domain/goals/value_objects/goal_start_date.dart';
 import 'package:akrasia/infra/goals/dtos/goal_data_dto.dart';

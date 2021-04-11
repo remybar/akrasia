@@ -1,7 +1,7 @@
-// Package imports:
+// Dart imports:
 import 'dart:async';
 
-import 'package:akrasia/domain/goals/i_goal_repository.dart';
+// Package imports:
 import 'package:dartz/dartz.dart';
 import 'package:injectable/injectable.dart';
 import 'package:kt_dart/kt.dart';
@@ -10,6 +10,7 @@ import 'package:meta/meta.dart';
 // Project imports:
 import 'package:akrasia/domain/core/unique_id.dart';
 import 'package:akrasia/domain/goals/i_goal_manager.dart';
+import 'package:akrasia/domain/goals/i_goal_repository.dart';
 import 'goal.dart';
 import 'goal_failure.dart';
 import 'goal_state.dart';
@@ -22,12 +23,16 @@ class GoalManager implements IGoalManager {
   // controller to provide list of goal states to the application layer through a stream
   final stateStreamController = StreamController<Either<GoalFailure, KtList<GoalState>>>.broadcast();
 
-  // stream subscription to be notified about goal steps update
+  // stream subscriptions to be notified about goals and steps update
   StreamSubscription<Either<GoalFailure, KtPair<DateTime, Map<UniqueId, GoalStep>>>> _stepStreamSubscription;
+  StreamSubscription<Either<GoalFailure, KtPair<DateTime, Map<UniqueId, Goal>>>> _goalStreamSubscription;
+
+  bool _firstGoalUpdate;
 
   GoalManager(this._repository);
 
   Future<void> dispose() async {
+    _goalStreamSubscription?.cancel();
     _stepStreamSubscription?.cancel();
     stateStreamController.close();
   }
@@ -61,12 +66,47 @@ class GoalManager implements IGoalManager {
     );
   }
 
+  // Handle goal update by building a list of goal states and add them to the state stream
+  // ignore: avoid_void_async
+  void _onGoalUpdate(Either<GoalFailure, KtPair<DateTime, Map<UniqueId, Goal>>> data) async {
+    // do not take into account the first notification as the goal state list is already built
+    // through goal steps update notification.
+    if (!_firstGoalUpdate) {
+      data.fold(
+        (failure) => stateStreamController.sink.add(left(failure)),
+        (data) async {
+          final fromDate = data.first;
+          final goals = data.second;
+
+          // get the list of goal steps at the specific date
+          final steps = await _repository.getSteps(fromDate: fromDate);
+
+          steps.fold(
+            (failure) => stateStreamController.sink.add(left(failure)),
+            (steps) {
+              // build the list of goal states
+              final List<GoalState> states = [];
+
+              goals.forEach((goalId, goal) {
+                states.add(GoalState(goal: goal, step: steps[goalId]));
+              });
+
+              stateStreamController.sink.add(right(states.toImmutableList()));
+            },
+          );
+        },
+      );
+    }
+    _firstGoalUpdate = false;
+  }
+
   @override
   Stream<Either<GoalFailure, KtList<GoalState>>> watchAll(DateTime fromDate) async* {
-    // cancel the previous steps stream subscription
+    _goalStreamSubscription?.cancel();
     _stepStreamSubscription?.cancel();
+    _firstGoalUpdate = true;
 
-    // listen for goal steps update
+    _goalStreamSubscription = _repository.watchGoals(fromDate).listen(_onGoalUpdate);
     _stepStreamSubscription = _repository.watchSteps(fromDate).listen(_onGoalStepUpdate);
 
     yield* stateStreamController.stream;

@@ -1,5 +1,4 @@
 // Flutter imports:
-import 'package:akrasia/domain/goals/goal_state.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -8,6 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 // Project imports:
 import 'package:akrasia/application/goals/goal_actor/goal_actor_bloc.dart';
+import 'package:akrasia/domain/goals/goal_state.dart';
 import 'package:akrasia/ui/akrasia_theme.dart';
 import 'package:akrasia/ui/core/widgets/more_menu_widget.dart';
 import 'package:akrasia/ui/routes/router.gr.dart';
@@ -40,8 +40,7 @@ class GoalCard extends StatelessWidget {
     return Card(
       child: InkWell(
         onTap: () {
-          // TODO
-//          ExtendedNavigator.of(context).pushGoalFormPage(editedGoal: goalState);
+          ExtendedNavigator.of(context).pushGoalFormPage(editedGoal: goalState.goal);
         },
         child: Container(
             padding: const EdgeInsets.all(5),

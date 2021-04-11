@@ -17,51 +17,44 @@ import 'package:akrasia/ui/routes/router.gr.dart';
 class GoalFormPage extends StatelessWidget {
   final Goal editedGoal;
 
-  const GoalFormPage({
-    Key key,
-    @required this.editedGoal,
-  }) : super(key: key);
+  const GoalFormPage({Key key, @required this.editedGoal}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => getIt<GoalFormBloc>()
-        ..add(
-          GoalFormEvent.initialized(
-            optionOf(editedGoal),
-          ),
-        ),
+    return BlocProvider<GoalFormBloc>(
+      create: (context) => getIt<GoalFormBloc>()..add(GoalFormEvent.initialized(optionOf(editedGoal))),
       child: BlocConsumer<GoalFormBloc, GoalFormState>(
-          listenWhen: (prev, cur) => prev.goalFailureOrSuccessOption != cur.goalFailureOrSuccessOption,
-          listener: (context, state) {
-            state.goalFailureOrSuccessOption.fold(
-              () {},
-              (either) {
-                either.fold(
-                  (failure) {
-                    FlushbarHelper.createError(
-                      message: failure.map(
-                        insufficientPermission: (_) => 'Insufficient permission',
-                        unexpected: (_) => 'Unexpected failure',
-                      ),
-                    ).show(context);
-                  },
-                  (_) {
-                    ExtendedNavigator.of(context).popUntil((route) => route.settings.name == Routes.goalOverviewPage);
-                  },
-                );
-              },
-            );
-          },
-          buildWhen: (prev, cur) => prev.isSaving != cur.isSaving,
-          builder: (context, state) {
-            return Stack(
-              children: [
-                const GoalFormPageBody(),
-                SavingInProgressOverlay(isSaving: state.isSaving),
-              ],
-            );
-          }),
+        listenWhen: (prev, cur) => prev.goalFailureOrSuccessOption != cur.goalFailureOrSuccessOption,
+        listener: (context, state) {
+          state.goalFailureOrSuccessOption.fold(
+            () {},
+            (either) {
+              either.fold(
+                (failure) {
+                  FlushbarHelper.createError(
+                    message: failure.map(
+                      insufficientPermission: (_) => 'Insufficient permission',
+                      unexpected: (_) => 'Unexpected failure',
+                    ),
+                  ).show(context);
+                },
+                (_) {
+                  ExtendedNavigator.of(context).popUntil((route) => route.settings.name == Routes.goalOverviewPage);
+                },
+              );
+            },
+          );
+        },
+        buildWhen: (prev, cur) => prev.isSaving != cur.isSaving,
+        builder: (context, state) {
+          return Stack(
+            children: [
+              const GoalFormPageBody(),
+              SavingInProgressOverlay(isSaving: state.isSaving),
+            ],
+          );
+        },
+      ),
     );
   }
 }

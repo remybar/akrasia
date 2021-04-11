@@ -18,7 +18,7 @@ class GoalOverviewBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<GoalWatcherBloc, GoalWatcherState>(
       builder: (context, state) {
-        return state.map(
+        return state.maybeMap(
           initial: (_) => Container(),
           loading: (_) => const Center(child: CircularProgressIndicator()),
           loaded: (state) {
@@ -37,6 +37,7 @@ class GoalOverviewBody extends StatelessWidget {
           loadFailure: (state) {
             return GoalOverviewFailure(failure: state.failure);
           },
+          orElse: () => Container(),
         );
       },
     );

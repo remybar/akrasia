@@ -1,6 +1,8 @@
-import 'package:meta/meta.dart';
+// Package imports:
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:meta/meta.dart';
 
+// Project imports:
 import 'goal.dart';
 import 'goal_step.dart';
 

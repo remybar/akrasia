@@ -28,7 +28,7 @@ class GoalOverviewPage extends StatelessWidget {
         ),
         BlocProvider<GoalActorBloc>(
           create: (context) => getIt<GoalActorBloc>(),
-        )
+        ),
       ],
       child: MultiBlocListener(
         listeners: [

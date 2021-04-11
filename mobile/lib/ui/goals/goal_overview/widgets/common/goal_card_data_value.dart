@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 // Project imports:
-import 'package:akrasia/domain/goals/goal_state.dart';
 import 'package:akrasia/domain/goals/goal.dart';
+import 'package:akrasia/domain/goals/goal_state.dart';
 
 abstract class GoalCardDataValue extends StatelessWidget {
   final GoalState goalState;

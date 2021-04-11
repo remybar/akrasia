@@ -29,7 +29,6 @@ DEV
 ===
 
 NEXT STEPS:
-- après création d'un goal, rafraichir la liste des steps (overview)
 - ajout des données (check, count, timer, manual)
 - finaliser le widget goal (overview page)
 - améliorer la gestion des erreurs / la validation des entities/value objects
