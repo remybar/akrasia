@@ -11,29 +11,28 @@ import 'package:akrasia/domain/goals/goal_state.dart';
 import 'package:akrasia/ui/akrasia_theme.dart';
 import 'package:akrasia/ui/core/widgets/more_menu_widget.dart';
 import 'package:akrasia/ui/routes/router.gr.dart';
-import 'count_goal/count_goal_card_control.dart';
-import 'count_goal/count_goal_card_data_value.dart';
-import 'count_goal/count_goal_card_info.dart';
-import 'timer_goal/timer_goal_card_control.dart';
-import 'timer_goal/timer_goal_card_data_value.dart';
-import 'timer_goal/timer_goal_card_info.dart';
-import 'value_goal/value_goal_card_control.dart';
-import 'value_goal/value_goal_card_data_value.dart';
-import 'value_goal/value_goal_card_info.dart';
-import 'yesno_goal/yesno_goal_card_control.dart';
-import 'yesno_goal/yesno_goal_card_data_value.dart';
-import 'yesno_goal/yesno_goal_card_info.dart';
 
 enum _ContextMenuChoice {
   pause,
   delete,
 }
 
-class GoalCard extends StatelessWidget {
-  final DateTime selectedDate;
+// a goal card displays all the info of a goal.
+// It is composed of 4 areas:
+// - "data control" to have some controls on current goal data according to the goal type (play/pause, check, ...)
+// - "goal info" to display general information about the goal
+// - "data display" to be able to display the actual goal data status
+// - a "more" contextual menu
+abstract class GoalCard extends StatelessWidget {
   final GoalState goalState;
 
-  const GoalCard({Key key, @required this.goalState, this.selectedDate}) : super(key: key);
+  const GoalCard({Key key, @required this.goalState}) : super(key: key);
+
+  Widget _buildDataControl();
+
+  Widget _buildGoalInfo();
+
+  Widget _buildDataDisplay();
 
   @override
   Widget build(BuildContext context) {
@@ -51,26 +50,11 @@ class GoalCard extends StatelessWidget {
             ),
             child: Row(
               children: [
-                goalState.goal.type.when(
-                  yesNoGoal: () => YesNoGoalCardDataValue(selectedDate: selectedDate, goalState: goalState),
-                  countGoal: (_) => CountGoalCardDataValue(selectedDate: selectedDate, goalState: goalState),
-                  timerGoal: (_) => TimerGoalCardDataValue(selectedDate: selectedDate, goalState: goalState),
-                  valueGoal: (_) => ValueGoalCardDataValue(selectedDate: selectedDate, goalState: goalState),
-                ),
+                _buildDataControl(),
                 const SizedBox(width: 10),
-                goalState.goal.type.when(
-                  yesNoGoal: () => YesNoGoalCardInfo(goalState: goalState),
-                  countGoal: (_) => CountGoalCardInfo(goalState: goalState),
-                  timerGoal: (_) => TimerGoalCardInfo(goalState: goalState),
-                  valueGoal: (_) => ValueGoalCardInfo(goalState: goalState),
-                ),
+                _buildGoalInfo(),
                 const Spacer(),
-                goalState.goal.type.when(
-                  yesNoGoal: () => YesNoGoalCardControl(goalState: goalState),
-                  countGoal: (_) => CountGoalCardControl(goalState: goalState),
-                  timerGoal: (_) => TimerGoalCardControl(goalState: goalState),
-                  valueGoal: (_) => ValueGoalCardControl(goalState: goalState),
-                ),
+                _buildDataDisplay(),
                 MoreMenuWidget<_ContextMenuChoice>(
                   menuChoices: const {
                     _ContextMenuChoice.pause: "Mettre en pause",

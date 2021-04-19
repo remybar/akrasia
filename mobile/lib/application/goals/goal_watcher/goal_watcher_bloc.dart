@@ -41,6 +41,8 @@ class GoalWatcherBloc extends Bloc<GoalWatcherEvent, GoalWatcherState> {
             );
       },
       goalsReceived: (e) async* {
+        // TODO: convert the list of goal states from the domain into a list of "UI goals"
+        // TODO: easier to manipulate at UI level
         yield e.failureOrGoals.fold(
           (failure) => GoalWatcherState.loadFailure(failure),
           (goals) => GoalWatcherState.loaded(goals),
